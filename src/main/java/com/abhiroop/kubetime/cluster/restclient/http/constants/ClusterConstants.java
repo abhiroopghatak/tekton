@@ -4,7 +4,7 @@ public interface ClusterConstants {
 
 	interface RestApiRelativePath {
 
-		public static final String CLUSTER_VERSIONS = "api/config.openshift.io/v1/clusterversions";
+		public static final String CLUSTER_VERSIONS = "apis/config.openshift.io/v1/clusterversions/version";
 	}
 
 	interface ResourceStatus {

@@ -11,7 +11,7 @@ import com.abhiroop.kubetime.repo.ClusterRepo;
 
 
 @Service
-public class ClusterDataServiceImpl implements ClusterDataService {
+public class ClusterInfoServiceImpl implements ClusterInfoService {
 
 	@Autowired
 	ClusterRepo clusterRepo;

@@ -14,8 +14,4 @@ public class KubetimeApplication {
 	}
 
 	
-	@Bean
-	public RestTemplate getRestTemplate() {
-	    return new RestTemplate();
-	}
 }

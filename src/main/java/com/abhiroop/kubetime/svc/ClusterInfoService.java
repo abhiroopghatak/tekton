@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.abhiroop.kubetime.pojo.Cluster;
 
 @Service
-public interface ClusterDataService {
+public interface ClusterInfoService {
 
 	
 	
