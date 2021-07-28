@@ -12,6 +12,7 @@ public class OpenshiftClient extends ClusterClientBaseBuilder{
 		// TODO Auto-generated method stub
 		return this.getBaseUrl()+ClusterConstants.RestApiRelativePath.CLUSTER_VERSIONS;
 	}
+	
 
 	
 	
