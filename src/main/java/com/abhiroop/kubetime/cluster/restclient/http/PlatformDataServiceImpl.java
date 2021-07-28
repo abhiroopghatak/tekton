@@ -19,27 +19,24 @@ import com.abhiroop.kubetime.cluster.restclient.utils.JsonParserHelper;
 
 
 @Service
-public class ClusterDataServiceImpl implements IClusterDataService {
+public class PlatformDataServiceImpl implements IPlatformDataService {
 
-	private static final Logger log = LoggerFactory.getLogger(ClusterDataServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(PlatformDataServiceImpl.class);
 
 	@Autowired
 	private RestTemplate restTemplate;
 
 	@Override
-	public String getClusterSpec(ClusterClientBaseBuilder client) {
-//		restTemplate.
+	public String getPlatformSpec(ClusterClientBaseBuilder client) {
 		String fullJson = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(client.getToken());
 		headers.add("Accept", "application/json");
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 		log.info("==== RESTful API call getClusterSpec using Spring RESTTemplate START =======");
-//		Response response = restTemplate.getForObject  (client.getClusterSpecApiUrl(), Response.class);
 		try {
 			ResponseEntity<String> response= restTemplate.exchange(client.getClusterSpecApiUrl(), HttpMethod.GET,entity,String.class);
 		fullJson=response.getBody();
-		//fullJson = response.getBody().toString();
 		JSONObject jo = (JSONObject) new JSONParser().parse(fullJson);
 		System.out.println(JsonParserHelper.getDataValue(fullJson, new String[]{"spec"}));
 		System.out.println(JsonParserHelper.getDataValue(fullJson, new String[]{"status","desired","version"}));

@@ -1,4 +1,4 @@
-package com.abhiroop.kubetime.cluster.restclient.http.constants;
+package com.abhiroop.kubetime.cluster.restclient.http.constants.openshift4;
 
 public interface ClusterConstants {
 

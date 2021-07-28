@@ -2,9 +2,9 @@ package com.abhiroop.kubetime.cluster.restclient.http;
 
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.ClusterClientBaseBuilder;
 
-public interface IClusterDataService {
+public interface IPlatformDataService {
 
 	
 	
-	String getClusterSpec(ClusterClientBaseBuilder client);
+	String getPlatformSpec(ClusterClientBaseBuilder client);
 }
