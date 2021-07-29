@@ -15,6 +15,7 @@ public class ClusterMetadata implements Serializable{
 	 */
 	private static final long serialVersionUID = -4606202298579044449L;
 
+	//response variables
 	private String clusterName;
 	private String gitVersion;
 	private String buildDate;
@@ -24,5 +25,10 @@ public class ClusterMetadata implements Serializable{
 	private String clusterId;
 	private String clusterVersion;
 	private String errorMessage;
+	
+	
+	//request variables
+	private String endPointUrl;
+	private String token;
 	
 }

@@ -1,14 +1,15 @@
 package com.abhiroop.kubetime.svc;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.abhiroop.kubetime.cluster.restclient.utils.DataFormatUtil;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.repo.ClusterRepo;
-
 
 @Service
 public class ClusterInfoServiceImpl implements ClusterInfoService {
@@ -39,11 +40,18 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 	@Override
 	public List<Cluster> getClusterLis() {
 		// TODO Auto-generated method stub
-		return  clusterRepo.findAll();
-				
+		List<Cluster> cList = clusterRepo.findAll();
+
+		for (Cluster cluster : cList) {
+			try {
+				cluster.setRegisteredon(DataFormatUtil.trimDateWithNoTime(cluster.getRegisteredon()));
+			} catch (ParseException pe) {
+				System.out.println(pe);
+				cluster.setErrorMessage("Date Parsing error occurred");
+			}
+		}
+
+		return cList;
 	}
-	
-	
-	
 
 }

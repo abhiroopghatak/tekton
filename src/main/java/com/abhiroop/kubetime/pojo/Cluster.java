@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,9 @@ public class Cluster implements Serializable{
 	
 	private String status;
 	private String token;
+	
+	@Transient
+	private String errorMessage;
 
 	
 }

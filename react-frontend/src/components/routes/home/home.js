@@ -1,24 +1,28 @@
-import React from "react";
+import  {Component} from "react";
 
-
-import { MDBJumbotron, MDBIcon, MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBListGroupItem, MDBListGroup } from "mdbreact";
+import { MDBJumbotron, MDBIcon,  MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBListGroupItem, MDBListGroup,MDBCollapse ,MDBBtn  } from "mdbreact";
 import bgimage from "../../../images/home-jumbotron.PNG";
 import _user_icon from "../../../images/icon/_user_icon.png";
 
 
 import ClusterDataService from '../../../restapi/data-service/clusterDataService';
+import ClusterModal from './ClusterModalComponent';
 
-
-class Home extends React.Component {
+class Home extends Component {
 
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			clusters: []
+			clusters: [],
+			collapseID: ""
 		}
 	}
-
+			toggleCollapse = collapseID => () => {
+  this.setState(prevState => ({
+    collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+  }));
+}
 	componentDidMount() {
 		ClusterDataService.getAllClusters().then(
 
@@ -35,6 +39,8 @@ class Home extends React.Component {
 	render() {
 		return (
 			<div>
+					
+
 				<MDBContainer>
 					<MDBRow>
 						<MDBCol sm="12">
@@ -54,22 +60,34 @@ class Home extends React.Component {
 					<MDBRow>
 						<MDBCol sm="8" className="border border-primary" >
 
-							<MDBCardTitle className="h1-responsive font-bold">List of cluster registered against your email</MDBCardTitle>
+							<MDBCardTitle className="h3-responsive font-bold">List of cluster registered against your email</MDBCardTitle>
 							<MDBListGroup className="my-3 mx-3" >
 								{
 									this.state.clusters.map(cluster => (
 
-										<MDBListGroupItem color="primary"><a
-											class="nav-link "
-											id="v-pills-home-tab"
-											data-mdb-toggle="pill"
-											href="#v-pills-home"
-											role="tab"
-											aria-controls="v-pills-home"
-											aria-selected="true"
-										>{cluster.name}</a></MDBListGroupItem>
-									))}
+										<MDBListGroupItem color="primary" >
 
+											<a
+												class="nav-link "
+												id="v-pills-home-tab"
+												role="tab"
+												aria-selected="true" onClick={this.toggleCollapse("basicCollapse")}
+
+											>{cluster.name} registered on {cluster.registeredon.substring(0, 10)}</a>
+
+										</MDBListGroupItem>
+									))}
+					 <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum
+          </p>
+        </MDBCollapse>
 							</MDBListGroup>
 						</MDBCol>
 
@@ -91,7 +109,6 @@ class Home extends React.Component {
 
 
 				</MDBContainer>
-
 
 			</div >
 		);

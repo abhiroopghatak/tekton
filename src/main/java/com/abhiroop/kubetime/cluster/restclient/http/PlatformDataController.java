@@ -21,15 +21,15 @@ public class PlatformDataController {
 	
 	
 		@GetMapping("/getPlatformSpec")
-		public ClusterMetadata getPlatformSpec() {
+		public ClusterMetadata getPlatformSpec(ClusterMetadata cmd) {
 			
 			
 			ClusterClientBaseBuilder oc = new OpenshiftClient();
 			
-			oc.withBaseUrl("https://api.openshift4.ocppocmtc311.com:6443");
-			oc.withConnectTimeout(9000);
-			oc.usingToken("sha256~E1sClQoj1yKDz6f9e0K955wttfQW-vACbMUubMtW3tg");
+			oc.withBaseUrl(cmd.getEndPointUrl());
+			oc.usingToken(cmd.getToken());
 			ClusterMetadata data = platformDataService.getPlatformSpec(oc);
+			data.setClusterName(cmd.getClusterName());
 			return data;
 		}
 }
