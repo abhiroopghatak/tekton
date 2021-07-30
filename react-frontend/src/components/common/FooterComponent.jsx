@@ -15,7 +15,7 @@ class FooterComponent extends Component {
 			
 		
 				  
-			<MDBFooter className="footer font-small pt-1 mt-4 bg-dark">
+			<MDBFooter className="footer font-small pt-1 mt-4 bg-dark ">
 			
 				<MDBContainer fluid className="text-center text-md-left">
 
