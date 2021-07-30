@@ -3,7 +3,7 @@ import  {Component,Suspense} from "react";
 import {   MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBListGroupItem, MDBListGroup,MDBCollapse } from "mdbreact";
 import _user_icon from "../../../images/icon/_user_icon.png";
 
-
+import BannerMdbRow from './bannerMdbRow.js';
 import ClusterDataService from '../../../restapi/data-service/clusterDataService';
 
 class Home extends Component {
@@ -96,7 +96,7 @@ class Home extends Component {
 		                  }> <>
 		                  <h2>hi</h2>
 		                  <p>
-		                     ========================{this.state.cluster.errorMessage}================
+		                     =========={this.state.cluster.gitVersion}=============={this.state.cluster.errorMessage}================
 		                  </p>
 		                  </></Suspense>
 		               </MDBCollapse>
@@ -104,17 +104,7 @@ class Home extends Component {
 		         </MDBCol>
 		        
 		      </MDBRow>
-		      <MDBRow>
-		         <MDBCol sm="12">
-		            <MDBCol className="text-black text-center py-5 px-4 my-5" style={{ backgroundImage: `url(https://mdbcdn.b-cdn.net/img/Photos/Others/gradient1.jpg)` }}>
-		            <MDBCol className="py-9">
-		               <MDBCardTitle className="h1-responsive m-5 font-bold">Verify kubernetes cluster usage and reduce cluster spending</MDBCardTitle>
-		               <p className="mx-5 mb-5 ">Kubetime provides realtime kubernetes cluster usage and generates time based spending . Adding to that it can facilitate as advisor which can suggest house keeping opertaion to recduce cluster spending.
-		               </p>
-		            </MDBCol>
-		         </MDBCol>
-		         </MDBCol>
-		      </MDBRow>
+		      <BannerMdbRow/>
 		   </MDBContainer>
 		</div >
 		);

@@ -36,8 +36,10 @@ public class ClusterInfoControlller {
 	}
 	
 	@GetMapping("/getOne/{id}")
-	public Cluster getById(@PathVariable long id) {
-		return clusterInfoService.getClusterById(id);
+	public Cluster getById(@PathVariable String string) {
+		
+		
+		return clusterInfoService.getClusterById(Long.parseLong(string));
 	}
 	
 	@GetMapping("/getAllByUser/{email}")
@@ -55,6 +57,9 @@ public class ClusterInfoControlller {
 	
 	@PostMapping("/clusterSummary")
 	public ClusterMetadata  getClusterSummarty(@RequestBody ClusterMetadata cmd) {
+		Cluster c = getById(cmd.getClusterId());
+		cmd.setEndPointUrl(c.getEndpoint());
+		cmd.setToken(c.getToken());
 		return pdc.getPlatformSpec(cmd);
 	}
 }
