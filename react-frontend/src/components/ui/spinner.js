@@ -1,14 +1,13 @@
-import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import {Box} from '@material-ui/core';
+import React from "react";
 
-export default function Spinner({textComponent = null}) {
-    return (
-        <Box display="flex" justifyContent="center" alignItems="center"
-             css={{minHeight: "60vh", flexDirection: "column"}}>
-
-            <CircularProgress color="secondary" style={{marginBottom: 20}}/>
-            {textComponent}
-        </Box>
-    );
+const SpinnerPage = () => {
+  return (
+    <>
+     <div className="spinner-grow text-primary" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </>
+  );
 }
+
+export default SpinnerPage;

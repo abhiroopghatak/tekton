@@ -60,6 +60,7 @@ public class ClusterInfoControlller {
 		Cluster c = getById(cmd.getClusterId());
 		cmd.setEndPointUrl(c.getEndpoint());
 		cmd.setToken(c.getToken());
+		cmd.setClusterName(c.getName());
 		return pdc.getPlatformSpec(cmd);
 	}
 }
