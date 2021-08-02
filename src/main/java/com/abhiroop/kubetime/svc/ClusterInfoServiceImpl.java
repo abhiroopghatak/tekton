@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.abhiroop.kubetime.cluster.restclient.utils.DataFormatUtil;
@@ -37,11 +38,13 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 		return clusterRepo.saveAndFlush(c);
 	}
 
+	@Cacheable(value="clusters")           // it will cache result and key name will be "clusters"
 	@Override
-	public List<Cluster> getClusterLis() {
+	public List<Cluster> getClusterList() {
 		// TODO Auto-generated method stub
+		System.out.println("getClusterList : service call invoked");
 		List<Cluster> cList = clusterRepo.findAll();
-
+		System.out.println("All cluster retrieved from cionfig-DB.");
 		for (Cluster cluster : cList) {
 			try {
 				cluster.setRegisteredon(DataFormatUtil.trimDateWithNoTime(cluster.getRegisteredon()));
@@ -50,7 +53,7 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 				cluster.setErrorMessage("Date Parsing error occurred");
 			}
 		}
-
+		
 		return cList;
 	}
 

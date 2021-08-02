@@ -3,6 +3,8 @@ package com.abhiroop.kubetime.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,9 @@ public class ClusterInfoControlller {
 	private ClusterInfoService clusterInfoService;
 	
 	@Autowired
+    private CacheManager cacheManager; 
+	
+	@Autowired
 	PlatformDataController pdc;
 		
 	
@@ -34,6 +39,16 @@ public class ClusterInfoControlller {
 	public String health() {
 		return "OK";
 	}
+	
+	// clear all cache using cache manager
+    @RequestMapping(value = "/clearCache")
+    public String clearCache(){
+        for(String name:cacheManager.getCacheNames()){
+            cacheManager.getCache(name).clear();
+        }
+        System.out.println("cache flushed successfully");
+        return "cache flushed successfully";
+    }
 	
 	@GetMapping("/getOne/{id}")
 	public Cluster getById(@PathVariable String string) {
@@ -50,8 +65,7 @@ public class ClusterInfoControlller {
 	@GetMapping("/getAll")
 	public List<Cluster>  getAll() {
 		
-		
-		return clusterInfoService.getClusterLis();
+		return clusterInfoService.getClusterList();
 	}
 	
 	
