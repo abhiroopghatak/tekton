@@ -4,7 +4,7 @@ import {   MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardImage, MDB
 import _user_icon from "../../../images/icon/_user_icon.png";
 
 import BannerMdbRow from './bannerMdbRow.js';
-import ClusterDataService from '../../../restapi/data-service/clusterDataService';
+import DataService from '../../../restapi/data-service/DataService.js';
 import UserProfileCard from '../../ui/userProfileCard.js';
 
 import SpinnerPage from '../../ui/spinner.js';
@@ -35,7 +35,7 @@ toggleCollapse = (collapseID, clusterid) => {
 
 loadData() {
 
-    ClusterDataService.getClusterMetadata(this.state.cluster).then(
+    DataService.getClusterMetadata(this.state.cluster).then(
 
         (response) => {
             this.setState({
@@ -51,7 +51,7 @@ loadData() {
 }
 
 componentDidMount() {
-    ClusterDataService.getAllClusters().then(
+    DataService.getAllClusters().then(
 
         (response) => {
             this.setState({
@@ -67,12 +67,13 @@ componentDidMount() {
 	render() {
 		return (
 		<div>
-	<MDBContainer>
+	<MDBContainer className="z-depth-5">
 		<MDBRow class=".mt-30">
-			<MDBCol sm="3">
+			<MDBCol sm="4">
 				<UserProfileCard/>
 			</MDBCol>
-			<MDBCol sm="9" className="border border-primary">
+			
+			<MDBCol sm="8" className="border border-primary hoverable">
 				<MDBCardTitle className="h3-responsive font-bold">List of cluster registered against your email</MDBCardTitle>
 				<MDBListGroup className="my-3 mx-3"> 
 				{ this.state.clusters.map(cluster => (
@@ -89,20 +90,22 @@ componentDidMount() {
 										<thead>
 											<tr>
 												<th scope="col">clusterName</th>
+												<th scope="col">Environment</th>
 												<th scope="col">clusterVersion</th>
 												<th scope="col">platform</th>
 												<th scope="col">channel</th>
-												<th scope="col">buildDate</th>
+												
 												<th scope="col">k8s-gitVersion</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td>{this.state.cluster.clusterName}</td>
+												<td>{this.state.cluster.env}</td>
 												<td>{this.state.cluster.clusterVersion}</td>
 												<td>{this.state.cluster.platform}</td>
 												<td>{this.state.cluster.channel}</td>
-												<td>{this.state.cluster.buildDate}</td>
+												
 												<td>{this.state.cluster.gitVersion}</td>
 											</tr>
 										</tbody>

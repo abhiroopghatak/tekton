@@ -41,7 +41,6 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 	@Cacheable(value="clusters")           // it will cache result and key name will be "clusters"
 	@Override
 	public List<Cluster> getClusterList() {
-		// TODO Auto-generated method stub
 		System.out.println("getClusterList : service call invoked");
 		List<Cluster> cList = clusterRepo.findAll();
 		System.out.println("All cluster retrieved from cionfig-DB.");

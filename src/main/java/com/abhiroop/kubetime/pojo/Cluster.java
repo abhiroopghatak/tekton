@@ -34,6 +34,7 @@ public class Cluster implements Serializable{
 	
 	private String status;
 	private String token;
+	private String environment;
 	
 	@Transient
 	private String errorMessage;
