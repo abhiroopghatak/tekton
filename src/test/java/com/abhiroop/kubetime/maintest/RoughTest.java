@@ -5,13 +5,7 @@ import com.abhiroop.kubetime.cluster.restclient.http.pojo.OpenshiftClient;
 
 public class RoughTest {
 
-	public static void main(String ...a) {
-		System.out.println("TEST STARTS ");
-		
-		RoughTest rt = new RoughTest();
-		rt.applyClusterDetailTest();
-		
-	}
+	
 
 
 	String applyClusterDetailTest(){

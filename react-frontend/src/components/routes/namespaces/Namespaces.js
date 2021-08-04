@@ -1,13 +1,14 @@
 
 import React from 'react';
-
+import { MDBCard } from "mdbreact";
 
 function FixedPriceCard(){
 	
 	return (
 <>
+<MDBCard className="border border-info  z-depth-5" >
 	<section class="text-center pb-3">
-		<div class="row d-flex justify-content-center">
+		<div class="row d-flex justify-content-center">						<h2>Accessible Namespaces</h2>
 			<div class="col-lg-6 col-xl-5 mb-3">
 				<div class="card d-flex mb-5">
 					<div class="view"><img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-profile-page.jpg" alt="Project" class="img-fluid" ></img>
@@ -60,6 +61,7 @@ function FixedPriceCard(){
 			</div>
 		</div>
 	</section>
+	</MDBCard>
 </>);
 };
 export default FixedPriceCard;
