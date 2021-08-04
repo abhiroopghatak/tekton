@@ -27,7 +27,7 @@ function UserProfileCard() {
 		<MDBCard className="border border-info  z-depth-5" >
 			<MDBCardBody> <MDBBadge color="danger" className="ml-3">{data.status === 'A' ?
 				'Active' : 'Inactive'}</MDBBadge>
-				<img className="img-fluid" src={_user_icon} width="143" height="80" margin="auto" >
+				<img className="img-fluid" src={_user_icon}  margin="auto" >
 
 				</img>
 						<MDBCardTitle>Welcome {data.fullname}</MDBCardTitle>

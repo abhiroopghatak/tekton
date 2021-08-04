@@ -5,7 +5,7 @@ import React from 'react';
 function FixedPriceCard(){
 	
 	return (
-<div class="col-md-6 col-lg-9">
+<>
 	<section class="text-center pb-3">
 		<div class="row d-flex justify-content-center">
 			<div class="col-lg-6 col-xl-5 mb-3">
@@ -60,6 +60,6 @@ function FixedPriceCard(){
 			</div>
 		</div>
 	</section>
-</div>);
+</>);
 };
 export default FixedPriceCard;

@@ -13,10 +13,12 @@ class QuotaDetails extends Component {
 				<MDBContainer >
 					<div class="row justify-content-center">
 						<h2>Price</h2>
-						<div class="col-md-3 col-lg-3">
+						<div class="col-md-4 col-lg-4">
 							<FixedPriceCard />
 						</div>
+						<div class="col-md-5 col-lg-8">
 						<Namespaces />
+						</div>
 					</div>
 				</MDBContainer>
 			</>
