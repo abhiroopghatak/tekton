@@ -20,7 +20,7 @@ import lombok.ToString;
 public class ItemCost implements Serializable {
 
 	/**
-	 * 
+	 
 	 */
 	private static final long serialVersionUID = -4881492616406082505L;
 
@@ -29,8 +29,12 @@ public class ItemCost implements Serializable {
 	
 	private long clusterid;
 	private String currency;
-	private String resourceunit;
-	private String resourcetype;
-	private double costpermonth;
+	private String cpuunit;
+	private String memoryunit;
+	private String storageunit;
+	private String timelengthunit;
+	private double cpucost;
+	private double momorycost;
+	private double storagecost;
 	private Date lastupdated;
 }

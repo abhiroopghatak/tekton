@@ -4,4 +4,6 @@ CREATE TABLE IF NOT EXISTS `_user` (  `uuid` int NOT NULL,  `email` varchar(255)
 
 
 
-CREATE TABLE IF NOT EXISTS  `_costlist` (  `uuid` int NOT NULL,  `clusterId` int NOT NULL,  `currency` varchar(45) NOT NULL,  `resourceUnit` varchar(45) NOT NULL,  `costPerMonth` decimal(10,0) DEFAULT NULL,  `lastUpdated` date DEFAULT NULL,  `resourceType` varchar(45) NOT NULL,  PRIMARY KEY (`uuid`))
+CREATE TABLE IF NOT EXISTS `_costlist` (  `uuid` int NOT NULL,  `clusterId` int NOT NULL,  `currency` varchar(45) NOT NULL,  `cpuunit` varchar(45) NOT NULL,  `lastUpdated` date DEFAULT NULL,  `memoryunit` varchar(45) NOT NULL,  `storageunit` varchar(45) DEFAULT NULL,  `timelengthunit` varchar(45) DEFAULT NULL,  `cpucost` float DEFAULT NULL,  `momorycost` float DEFAULT NULL,  `storagecost` float DEFAULT NULL,  PRIMARY KEY (`uuid`)) 
+
+  

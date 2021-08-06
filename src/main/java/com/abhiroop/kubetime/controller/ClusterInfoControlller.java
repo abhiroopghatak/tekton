@@ -83,16 +83,17 @@ public class ClusterInfoControlller {
 	/////////////////////// cost details//////////////
 
 	@GetMapping("/getcosts/{id}")
-	public List<ItemCost> getAll(@PathVariable String id) {
-		List<ItemCost> clist = new ArrayList<>();
+	public ItemCost getAll(@PathVariable String id) {
+		ItemCost ic = new ItemCost();
 		long cid = 0;
 		try {
 			cid = Long.parseLong(id);
-			clist = costService.getCostDeatilPerCluster(cid);
+			ic = costService.getCostDeatilPerCluster(cid);
+			System.out.println("cost per cluster data recieved");
 		} catch (RuntimeException pe) {
 			System.out.println(pe);
 		}
-		return clist;
+		return ic;
 	}
 
 	/////////////////// cost details//////////////

@@ -10,5 +10,5 @@ public interface ICostService {
 	
 	ItemCost addCostDetail(ItemCost costItem);
 	ItemCost upadteCostDetail(ItemCost costItem);
-	List<ItemCost> getCostDeatilPerCluster(long clusterId);
+	ItemCost getCostDeatilPerCluster(long clusterId);
 }

@@ -1,7 +1,5 @@
 package com.abhiroop.kubetime.repo;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,5 +13,5 @@ public interface ItemCostRepo extends JpaRepository<ItemCost, Long>{
 
 	
 	@Query("SELECT u FROM ItemCost u where u.clusterid = :clusterUniqueId")
-	List<ItemCost> getAllPerCluster(long clusterUniqueId);
+	ItemCost getAllPerCluster(long clusterUniqueId);
 }

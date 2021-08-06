@@ -1,7 +1,5 @@
 package com.abhiroop.kubetime.svc;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +13,8 @@ public class CostServiceImpl implements ICostService {
 	ItemCostRepo costrepo;
 
 	@Override
-	public List<ItemCost> getCostDeatilPerCluster(long clusterId) {
-
+	public ItemCost getCostDeatilPerCluster(long clusterId) {
+		System.out.println("getCostDeatilPerCluster : service call invoked");
 		return costrepo.getAllPerCluster(clusterId);
 	}
 

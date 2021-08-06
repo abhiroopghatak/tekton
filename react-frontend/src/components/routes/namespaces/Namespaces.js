@@ -1,67 +1,184 @@
 
-import React from 'react';
+import React,{useState, useEffect, useMemo, useRef} from 'react';
 import { MDBCard } from "mdbreact";
+import DataService from '../../../restapi/data-service/DataService.js';
 
-function FixedPriceCard(){
-	
-	return (
-<>
-<MDBCard className="border border-info  z-depth-5" >
-	<section class="text-center pb-3">
-		<div class="row d-flex justify-content-center">						<h2>Accessible Namespaces</h2>
-			<div class="col-lg-6 col-xl-5 mb-3">
-				<div class="card d-flex mb-5">
-					<div class="view"><img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-profile-page.jpg" alt="Project" class="img-fluid" ></img>
-						<div class="mask rgba-white-slight"></div>
-					</div>
-					<div class="card-body">
-						<h4 class="card-title font-bold mb-3"><strong>Project name</strong></h4>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-					<div class="card-footer links-light profile-card-footer"><span class="right"><a class="p-2" href="#profile">Live Preview<i class="fa fa-photo ml-1"></i></a></span></div>
-				</div>
-			</div>
-			<div class="col-lg-6 col-xl-5 mb-3">
-				<div class="card d-flex mb-5">
-					<div class="view"><img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-signup.jpg" alt="Project" class="img-fluid" ></img>
-						<div class="mask rgba-white-slight"></div>
-					</div>
-					<div class="card-body">
-						<h4 class="card-title font-bold mb-3"><strong>Project name</strong></h4>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-					<div class="card-footer links-light profile-card-footer"><span class="right"><a class="p-2" href="#profile">Live Preview<i class="fa fa-photo ml-1"></i></a></span></div>
-				</div>
-			</div>
-		</div>
-		<div class="row d-flex justify-content-center">
-			<div class="col-lg-6 col-xl-5 mb-3">
-				<div class="card d-flex mb-5">
-					<div class="view"><img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-profile-page.jpg" alt="Project" class="img-fluid"></img>
-						<div class="mask rgba-white-slight"></div>
-					</div>
-					<div class="card-body">
-						<h4 class="card-title font-bold mb-3"><strong>Project name</strong></h4>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-					<div class="card-footer links-light profile-card-footer"><span class="right"><a class="p-2" href="#profile">Live Preview<i class="fa fa-photo ml-1"></i></a></span></div>
-				</div>
-			</div>
-			<div class="col-lg-6 col-xl-5 mb-3">
-				<div class="card d-flex mb-5">
-					<view-wrapper><img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-signup.jpg" alt="Project" class="img-fluid"></img>
-						<div class="mask rgba-white-slight"></div>
-					</view-wrapper>
-					<div class="card-body">
-						<h4 class="card-title font-bold mb-3"><strong>Project name</strong></h4>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-					<div class="card-footer links-light profile-card-footer"><span class="right"><a class="p-2" href="#profile">Live Preview<i class="fa fa-photo ml-1"></i></a></span></div>
-				</div>
-			</div>
-		</div>
-	</section>
-	</MDBCard>
-</>);
+import '../../../styles/componentstyles/table.css';
+
+
+import { useTable } from "react-table";
+
+const tableHead = {
+  name: "Campaign Name",
+  parentId: "Campaign Id",
+  campaignType: "Type",
+  status: "Status",
+  channel: "Channel"
 };
-export default FixedPriceCard;
+
+
+
+const Namespaces = (props) => {
+	
+	const [tutorials, setTutorials] = useState([]);
+  const [searchTitle, setSearchTitle] = useState("");
+  const tutorialsRef = useRef();
+
+  tutorialsRef.current = tutorials;
+
+  useEffect(() => {
+    retrieveTutorials();
+  }, []);
+
+  const onChangeSearchTitle = (e) => {
+    const searchTitle = e.target.value;
+    setSearchTitle(searchTitle);
+  };
+  const retrieveTutorials = () => {
+    DataService.getCostDataPerCluster(1111)
+      .then((response) => {
+        setTutorials(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const refreshList = () => {
+    retrieveTutorials();
+  };
+
+  
+
+  const findByTitle = () => {
+    DataService.getCostDataPerCluster(1111)
+      .then((response) => {
+        setTutorials(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const openTutorial = (rowIndex) => {
+    const id = tutorialsRef.current[rowIndex].id;
+
+    props.history.push("/tutorials/" + id);
+  };
+
+  
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Title",
+        accessor: "title",
+      },
+      {
+        Header: "Description",
+        accessor: "description",
+      },
+      {
+        Header: "Status",
+        accessor: "published",
+        Cell: (props) => {
+          return props.value ? "Published" : "Pending";
+        },
+      },
+      {
+        Header: "Actions",
+        accessor: "actions",
+        Cell: (props) => {
+          const rowIdx = props.row.id;
+          return (
+            <div>
+              <span onClick={() => openTutorial(rowIdx)}>
+                <i className="far fa-edit action mr-2"></i>
+              </span>
+
+              <span >
+                <i className="fas fa-trash action"></i>
+              </span>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
+    columns,
+    data: tutorials,
+  });
+  
+	return (
+    <div className="list row">
+      <div className="col-md-8">
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by title"
+            value={searchTitle}
+            onChange={onChangeSearchTitle}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByTitle}
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="col-md-12 list">
+        <table
+          className="table table-striped table-bordered"
+          {...getTableProps()}
+        >
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="col-md-8">
+        <button className="btn btn-sm btn-danger" >
+          Remove All-todelete
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Namespaces;
