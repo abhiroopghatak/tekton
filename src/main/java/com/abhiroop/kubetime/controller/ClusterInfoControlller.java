@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.abhiroop.kubetime.cluster.restclient.http.PlatformDataController;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.ClusterMetadata;
+import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.NamespaceResourceObject;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.pojo.ItemCost;
+import com.abhiroop.kubetime.pojo.ResourceRequestObject;
 import com.abhiroop.kubetime.svc.ClusterInfoService;
 import com.abhiroop.kubetime.svc.ICostService;
 
@@ -69,6 +71,7 @@ public class ClusterInfoControlller {
 		return clusterInfoService.getClusterList();
 	}
 
+	////////////////////////// platform api connection data //////////////
 	@PostMapping("/clusterSummary")
 	public ClusterMetadata getClusterSummarty(@RequestBody ClusterMetadata cmd) {
 		Cluster c = getById(cmd.getClusterId());
@@ -80,6 +83,36 @@ public class ClusterInfoControlller {
 		return cmd;
 	}
 
+	
+	@PostMapping("/platform/label/namespaces/resources")
+	public List<NamespaceResourceObject> getNameSpaceResources(@RequestBody ResourceRequestObject rqro) {
+
+		// get cluster
+		Cluster c = getById(rqro.getClusterId());
+		List<NamespaceResourceObject> nroList = null;
+		// session validate
+
+		// user status validate//
+
+		if (c != null) {
+			// user 's cluster access validate
+
+			// get all labels user is authorised
+			List<String> labelList = new ArrayList<>();
+			ClusterMetadata cmd = new ClusterMetadata();
+			cmd.setEndPointUrl(c.getEndpoint());
+			cmd.setToken(c.getToken());
+			cmd.setClusterId(c.getEndpoint());
+
+			
+			//DUMMY DATA
+			labelList.add("new-label=billing");
+			nroList = pdc.getNameSpaceResources(cmd, labelList);
+		}
+		return nroList;
+	}
+
+	/////////////////////// platform api connection data //////////////
 	/////////////////////// cost details//////////////
 
 	@GetMapping("/getcosts/{id}")
