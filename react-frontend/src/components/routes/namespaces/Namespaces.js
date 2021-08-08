@@ -71,7 +71,7 @@ const Namespaces = (props) => {
 		() => [
 			{
 				Header: "Namespace",
-				accessor: "namespace",
+				accessor: "namespaceName",
 			},
 			{
 				Header: "LabelSelector",
@@ -79,26 +79,24 @@ const Namespaces = (props) => {
 			},
 			{
 				Header: "Storage",
-				accessor: "storage",
-				Cell: (props) => {
-					return props.value ? "Published" : "Pending";
-				},
+				accessor: "storageVolume",
+				
 			},
 			{
 				Header: "cpu-quota",
-				accessor: "cpu-quota",
+				accessor: "requestCpu",
 			},
 			{
 				Header: "cpu-used",
-				accessor: "cpu-used",
+				accessor: "usedCpu",
 			},
 			{
 				Header: "memory-quota",
-				accessor: "memory-quota",
+				accessor: "requestMemory",
 			},
 			{
 				Header: "memory-used",
-				accessor: "memory-used",
+				accessor: "usedMemory",
 			},
 			{
 				Header: "Actions",
