@@ -3,6 +3,7 @@ package com.abhiroop.kubetime.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,7 @@ import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.Namesp
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.pojo.ItemCost;
 import com.abhiroop.kubetime.pojo.ResourceRequestObject;
+import com.abhiroop.kubetime.pojo.User;
 import com.abhiroop.kubetime.svc.ClusterInfoService;
 import com.abhiroop.kubetime.svc.ICostService;
 
@@ -29,6 +31,9 @@ public class ClusterInfoControlller {
 
 	@Autowired
 	private ClusterInfoService clusterInfoService;
+
+	@Autowired
+	private UserDataController userCtrl;
 
 	@Autowired
 	private ICostService costService;
@@ -83,7 +88,6 @@ public class ClusterInfoControlller {
 		return cmd;
 	}
 
-	
 	@PostMapping("/platform/label/namespaces/resources")
 	public List<NamespaceResourceObject> getNameSpaceResources(@RequestBody ResourceRequestObject rqro) {
 
@@ -93,8 +97,9 @@ public class ClusterInfoControlller {
 		// session validate
 
 		// user status validate//
+		User user = userCtrl.getUserById(rqro.getUserId());
 
-		if (c != null) {
+		if (c != null && user != null && StringUtils.equals("A", user.getStatus())) {
 			// user 's cluster access validate
 
 			// get all labels user is authorised
@@ -104,8 +109,7 @@ public class ClusterInfoControlller {
 			cmd.setToken(c.getToken());
 			cmd.setClusterId(c.getEndpoint());
 
-			
-			//DUMMY DATA
+			// DUMMY DATA
 			labelList.add("new-label=billing");
 			nroList = pdc.getNameSpaceResources(cmd, labelList);
 		}
@@ -113,6 +117,7 @@ public class ClusterInfoControlller {
 	}
 
 	/////////////////////// platform api connection data //////////////
+	
 	/////////////////////// cost details//////////////
 
 	@GetMapping("/getcosts/{id}")

@@ -1,4 +1,4 @@
-package com.abhiroop.kubetime.svc;
+package com.abhiroop.kubetime.svc.impl;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.abhiroop.kubetime.cluster.restclient.utils.DataFormatUtil;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.repo.ClusterRepo;
+import com.abhiroop.kubetime.svc.ClusterInfoService;
 
 @Service
 public class ClusterInfoServiceImpl implements ClusterInfoService {

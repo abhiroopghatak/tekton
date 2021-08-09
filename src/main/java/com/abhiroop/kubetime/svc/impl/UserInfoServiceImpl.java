@@ -1,10 +1,11 @@
-package com.abhiroop.kubetime.svc;
+package com.abhiroop.kubetime.svc.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.abhiroop.kubetime.pojo.User;
 import com.abhiroop.kubetime.repo.UserRepo;
+import com.abhiroop.kubetime.svc.IUserInfoService;
 
 
 @Service

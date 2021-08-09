@@ -25,4 +25,8 @@ public class UserDataController {
 		
 		return userInfoService.getOneByEmail(email);
 	}
+
+	public User getUserById(long userId) {
+		return userInfoService.getUserById(userId);
+	}
 }

@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { MDBCard } from "mdbreact";
 import DataService from '../../../restapi/data-service/DataService.js';
 
 import '../../../styles/componentstyles/table.css';
@@ -163,12 +162,12 @@ const Namespaces = (props) => {
 		state: { pageIndex, pageSize },
 	} = useTable({
 		columns,
-		data: resources,initialState: { pageSize:8 , pageIndex: 0 }, defaultColumn, filterTypes
-	}, useFilters, useGlobalFilter,useSortBy,usePagination);
+		data: resources, initialState: { pageSize: 8, pageIndex: 0 }, defaultColumn, filterTypes
+	}, useFilters, useGlobalFilter, useSortBy, usePagination);
 
 	return (
 		<div className="list row">
-			
+
 			<div className="col-md-12 list">
 				<h3> Accessbile Namespaces and resources in use</h3>
 				<table className="table  table-striped table-bordered" {...getTableProps()}>
@@ -205,7 +204,7 @@ const Namespaces = (props) => {
 							})} </tr>);
 					})} </tbody>
 				</table>
-				
+
 				<div className="pagination">
 					<button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
 						{'<<'}
@@ -232,7 +231,7 @@ const Namespaces = (props) => {
 							setPageSize(Number(e.target.value))
 						}}
 					>
-						{[8,12,16,20].map(pageSize => (
+						{[8, 12, 16, 20].map(pageSize => (
 							<option key={pageSize} value={pageSize}>
 								Show {pageSize}
 							</option>
