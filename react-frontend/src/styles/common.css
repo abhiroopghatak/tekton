@@ -15,7 +15,12 @@ body ::-webkit-scrollbar {
 }
 
 input {
-    font-size: 1.2rem !important;
+  width: 40%;
+  min-width: 200px;
+  border-radius: 10px;
+  border: 2px solid #14877c;
+  padding: 10px;
+  font-size: 14px;
 }
 
 .ui.button.googleButtonStyle {

@@ -5,20 +5,13 @@
   padding-bottom: 10px;
 }
 
-input {
-  width: 40%;
-  min-width: 200px;
-  border-radius: 10px;
-  border: 2px solid #14877c;
-  padding: 10px;
-  font-size: 14px;
-}
+
 table {
   width: 100%;
   padding: 1em;
-  margin: 20px 0;
   border-collapse: collapse;
-  box-shadow: 0 1px 2px 0 #c6e8c9;
+  box-shadow: 0 2px 8px 0 rgb(0, 0, 255);
+  
 }
 
 thead {
@@ -30,20 +23,18 @@ th {
   text-align: left;
   padding: 8px;
   background-color: 1px solid #ffffff;
-  color: #14877c;
+  color: rgb(0, 0, 0);
+ 
 }
 td {
   text-align: left;
   padding: 8px;
 }
 
-tr {
-  height: 50px;
-}
-
-tr:nth-child(even) {
-  background-color: #e0e0e0;
-}
+.pagination {
+    padding: 0.5rem;
+  }
+  
 button {
   height: 40px;
   border-radius: 4px;
