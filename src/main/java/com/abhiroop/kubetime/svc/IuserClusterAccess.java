@@ -7,7 +7,7 @@ import com.abhiroop.kubetime.pojo.UserClusterAccess;
 
 public interface IuserClusterAccess {
 
-	List<UserClusterAccess> getAllPerUser(long userid);
+	List<UserClusterAccess> getActiveLabelAccessPerUser(long userid);
 	UserClusterAccess addLabelAccessToUser(String label , long userid);
 	UserClusterAccess removeLabelAccessToUser(String label , long userid);
 	UserClusterAccess addClusterAccessToUser(Cluster c , String label , long userid);

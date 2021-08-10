@@ -3,7 +3,6 @@ package com.abhiroop.kubetime.cluster.restclient.http;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -17,8 +16,6 @@ import com.abhiroop.kubetime.cluster.restclient.http.pojo.OpenshiftClient;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.ClusterMetadata;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.NamespaceResourceObject;
 import com.abhiroop.kubetime.cluster.restclient.http.svc.PlatformDataServiceImpl;
-
-import antlr.NameSpace;
 
 @RestController
 @RequestMapping("/api/platforms")

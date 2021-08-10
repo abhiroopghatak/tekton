@@ -94,7 +94,7 @@ public class ClusterInfoControlller {
 		// get cluster
 		Cluster c = getById(rqro.getClusterId());
 		List<NamespaceResourceObject> nroList = null;
-		// session validate
+		// session validate:TODO
 
 		// user status validate//
 		User user = userCtrl.getUserById(rqro.getUserId());
@@ -103,21 +103,20 @@ public class ClusterInfoControlller {
 			// user 's cluster access validate
 
 			// get all labels user is authorised
-			List<String> labelList = new ArrayList<>();
+			List<String> labelList = userCtrl.getActiveLabelAccessPerUser(c, user.getUuid());
 			ClusterMetadata cmd = new ClusterMetadata();
 			cmd.setEndPointUrl(c.getEndpoint());
 			cmd.setToken(c.getToken());
 			cmd.setClusterId(c.getEndpoint());
 
-			// DUMMY DATA
-			labelList.add("new-label=billing");
 			nroList = pdc.getNameSpaceResources(cmd, labelList);
+			System.out.println("Total " + nroList.size() + " nameSpace Resources accessed to the user of id : " + user.getUuid());
 		}
 		return nroList;
 	}
 
 	/////////////////////// platform api connection data //////////////
-	
+
 	/////////////////////// cost details//////////////
 
 	@GetMapping("/getcosts/{id}")
