@@ -10,13 +10,13 @@ import org.json.simple.parser.ParseException;
 
 public class JsonParserHelper {
 
-	public static JSONArray getItemsFromResource (String jsonString)throws ParseException{
+	public static JSONArray getItemsFromResource (String jsonString , String arrayKey)throws ParseException{
 	
 		JSONArray ja=null;
 		if (jsonString != null) {
 			JSONObject jo = (JSONObject) new JSONParser().parse(jsonString);
-			if (jo.get("items") != null) {
-				ja = (JSONArray) jo.get("items");
+			if (jo.get(arrayKey) != null) {
+				ja = (JSONArray) jo.get(arrayKey);
 			}
 		}
 			return ja;

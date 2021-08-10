@@ -84,7 +84,7 @@ class Home extends Component {
 											<SpinnerPage /> : null} {this.state.cluster.errorMessage ?
 												<ErrorAlert /> : null}
 											<MDBCard className="border border-info">
-												<MDBCardBody>
+												<MDBCardBody className="clearfix">
 													<div class="table-responsive">
 														<table class="table table-success ">
 															<thead>
@@ -112,7 +112,7 @@ class Home extends Component {
 														</table>
 													</div>
 													<Link to="/resources">	{this.state.cluster.errorMessage ?
-														<button type="button" class="btn btn-dark p-2 pull-right disabled"  >Select</button> : <button type="button" class="btn btn-dark p-2 pull-right " >Select</button>}
+														<button type="button" class="btn btn-dark p-2 float-end disabled"  >Select</button> : <button type="button" class="btn btn-dark p-2 pull-right " >Select</button>}
 
 													</Link>
 

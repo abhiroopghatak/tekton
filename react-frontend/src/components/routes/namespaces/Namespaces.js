@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import DataService from '../../../restapi/data-service/DataService.js';
-
+import PodResources from './PodResources.js';
 import '../../../styles/componentstyles/table.css';
 
 
@@ -30,6 +30,10 @@ const Namespaces = (props) => {
 			});
 	};
 
+
+const openModal=(rowIndex)=> {
+		alert('clicked'+rowIndex);
+	};
 
 	// Define a default UI for filtering
 	function GlobalFilter({
@@ -124,6 +128,22 @@ const Namespaces = (props) => {
 				accessor: "usedMemory",
 				disableFilters: true,
 			},
+		      {
+		        Header: "Details",
+		        disableFilters: true,
+		        disableSort: true ,
+		        Cell: (props) => {
+		          const rowIdx = props.row.id;
+		          return (
+		            <a onClick={() => openModal(rowIdx)}>
+		              <span >
+		                <i className="far fa-edit action mr-2"></i>
+		              </span>
+		
+		            </a>
+		          );
+		        },
+		      }
 
 		],
 		[]
@@ -168,10 +188,9 @@ const Namespaces = (props) => {
 	return (
 		<div className="list row">
 
-			<div className="col-md-12 list">
-				<h3> Accessbile Namespaces and resources in use</h3>
-				<table className="table  table-striped table-bordered" {...getTableProps()}>
-					<thead>
+			<div className="col-md-12 list table-responsive">
+				<table className="table  table-striped table-sm table-bordered border-primary align-middle" {...getTableProps()}><caption>Accessbile Namespaces and resources in use</caption>
+					<thead className="">
 						<th
 							colSpan={visibleColumns.length}
 							style={{
@@ -200,10 +219,17 @@ const Namespaces = (props) => {
 						prepareRow(row); return (
 							<tr {...row.getRowProps()}> {row.cells.map((cell) => {
 								return (
-									<td {...cell.getCellProps()}>{cell.render("Cell")}</td>);
-							})} </tr>);
+									<><td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+									
+									</>						
+									);
+							})} 
+							
+							
+</tr>);
 					})} </tbody>
 				</table>
+				<PodResources/>
 
 				<div className="pagination">
 					<button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>

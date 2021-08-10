@@ -7,6 +7,7 @@ import org.json.simple.parser.ParseException;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.ClusterClientBaseBuilder;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.ClusterMetadata;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.NamespaceResourceObject;
+import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.PodResourceObject;
 
 public interface IPlatformDataService {
 
@@ -23,4 +24,7 @@ public interface IPlatformDataService {
 
 	NamespaceResourceObject getVolumePerNamespace(ClusterClientBaseBuilder client, NamespaceResourceObject namespace)
 			throws ParseException;
+	
+	
+	List<PodResourceObject> getPodResourcePerNameSpace(ClusterClientBaseBuilder client , String namespace) throws Exception;
 }

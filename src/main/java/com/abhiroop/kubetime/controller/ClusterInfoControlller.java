@@ -1,6 +1,5 @@
 package com.abhiroop.kubetime.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.abhiroop.kubetime.cluster.restclient.http.PlatformDataController;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.ClusterMetadata;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.NamespaceResourceObject;
+import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.PodResourceObject;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.pojo.ItemCost;
 import com.abhiroop.kubetime.pojo.ResourceRequestObject;
@@ -115,6 +115,21 @@ public class ClusterInfoControlller {
 		return nroList;
 	}
 
+	
+	@PostMapping("/platform/namespaces/pods")
+	public List<PodResourceObject> getNameSpacePodMetrics(@RequestBody ResourceRequestObject rqro) {
+		
+		
+		Cluster c = getById(rqro.getClusterId());
+		ClusterMetadata cmd = new ClusterMetadata();
+		cmd.setEndPointUrl(c.getEndpoint());
+		cmd.setToken(c.getToken());
+		cmd.setClusterId(c.getEndpoint());
+		
+		return pdc.getPodResourcePerNameSpace(cmd, rqro.getNamespace());
+	}
+	
+	
 	/////////////////////// platform api connection data //////////////
 
 	/////////////////////// cost details//////////////

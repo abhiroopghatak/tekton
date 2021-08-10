@@ -9,6 +9,9 @@ public class ResourceRequestObject {
 	
 	private String clusterId;
 	private long userId;
+	private String namespace;
 	private String sessionId;
+	
+	
 	
 }

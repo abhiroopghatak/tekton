@@ -15,6 +15,7 @@ import com.abhiroop.kubetime.cluster.restclient.http.pojo.ClusterClientBaseBuild
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.OpenshiftClient;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.ClusterMetadata;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.NamespaceResourceObject;
+import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.PodResourceObject;
 import com.abhiroop.kubetime.cluster.restclient.http.svc.PlatformDataServiceImpl;
 
 @RestController
@@ -78,5 +79,23 @@ public class PlatformDataController {
 		}
 
 		return nroList;
+	}
+
+	@GetMapping("/namespace/podmetric")
+	public
+	List<PodResourceObject> getPodResourcePerNameSpace(ClusterMetadata cmd, String namespace) {
+		List<PodResourceObject> proList = null;
+		ClusterClientBaseBuilder oc = new OpenshiftClient();
+
+		oc.withBaseUrl(cmd.getEndPointUrl());
+		oc.usingToken(cmd.getToken());
+		try {
+			proList = platformDataService.getPodResourcePerNameSpace(oc, namespace);
+		} catch (Exception e) {
+			System.out
+					.print("error in getting pod metric of namespaces : " + namespace + ". Details:" + e.getMessage());
+			e.printStackTrace();
+		}
+		return proList;
 	}
 }

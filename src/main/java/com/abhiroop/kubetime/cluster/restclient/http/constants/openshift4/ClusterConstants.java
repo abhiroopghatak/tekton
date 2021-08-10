@@ -7,6 +7,7 @@ public interface ClusterConstants {
 		public static final String CLUSTER_VERSIONS = "/apis/config.openshift.io/v1/clusterversions/version";
 		public static final String CLUSTER_METADATA = "/version";
 		public static final String CLUSTER_NAMESPACE_LIST = "/api/v1/namespaces";
+		public static final String CLUSTER_NAMESPACE_POD_RESORCE_PREFIX = "/apis/metrics.k8s.io/v1beta1/namespaces";
 		
 	}
 
