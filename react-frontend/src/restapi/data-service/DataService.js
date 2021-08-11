@@ -19,6 +19,10 @@ class DataService {
 	getResourcePerNamespaces(data) {
 		return axios.post(BASE_URL + '/api/clusters/platform/label/namespaces/resources', data);
 	}
+	
+	getPodResourcePerNamespaces(data) {
+		return axios.post(BASE_URL + '/api/clusters/platform/namespaces/pods', data);
+	}
 
 	getCostDataPerCluster(data) {
 		return axios.get(BASE_URL + '/api/clusters/getcosts/' + data);

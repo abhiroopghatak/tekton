@@ -3,16 +3,26 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import DataService from '../../../restapi/data-service/DataService.js';
 import PodResources from './PodResources.js';
 import '../../../styles/componentstyles/table.css';
-
+import Modal from 'react-modal';
 
 import { useTable, useSortBy, useFilters, useGlobalFilter, useAsyncDebounce, usePagination } from "react-table";
 
 
-
+const modalStyles = {
+	content: {
+		top: '10%',
+		left: '30%',
+		width: '50%',
+		right: 'auto',
+		bottom: 'auto',
+	}
+};
 const Namespaces = (props) => {
 
 	const [resources, setResources] = useState([]);
-
+	const [pods, setPods] = useState([]);
+	const resourcesRef = useRef();
+	resourcesRef.current = resources;
 	useEffect(async () => { retrieveResources(); }, []);
 
 
@@ -29,11 +39,35 @@ const Namespaces = (props) => {
 				console.log(e);
 			});
 	};
-
-
-const openModal=(rowIndex)=> {
-		alert('clicked'+rowIndex);
+	const getPodResources = (rowIndex) => {
+		const namespace = resourcesRef.current[rowIndex].namespaceName;
+		DataService.getPodResourcePerNamespaces(
+			{
+				"clusterId": "1111",
+				"namespace": namespace
+			}
+		).then((response) => {
+			setPods(response.data);
+			openModal();
+		}).catch((e) => {
+			console.log(e);
+		});
 	};
+
+	var subtitle;
+	const [modalIsOpen, setIsOpen] = React.useState(false);
+	function openModal() {
+		setIsOpen(true);
+	}
+
+	function afterOpenModal() {
+		// references are now sync'd and can be accessed.
+		subtitle.style.color = '#f00';
+	}
+
+	function closeModal() {
+		setIsOpen(false);
+	}
 
 	// Define a default UI for filtering
 	function GlobalFilter({
@@ -128,22 +162,22 @@ const openModal=(rowIndex)=> {
 				accessor: "usedMemory",
 				disableFilters: true,
 			},
-		      {
-		        Header: "Details",
-		        disableFilters: true,
-		        disableSort: true ,
-		        Cell: (props) => {
-		          const rowIdx = props.row.id;
-		          return (
-		            <a onClick={() => openModal(rowIdx)}>
-		              <span >
-		                <i className="far fa-edit action mr-2"></i>
-		              </span>
-		
-		            </a>
-		          );
-		        },
-		      }
+			{
+				Header: "Details",
+				disableFilters: true,
+				disableSort: true,
+				Cell: (props) => {
+					const rowIdx = props.row.id;
+					return (
+						<a onClick={() => getPodResources(rowIdx)}>
+							<span >
+								<i className="far fa-edit action mr-2"></i>
+							</span>
+
+						</a>
+					);
+				},
+			}
 
 		],
 		[]
@@ -220,16 +254,49 @@ const openModal=(rowIndex)=> {
 							<tr {...row.getRowProps()}> {row.cells.map((cell) => {
 								return (
 									<><td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-									
-									</>						
-									);
-							})} 
-							
-							
-</tr>);
+
+									</>
+								);
+							})}
+
+
+							</tr>);
 					})} </tbody>
 				</table>
-				<PodResources/>
+				<Modal
+					isOpen={modalIsOpen}
+					style={modalStyles}
+					onRequestClose={closeModal}
+				>
+					<div class="modal-header">
+						<h6 class="modal-title">Resources useage in detail</h6>
+						<button type="button" class="btn btn-secondary" onClick={closeModal}>Close</button>
+					</div>
+					<div class="modal-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Pod Name</th>
+									<th scope="col">Container name</th>
+									<th scope="col">cpu</th>
+									<th scope="col">memory</th>
+								</tr>
+							</thead>
+							<tbody>
+								{pods.map((pod, index) => (<>
+									{pod.containers.map((container, idx) => (
+										<tr>
+											<th scope="row">{idx == 0 ? pod.podName : null}</th>
+											<td>{container.containerName}</td>
+											<td>{container.cpuCores}</td>
+											<td>{container.memoryBytes}</td>
+										</tr>))}
+								</>))}
+							</tbody>
+						</table>
+
+					</div>
+				</Modal>
 
 				<div className="pagination">
 					<button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
@@ -266,7 +333,7 @@ const openModal=(rowIndex)=> {
 				</div>
 			</div>
 
-		</div>
+		</div >
 	);
 };
 

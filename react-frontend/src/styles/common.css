@@ -14,6 +14,8 @@ body ::-webkit-scrollbar {
     font-weight: bold;
 }
 
+
+
 input {
   width: 40%;
   min-width: 200px;
