@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.abhiroop.kubetime.config.SystemConstants;
 import com.abhiroop.kubetime.pojo.Cluster;
+import com.abhiroop.kubetime.pojo.ResponsePojo;
 import com.abhiroop.kubetime.pojo.User;
 import com.abhiroop.kubetime.pojo.UserClusterAccess;
 import com.abhiroop.kubetime.svc.IUserInfoService;
@@ -23,6 +27,9 @@ import com.abhiroop.kubetime.svc.IuserClusterAccess;
 @RestController
 @RequestMapping("/api/users")
 public class UserDataController {
+
+	@Autowired
+	private ClusterInfoControlller clusterCtrl;
 
 	@Autowired
 	private IUserInfoService userInfoService;
@@ -56,4 +63,26 @@ public class UserDataController {
 		System.out.println("Total " + labelList.size() + " number of label accessed to the user of id : " + userid);
 		return labelList;
 	}
+
+	
+	@PostMapping("/requestAccess")
+	public ResponsePojo raiseClusterACcess(@RequestBody UserClusterAccess uca) {
+
+		ResponsePojo rp = new ResponsePojo();
+		rp.setStatus(SystemConstants.EntitySavedInDBFAILURE);
+		if (uca != null && uca.getClusterUniqueId() != 0) {
+			User usr = getByEmail(uca.getJsUserEmail());
+			Cluster c = clusterCtrl.getById("" + uca.getClusterUniqueId());
+			if (c != null && usr != null && StringUtils.equals(usr.getStatus(), SystemConstants.UserStatusActive)) {
+				uca.setUserUniqueId(usr.getUuid());
+				uca.setStatus(SystemConstants.UserClusterAccessRequestedStatus);
+
+				uca = userClusterAccessService.clusterAccessRequest(uca);
+				rp.setStatus(SystemConstants.EntitySavedInDBSUCCESS);
+			} 
+		}
+
+		return rp;
+	}
+
 }

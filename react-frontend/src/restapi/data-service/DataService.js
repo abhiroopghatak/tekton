@@ -31,6 +31,9 @@ class DataService {
 		return axios.get(BASE_URL + '/api/users/getOne/' + data);
 	}
 
+	raiseClusterAccess(data) {
+		return axios.post(BASE_URL + '/api/users/requestAccess', data);
+	}
 
 }
 

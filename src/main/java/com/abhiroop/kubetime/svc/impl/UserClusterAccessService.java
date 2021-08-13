@@ -57,5 +57,11 @@ public class UserClusterAccessService implements IuserClusterAccess {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public UserClusterAccess clusterAccessRequest(UserClusterAccess uca) {
+		// TODO Auto-generated method stub
+		return userClusterAccessRepo.save(uca);
+	}
 
 }

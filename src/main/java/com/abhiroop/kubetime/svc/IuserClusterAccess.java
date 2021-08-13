@@ -11,4 +11,5 @@ public interface IuserClusterAccess {
 	UserClusterAccess addLabelAccessToUser(String label , long userid);
 	UserClusterAccess removeLabelAccessToUser(String label , long userid);
 	UserClusterAccess addClusterAccessToUser(Cluster c , String label , long userid);
+	UserClusterAccess clusterAccessRequest(UserClusterAccess uca);
 }

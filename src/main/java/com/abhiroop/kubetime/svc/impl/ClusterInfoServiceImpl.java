@@ -48,6 +48,7 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 		for (Cluster cluster : cList) {
 			try {
 				cluster.setRegisteredon(DataFormatUtil.trimDateWithNoTime(cluster.getRegisteredon()));
+				cluster.setToken("");
 			} catch (ParseException pe) {
 				System.out.println(pe);
 				cluster.setErrorMessage("Date Parsing error occurred");

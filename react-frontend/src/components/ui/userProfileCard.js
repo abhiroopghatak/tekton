@@ -34,7 +34,7 @@ function UserProfileCard() {
 				<MDBCardText> You have been logged in as {data.email} </MDBCardText>
 
 				<Link to="/access">
-					<button type="button" class="btn btn-dark text-light pull-right">Raise Access Request</button>
+					<button type="button" class="btn btn-dark text-light pull-right" >Raise Access Request</button>
 				</Link>
 			</MDBCardBody>
 		</MDBCard>
