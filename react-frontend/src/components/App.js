@@ -10,7 +10,7 @@ import '../styles/App.css';
 import HeaderComponent from "./common/HeaderComponent";
 import FooterComponent from "./common/FooterComponent";
 import QuotaDetails from './routes/namespaces/QuotaDetails.js';
-
+import ClusterAccess from  './routes/access/ClusterAccess.js';
 
 const Home = lazy(() => import('./routes/home/home'));
 const Sidebar = lazy(() => import('./common/sidebar'));
@@ -35,6 +35,7 @@ const App = () => {
 					<Route path="/home" ><Suspense fallback={renderLoader()}><Home/></Suspense></Route>
 
 					<Route path="/resources" component={QuotaDetails} />
+					<Route path="/access" exact component={ClusterAccess} />
 					<Route path="*" exact component={BadRequest} />
 </Switch>
 				</Router>

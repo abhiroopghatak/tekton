@@ -14,8 +14,8 @@ export default props => {
         About
       </a>
 
-      <a className="menu-item" href="/services">
-        Services
+      <a className="menu-item" href="/access">
+        Cluster Access request
       </a>
 
       <a className="menu-item" href="/contact">

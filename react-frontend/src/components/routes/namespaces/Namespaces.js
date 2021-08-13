@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import DataService from '../../../restapi/data-service/DataService.js';
-import PodResources from './PodResources.js';
 import '../../../styles/componentstyles/table.css';
 import Modal from 'react-modal';
 
