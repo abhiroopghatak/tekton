@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import { Link } from "react-router-dom";
 import DataService from '../../../restapi/data-service/DataService.js';
@@ -46,6 +47,7 @@ const ClusterAccess = () => {
 				console.log(response.data);
 				setResult(response.data.status);
 			}).catch((error) => {
+				setResult('F');
 				console.log(error);
 			});
 	};
@@ -62,6 +64,14 @@ const ClusterAccess = () => {
 					<MDBContainer>
 						<MDBRow>
 							<MDBCol md="12">
+								{(result === 'S') ?
+									<div id="success-alert" class="alert alert-success" role="alert" >
+										Resquest has been raised successfully
+								</div> : ''}
+
+								{(result === 'F') ? <div id="success-alert" class="alert alert-warning" role="alert" >
+									Request couldnt be raised due to data error . Please connect Admin!!!
+								</div> : ''}
 								<form onSubmit={handleSubmit}>
 									<p className="h4 text-center mb-4">Cluster Access Request</p>
 									<div className="grey-text">
@@ -82,7 +92,10 @@ const ClusterAccess = () => {
 									<MDBBtn onClick={handleSubmit} className="position-absolute bottom-20 end-0 waves-light" gradient="blue" rounded="true" mdbWavesEffect >Submit</MDBBtn>
 								</form>
 							</MDBCol>
+
+
 						</MDBRow>
+
 					</MDBContainer>
 
 				</div>

@@ -9,8 +9,10 @@ import 'mdbreact/dist/css/mdb.css';
 
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
+
+
+
 
 import log from 'loglevel';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,7 +28,6 @@ if (process.env.REACT_APP_ENVIRONMENT === "dev") {
 	composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose();
 } else {
 	console.log = console.error = console.warn = function() { }
-	log.disableAll(true)
 	composeEnhancers = compose();
 }
 
