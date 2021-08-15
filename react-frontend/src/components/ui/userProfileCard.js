@@ -20,7 +20,7 @@ function UserProfileCard() {
 				console.log(error);
 			});
 
-	});
+	},[]);
 
 	return (
 

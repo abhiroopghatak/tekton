@@ -17,7 +17,7 @@ class HeaderComponent extends Component {
 					<div class="collapse navbar-collapse">
 						<ul class="navbar-nav mr-auto">
 							
-							<li class="nav-item active"><a class="nav-link Ripple-parent" href="/home">Home<div class="Ripple " STYLE="top: 0px; left: 0px; width: 0px; height: 0px;"></div></a></li>
+							<li class="nav-item active"><a class="nav-link Ripple-parent" href="/">Home<div class="Ripple " STYLE="top: 0px; left: 0px; width: 0px; height: 0px;"></div></a></li>
 							<li class="nav-item"><a rel="noopener noreferrer" class="nav-link Ripple-parent" href="https://mdbootstrap.com/react/5-min-quick-start/" target="_blank">About KubeTime</a></li>
 							<li class="nav-item"><a rel="noopener noreferrer" class="nav-link Ripple-parent" href="https://mdbootstrap.com/react/react-bootstrap-getting-started/" target="_blank">Free download</a></li>
 							<li class="nav-item"><a rel="noopener noreferrer" class="nav-link Ripple-parent" href="https://mdbootstrap.com/bootstrap-tutorial/" target="_blank">How to Use</a></li>

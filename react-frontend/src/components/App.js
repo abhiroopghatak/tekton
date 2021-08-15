@@ -5,6 +5,7 @@ import history from "../history";
 import { BadRequest } from "./ui/error/badRequest";
 import log from "loglevel";
 import { Router, Route, Switch } from 'react-router-dom';
+
 import '../styles/App.css';
 
 
@@ -29,10 +30,10 @@ const App = () => {
 				<Suspense fallback={renderLoader()}>
 					<Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} /> </Suspense>
 				<Router history={history}><Switch>
-					<Route path="/" ><Suspense fallback={renderLoader()}><Home /></Suspense></Route>
+					<Route path="/" exact ><Suspense fallback={renderLoader()}><Home /></Suspense></Route>
 					<Route path="/resources" component={QuotaDetails} />
 					<Route path="/access" exact component={ClusterAccess} />
-					<Route path="*" exact component={BadRequest} />
+					<Route path="*" component={BadRequest} />
 				</Switch>
 				</Router>
 			</div>
