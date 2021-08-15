@@ -1,5 +1,5 @@
 
-import React, { useState, lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import history from "../history";
 
 import { BadRequest } from "./ui/error/badRequest";
@@ -29,7 +29,7 @@ const App = () => {
 				<Suspense fallback={renderLoader()}>
 					<Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} /> </Suspense>
 				<Router history={history}><Switch>
-					<Route path="/home" ><Suspense fallback={renderLoader()}><Home /></Suspense></Route>
+					<Route path="/" ><Suspense fallback={renderLoader()}><Home /></Suspense></Route>
 					<Route path="/resources" component={QuotaDetails} />
 					<Route path="/access" exact component={ClusterAccess} />
 					<Route path="*" exact component={BadRequest} />

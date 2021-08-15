@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
-import { Link } from "react-router-dom";
+
+import { Link } from 'react-router-dom';
 import DataService from '../../../restapi/data-service/DataService.js';
 
 const ClusterAccess = () => {
@@ -61,9 +61,9 @@ const ClusterAccess = () => {
 				</div>
 
 				<div class="col-md position-relative top-50 start-0">
-					<MDBContainer>
-						<MDBRow>
-							<MDBCol md="12">
+					<div class="container">
+						<div class="row">
+							<div class="col" >
 								{(result === 'S') ?
 									<div id="success-alert" class="alert alert-success" role="alert" >
 										Resquest has been raised successfully
@@ -73,30 +73,40 @@ const ClusterAccess = () => {
 									Request couldnt be raised due to data error . Please connect Admin!!!
 								</div> : ''}
 								<form onSubmit={handleSubmit}>
-									<p className="h4 text-center mb-4">Cluster Access Request</p>
-									<div className="grey-text">
-										<MDBInput containerClass="text-left" icon="envelope" label="Type your email" type="email" validate name="jsUserEmail"
-											success="right" onChange={handleChange} />
+									<p className="h4 text-center">Cluster Access Request</p>
+									<div class="input-group mb-3 ">
+
+										<input class="w-100" placeholder="Type your email" type="text" validate name="jsUserEmail"
+											onChange={handleChange} />
+										<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+									</div>
+									<div class="form-group input-group-lg mb-3">
 										<select class="form-select" aria-label="Select the cluster" onChange={handleChange} name="clusterUniqueId">
 											<option selected>Select the cluster</option>
 											{clusters.map((c, index) => <option value={c.uuid}>{c.name} of env {c.environment}</option>)}
 
 										</select>
-
-										<MDBInput containerClass="text-left" label="Key=value lable please ..." icon="pen" type="text" onChange={handleChange} name="accessedLabel" />
 									</div>
 
-									<Link to="/home">
-										<MDBBtn className="position-absolute bottom-20 end-40 waves-light" gradient="purple" rounded="true" mdbWavesEffect>Cancel</MDBBtn>
-									</Link>
-									<MDBBtn onClick={handleSubmit} className="position-absolute bottom-20 end-0 waves-light" gradient="blue" rounded="true" mdbWavesEffect >Submit</MDBBtn>
+									<div class="input-group mb-3">
+										<input class="w-100" placeholder="Key=value lable please ..." type="text" onChange={handleChange} name="accessedLabel" />
+									</div>
+									<small id="labelHelp" class="form-text text-muted">provide the label selector based on that namespaces in that selected cluster will appear in your dashboard</small>
+									<br />
+									<br />
+									<div class="button-group mb-3">
+										<Link to="/home">
+											<button className="btn btn-info float-left"  rounded="true" >Cancel</button>
+										</Link>
+										<button type="button" onClick={handleSubmit} className="btn btn-primary float-right" rounded="true"  >Submit</button>
+									</div>
 								</form>
-							</MDBCol>
+							</div>
 
 
-						</MDBRow>
+						</div>
 
-					</MDBContainer>
+					</div>
 
 				</div>
 			</div>
@@ -105,4 +115,4 @@ const ClusterAccess = () => {
 	);
 };
 
-export default ClusterAccess;
+export default ClusterAccess;	

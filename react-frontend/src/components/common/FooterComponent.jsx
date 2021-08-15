@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBFooter,MDBAlert  } from "mdbreact";
+import { MDBContainer, MDBFooter  } from "mdbreact";
 
 class FooterComponent extends Component {
 	constructor(props) {

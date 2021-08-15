@@ -1,8 +1,5 @@
 import axios from 'axios'
 
-import clusterListServiceAPI from './url-constant';
-
-
 
 const BASE_URL = 'http://localhost:9000';
 class DataService {
