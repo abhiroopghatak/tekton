@@ -13,6 +13,17 @@ class DataService {
 		return axios.post(BASE_URL + '/api/clusters/clusterSummary', data);
 	}
 	
+	registerUser(data){
+		return axios.post(BASE_URL + '/api/users/register', data);
+	}
+	getUserByEmail(data) {
+		return axios.get(BASE_URL + '/api/users/getOne/' + data);
+	}
+
+	raiseClusterAccess(data) {
+		return axios.post(BASE_URL + '/api/users/requestAccess', data);
+	}
+	
 	getResourcePerNamespaces(data) {
 		return axios.post(BASE_URL + '/api/clusters/platform/label/namespaces/resources', data);
 	}
@@ -24,13 +35,7 @@ class DataService {
 	getCostDataPerCluster(data) {
 		return axios.get(BASE_URL + '/api/clusters/getcosts/' + data);
 	}
-	getUserByEmail(data) {
-		return axios.get(BASE_URL + '/api/users/getOne/' + data);
-	}
-
-	raiseClusterAccess(data) {
-		return axios.post(BASE_URL + '/api/users/requestAccess', data);
-	}
+	
 
 }
 

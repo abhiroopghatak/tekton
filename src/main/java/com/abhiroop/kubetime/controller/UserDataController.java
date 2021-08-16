@@ -1,11 +1,11 @@
 package com.abhiroop.kubetime.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,12 +64,11 @@ public class UserDataController {
 		return labelList;
 	}
 
-	
 	@PostMapping("/requestAccess")
 	public ResponsePojo raiseClusterACcess(@RequestBody UserClusterAccess uca) {
 
 		ResponsePojo rp = new ResponsePojo();
-		rp.setStatus(SystemConstants.EntitySavedInDBFAILURE);
+		rp.setMessage(SystemConstants.EntitySavedInDBFAILURE);
 		if (uca != null && uca.getClusterUniqueId() != 0) {
 			User usr = getByEmail(uca.getJsUserEmail());
 			Cluster c = clusterCtrl.getById("" + uca.getClusterUniqueId());
@@ -78,11 +77,30 @@ public class UserDataController {
 				uca.setStatus(SystemConstants.UserClusterAccessRequestedStatus);
 
 				uca = userClusterAccessService.clusterAccessRequest(uca);
-				rp.setStatus(SystemConstants.EntitySavedInDBSUCCESS);
-			} 
+				rp.setMessage(SystemConstants.EntitySavedInDBSUCCESS);
+			}
 		}
 
 		return rp;
 	}
 
+	@PostMapping("/register")
+	public ResponsePojo create(@RequestBody User user) {
+		System.out.println("received request to create user =>" + user);
+		ResponsePojo ar = null;
+		boolean isUpdate = false;
+		try {
+			user = userInfoService.signUpUser(user, isUpdate);
+			if (!isUpdate && user.getUuid() == 0) {
+				ar = new ResponsePojo(HttpStatus.CONFLICT, SystemConstants.EntitySavedInDBFAILURE, user);
+			} else if (!isUpdate && user.getUuid() >= 0) {
+				ar = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, user);
+			}
+
+		} catch (RuntimeException re) {
+			ar = new ResponsePojo(HttpStatus.BAD_REQUEST, SystemConstants.EntitySavedInDBFAILURE, user);
+			re.printStackTrace();
+		}
+		return ar;
+	}
 }

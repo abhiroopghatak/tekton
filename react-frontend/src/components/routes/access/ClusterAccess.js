@@ -45,7 +45,7 @@ const ClusterAccess = () => {
 		DataService.raiseClusterAccess(formData).then(
 			(response) => {
 				console.log(response.data);
-				setResult(response.data.status);
+				setResult(response.data.message);
 			}).catch((error) => {
 				setResult('F');
 				console.log(error);

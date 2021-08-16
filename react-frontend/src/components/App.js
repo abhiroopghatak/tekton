@@ -14,7 +14,7 @@ import FooterComponent from "./common/FooterComponent";
 import QuotaDetails from './routes/namespaces/QuotaDetails.js';
 import ClusterAccess from './routes/access/ClusterAccess.js';
 import Login from "./login/login.component";
-import SignUp from "./login/signup.component";
+import SignUp from "./login/signup.function.js";
 const Home = lazy(() => import('./routes/home/home'));
 const Sidebar = lazy(() => import('./common/sidebar'));
 const renderLoader = () => <p>-------Loading-----------</p>;
