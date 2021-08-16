@@ -13,7 +13,8 @@ import HeaderComponent from "./common/HeaderComponent";
 import FooterComponent from "./common/FooterComponent";
 import QuotaDetails from './routes/namespaces/QuotaDetails.js';
 import ClusterAccess from './routes/access/ClusterAccess.js';
-
+import Login from "./login/login.component";
+import SignUp from "./login/signup.component";
 const Home = lazy(() => import('./routes/home/home'));
 const Sidebar = lazy(() => import('./common/sidebar'));
 const renderLoader = () => <p>-------Loading-----------</p>;
@@ -30,6 +31,8 @@ const App = () => {
 				<Suspense fallback={renderLoader()}>
 					<Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} /> </Suspense>
 				<Router history={history}><Switch>
+					<Route path="/sign-in" component={Login} />
+					<Route path="/sign-up" component={SignUp} />
 					<Route path="/" exact ><Suspense fallback={renderLoader()}><Home /></Suspense></Route>
 					<Route path="/resources" component={QuotaDetails} />
 					<Route path="/access" exact component={ClusterAccess} />
