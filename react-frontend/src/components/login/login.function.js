@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import '../../styles/componentstyles/login.css';
 import DataService from '../../restapi/data-service/DataService.js';
 const Login = () => {
@@ -36,7 +37,7 @@ const Login = () => {
 				(response) => {
 					console.log(response);
 					localStorage.setItem("token", JSON.stringify(response.data.token));
-					window.location.href="/";
+					window.location.href = "/home";
 				}).catch((error) => {
 					setResult('F');
 					console.log(error);
@@ -73,6 +74,14 @@ const Login = () => {
 						<p className="forgot-password text-right">
 							Forgot <a href="#">password?</a>
 						</p>
+
+						<div class="alert alert-warning" role="alert">
+							<span
+								className="align-right">Do not have account . Please register
+						here</span>
+						</div>
+						<Link to="/sign-up">	<button className="btn btn-dark btn-lg btn-block float-right" rounded="true" >Sign-up</button></Link>
+
 					</form>
 				</div>
 			</div></div>

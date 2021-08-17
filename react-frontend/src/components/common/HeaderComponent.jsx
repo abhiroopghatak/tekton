@@ -27,7 +27,7 @@ logout() {
 							<li class="nav-item"><a rel="noopener noreferrer" class="nav-link Ripple-parent" href="https://mdbootstrap.com/react/5-min-quick-start/" target="_blank">About KubeTime</a></li>
 						</ul>
 						<ul class="navbar-nav ml-auto">
-							<li class="nav-item"><a class="nav-link navbar-link" href="/sign-in"><i class="fa fa-facebook"></i>login</a></li>
+							<li class="nav-item"><a class="nav-link navbar-link" href="/login"><i class="fa fa-facebook"></i>login</a></li>
 						<li class="nav-item"><a class="border border-light rounded mr-1 nav-link Ripple-parent" href="/sign-up"><i class="fas fa-user-plus"></i>Register</a></li>
 							<li class="nav-item"><a class="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="/profile" ><i class="fa fa-id-card" aria-hidden="true"></i> Profile</a></li>
 							<li class="nav-item"><a class="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" onclick="logout()" ><i class="fas fa-sign-out-alt" ></i> Sign Out</a></li>
