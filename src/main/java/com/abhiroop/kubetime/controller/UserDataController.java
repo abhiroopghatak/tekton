@@ -97,7 +97,7 @@ public class UserDataController {
 				ar = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, user);
 			}
 
-		} catch (RuntimeException re) {
+		} catch (Exception re) {
 			ar = new ResponsePojo(HttpStatus.BAD_REQUEST, SystemConstants.EntitySavedInDBFAILURE, user);
 			re.printStackTrace();
 		}

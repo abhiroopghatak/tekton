@@ -12,6 +12,7 @@ const SignUp = () => {
 	});
 	const [formData, updateFormData] = useState(signupFormData);
 	const [result, setResult] = useState([]);
+	const [validPasscode, setValidPasscode] = useState(['T']);
 
 
 	const handleChange = (e) => {
@@ -25,6 +26,7 @@ const SignUp = () => {
 
 	const validateForm = () => {
 		if (formData.pwd != formData.confirmCode) {
+			setValidPasscode('F');
 			return false;
 		} else {
 			return true;
@@ -52,6 +54,16 @@ const SignUp = () => {
 		<div className="outer">
 			<div className="inner">
 				<div className="login-box">
+					{(result === 'S') ?
+						<div id="success-alert" class="alert alert-success" role="alert" >
+							Resquest has been raised successfully. Please wait for confirmation mail from admin.
+								</div> : ''}
+
+					{(result === 'F') ? <div id="success-alert" class="alert alert-warning" role="alert" >
+						Request couldnt be raised due to data error . Please try later!!!
+								</div> : ''}
+
+
 					<form>
 						<h3>Register</h3>
 
@@ -76,6 +88,9 @@ const SignUp = () => {
 							<label>Confirm Password</label>
 							<input type="password" name="confirmCode" className="form-control" onChange={handleChange} placeholder="Type password again" />
 						</div>
+						{validPasscode === 'F' ? <div id="pwd-alert" class="alert alert-danger" role="alert" >
+							Both password doesnt match . Please try carefully.
+								</div> : null}
 
 						<button type="submit" onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Register</button>
 						<p className="forgot-password text-right">

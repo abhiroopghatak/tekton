@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 ReactDOM.render(
-	<HashRouter>
+	<HashRouter >
 		<App />
 	</HashRouter>,
 	document.getElementById('root')
