@@ -1,27 +1,28 @@
 package com.abhiroop.kubetime.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
-import com.abhiroop.kubetime.pojo.User;
-import com.abhiroop.kubetime.svc.IUserInfoService;
-
-import io.jsonwebtoken.ExpiredJwtException;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.abhiroop.kubetime.svc.IUserInfoService;
+
+import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter{
@@ -73,7 +74,8 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 				System.out.println("JWT Token has expired");
 			}
 		} else {
-			if (!"/health".equals(request.getRequestURI()))
+			List<String> unAuthUrlsList = new ArrayList<>(Arrays.asList(SystemConstants.unAuthUrls));
+			if (!request.getRequestURI().startsWith("/static") && !unAuthUrlsList.contains(request.getRequestURI()))
 				logger.warn("JWT Token does not begin with Bearer String @" + request.getRequestURI());
 		}
 
