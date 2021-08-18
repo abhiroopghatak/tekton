@@ -10,8 +10,14 @@ function UserProfileCard() {
 
 	const [data, setData] = useState([]);
 
-	useEffect(async () => {
-		DataService.getUserByEmail("abhiroop.g@hcl.com").then(
+	useEffect(() => {
+		var _u_email = JSON.parse(localStorage.getItem('_u_email'));
+		loadProfile(_u_email);
+
+	}, []);
+
+	async function loadProfile(_u_email) {
+		DataService.getUserByEmail(_u_email).then(
 
 			(response) => {
 				setData(response.data);
@@ -19,9 +25,7 @@ function UserProfileCard() {
 			}).catch(error => {
 				console.log(error);
 			});
-
-	},[]);
-
+	}
 	return (
 
 		<MDBCard className="border border-info  z-depth-5" >

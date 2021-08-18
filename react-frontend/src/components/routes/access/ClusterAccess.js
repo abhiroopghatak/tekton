@@ -16,7 +16,8 @@ const ClusterAccess = () => {
 
 	const [formData, updateFormData] = useState(initialFormData);
 	const [result, setResult] = useState([]);
-
+	const [validForm, setValidForm] = useState([]);
+	const [errMsg, setErrMsg] = useState([]);
 	useEffect(async () => {
 		DataService.getAllClusters().then(
 			(response) => {
@@ -28,7 +29,24 @@ const ClusterAccess = () => {
 
 	}, []);
 
+	const validateAccessForm = () => {
 
+		var _u_email = JSON.parse(localStorage.getItem('_u_email'));
+		if (formData.jsUserEmail === _u_email) {
+			if (formData.accessedLabel && formData.accessedLabel.indexOf('=') > 1) {
+				setValidForm('T');
+				return true;
+			} else {
+				setValidForm('F');
+				setErrMsg('Label field is of format KEY=VALUE. Please type again.');
+				return false;
+			}
+		} else {
+			setValidForm('F');
+			setErrMsg('Data Invalid . Please retype your registered email.');
+			return false;
+		}
+	}
 	const handleChange = (e) => {
 
 		updateFormData({
@@ -41,15 +59,17 @@ const ClusterAccess = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		console.log(formData);
-
-		DataService.raiseClusterAccess(formData).then(
-			(response) => {
-				console.log(response.data);
-				setResult(response.data.message);
-			}).catch((error) => {
-				setResult('F');
-				console.log(error);
-			});
+		if (validateAccessForm()) {
+			DataService.raiseClusterAccess(formData).then(
+				(response) => {
+					console.log(response.data);
+					setResult(response.data.message);
+				}).catch((error) => {
+					setResult('F');
+					setErrMsg('Request couldnt be raised due to data error . Please connect Admin!!!');
+					console.log(error);
+				});
+		}
 	};
 
 	return (
@@ -69,9 +89,13 @@ const ClusterAccess = () => {
 										Resquest has been raised successfully
 								</div> : ''}
 
-								{(result === 'F') ? <div id="success-alert" class="alert alert-warning" role="alert" >
-									Request couldnt be raised due to data error . Please connect Admin!!!
+								{(result === 'F') ? <div id="warnming-alert" class="alert alert-warning" role="alert" >
+									{errMsg}
 								</div> : ''}
+
+								{validForm === 'F' ? <div id="pwd-alert" class="alert alert-danger" role="alert" >
+									{errMsg}
+								</div> : null}
 								<form onSubmit={handleSubmit}>
 									<p className="h4 text-center">Cluster Access Request</p>
 									<div class="input-group mb-3 ">
@@ -96,7 +120,7 @@ const ClusterAccess = () => {
 									<br />
 									<div class="button-group mb-3">
 										<Link to="/home">
-											<button className="btn btn-info float-left"  rounded="true" >Cancel</button>
+											<button className="btn btn-info float-left" rounded="true" >Cancel</button>
 										</Link>
 										<button type="button" onClick={handleSubmit} className="btn btn-primary float-right" rounded="true"  >Submit</button>
 									</div>

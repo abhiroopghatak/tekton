@@ -47,7 +47,7 @@ public class JwtAuthenticationController {
 		if (userDetails != null) {
 			final String token = jwtTokenUtil.generateToken(userDetails);
 
-			return ResponseEntity.ok(new JwtResponse(token));
+			return ResponseEntity.ok(new JwtResponse(token,u.getEmail()));
 		} else {
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.setLocation(null);

@@ -36,7 +36,8 @@ const Login = () => {
 			DataService.loginUser(formData).then(
 				(response) => {
 					console.log(response);
-					localStorage.setItem("token", JSON.stringify(response.data.token));
+					localStorage.setItem("_token", JSON.stringify(response.data.jwttoken));
+					localStorage.setItem("_u_email", JSON.stringify(response.data.useremail));
 					window.location.href = "/home";
 				}).catch((error) => {
 					setResult('F');
