@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../../styles/componentstyles/login.css';
 import DataService from '../../restapi/data-service/DataService.js';
-
+import ErrorAlert from '../ui/error/errorAlert.js';
 
 const SignUp = () => {
 	const signupFormData = Object.freeze({
@@ -13,6 +13,7 @@ const SignUp = () => {
 	const [formData, updateFormData] = useState(signupFormData);
 	const [result, setResult] = useState([]);
 	const [validPasscode, setValidPasscode] = useState(['T']);
+	const [errMsg, setErrMsg] = useState([]);
 
 
 	const handleChange = (e) => {
@@ -27,7 +28,13 @@ const SignUp = () => {
 	const validateForm = () => {
 		if (formData.pwd != formData.confirmCode) {
 			setValidPasscode('F');
+			setErrMsg('Both password doesnt match . Please try carefully.');
 			return false;
+		} else if (formData.fullname || formData.email || formData.pwd || formData.confirmcode) {
+			setValidPasscode('F');
+			setErrMsg('One of form field is empty . Please fill carefully.');
+			return false;
+
 		} else {
 			return true;
 		}
@@ -88,9 +95,7 @@ const SignUp = () => {
 							<label>Confirm Password</label>
 							<input type="password" name="confirmCode" className="form-control" onChange={handleChange} placeholder="Type password again" />
 						</div>
-						{validPasscode === 'F' ? <div id="pwd-alert" class="alert alert-danger" role="alert" >
-							Both password doesnt match . Please try carefully.
-								</div> : null}
+						{validPasscode === 'F' ? <ErrorAlert msg={errMsg} />: null}
 
 						<button type="submit" onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Register</button>
 						<p className="forgot-password text-right">

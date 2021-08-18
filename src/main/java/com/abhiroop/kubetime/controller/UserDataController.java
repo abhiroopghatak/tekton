@@ -90,6 +90,9 @@ public class UserDataController {
 		ResponsePojo ar = null;
 		boolean isUpdate = false;
 		try {
+			if (StringUtils.isEmpty(user.getFullname()) || StringUtils.isEmpty(user.getEmail())) {
+				throw new RuntimeException("INVALID REQUEST : Request with Empty data.");
+			}
 			user = userInfoService.signUpUser(user, isUpdate);
 			if (!isUpdate && user.getUuid() == 0) {
 				ar = new ResponsePojo(HttpStatus.CONFLICT, SystemConstants.EntitySavedInDBFAILURE, user);

@@ -8,7 +8,7 @@ import DataService from '../../../restapi/data-service/DataService.js';
 import UserProfileCard from '../../ui/userProfileCard.js';
 
 import SpinnerPage from '../../ui/spinner.js';
-import ErrorAlert from '../../ui/errorAlert.js';
+import ErrorAlert from '../../ui/error/errorAlert.js';
 class Home extends Component {
 
 	constructor(props) {
