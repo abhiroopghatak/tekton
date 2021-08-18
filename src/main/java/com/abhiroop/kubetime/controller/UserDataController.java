@@ -3,8 +3,11 @@ package com.abhiroop.kubetime.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +30,12 @@ import com.abhiroop.kubetime.svc.IuserClusterAccess;
 @RestController
 @RequestMapping("/api/users")
 public class UserDataController {
+
+	@Value("${ADMIN_USER_EMAIL}")
+	private String adminUserEmail;
+
+	@Value("${ADMIN_USER_PWD}")
+	private String adminUserPwd;
 
 	@Autowired
 	private ClusterInfoControlller clusterCtrl;
@@ -84,6 +93,23 @@ public class UserDataController {
 		return rp;
 	}
 
+	@PostConstruct
+	void init() {
+		User user = new User();
+		user.setEmail(adminUserEmail);
+		user.setPwd(adminUserPwd);
+		user.setRole(SystemConstants.ADMIN_USER_ROLE);
+		user.setStatus(SystemConstants.UserStatusActive);
+		user.setFullname("System Admin");
+
+		try {
+			user = userInfoService.signUpUser(user, false);
+			System.out.println("Admin user of email " + adminUserEmail + " created successfully.");
+		} catch (Exception e) {
+			System.err.println("Admin user already exists.");
+		}
+	}
+
 	@PostMapping("/register")
 	public ResponsePojo create(@RequestBody User user) {
 		System.out.println("received request to create user =>" + user);
@@ -92,7 +118,10 @@ public class UserDataController {
 		try {
 			if (StringUtils.isEmpty(user.getFullname()) || StringUtils.isEmpty(user.getEmail())) {
 				throw new RuntimeException("INVALID REQUEST : Request with Empty data.");
+			} else if (!StringUtils.isEmpty(user.getRole()) && !StringUtils.isEmpty(user.getStatus())) {
+				throw new RuntimeException("INVALID REQUEST : Request with malfunctioned data.");
 			}
+
 			user = userInfoService.signUpUser(user, isUpdate);
 			if (!isUpdate && user.getUuid() == 0) {
 				ar = new ResponsePojo(HttpStatus.CONFLICT, SystemConstants.EntitySavedInDBFAILURE, user);
@@ -102,7 +131,7 @@ public class UserDataController {
 
 		} catch (Exception re) {
 			ar = new ResponsePojo(HttpStatus.BAD_REQUEST, SystemConstants.EntitySavedInDBFAILURE, user);
-			re.printStackTrace();
+			System.err.print("Exception @ /register " + re.getMessage());
 		}
 		return ar;
 	}
