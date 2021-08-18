@@ -30,7 +30,7 @@ const SignUp = () => {
 			setValidPasscode('F');
 			setErrMsg('Both password doesnt match . Please try carefully.');
 			return false;
-		} else if (formData.fullname || formData.email || formData.pwd || formData.confirmcode) {
+		} else if (!(formData.fullname && formData.email && formData.pwd && formData.confirmCode)) {
 			setValidPasscode('F');
 			setErrMsg('One of form field is empty . Please fill carefully.');
 			return false;
@@ -95,7 +95,7 @@ const SignUp = () => {
 							<label>Confirm Password</label>
 							<input type="password" name="confirmCode" className="form-control" onChange={handleChange} placeholder="Type password again" />
 						</div>
-						{validPasscode === 'F' ? <ErrorAlert msg={errMsg} />: null}
+						{validPasscode === 'F' ? <ErrorAlert msg={errMsg} /> : null}
 
 						<button type="submit" onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Register</button>
 						<p className="forgot-password text-right">

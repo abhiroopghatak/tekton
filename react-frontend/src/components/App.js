@@ -12,6 +12,7 @@ import ProtectedRoute from './ui/ProtectedRoute';
 import SpinnerPage from "./ui/spinner";
 import HeaderComponent from "./common/HeaderComponent";
 import FooterComponent from "./common/FooterComponent";
+import AddCluster from './routes/admin/addcluster.function.js'
 import QuotaDetails from './routes/namespaces/QuotaDetails.js';
 import ClusterAccess from './routes/access/ClusterAccess.js';
 import Login from "./login/login.function.js";
@@ -39,6 +40,7 @@ const App = () => {
 						<Route path="/sign-up" component={SignUp} />
 						<ProtectedRoute path="/resources" component={QuotaDetails} />
 						<ProtectedRoute path="/access" exact component={ClusterAccess} />
+						<ProtectedRoute path="/add-cluster" exact component={AddCluster} forAdmin="true" />
 						<Route path="*" component={BadRequest} />
 					</Switch>
 

@@ -15,11 +15,13 @@ public class JwtResponse implements Serializable {
 	private  String jwttoken;
 	
 	private String useremail;
+	private String role;
 
-	public JwtResponse(String jwttoken, String useremail) {
+	public JwtResponse(String jwttoken, String useremail, String role) {
 		super();
 		this.jwttoken = jwttoken;
 		this.useremail = useremail;
+		this.role=role;
 	}
 	
 	

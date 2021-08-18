@@ -38,6 +38,7 @@ const Login = () => {
 					console.log(response);
 					localStorage.setItem("_token", JSON.stringify(response.data.jwttoken));
 					localStorage.setItem("_u_email", JSON.stringify(response.data.useremail));
+					localStorage.setItem("system_role", JSON.stringify(response.data.role));
 					window.location.href = "/home";
 				}).catch((error) => {
 					setResult('F');
