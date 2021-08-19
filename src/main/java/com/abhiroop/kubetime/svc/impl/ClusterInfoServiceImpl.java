@@ -58,6 +58,15 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 		return cList;
 	}
 
+	@Override
+	public Cluster addCluster(Cluster c) throws Exception {
+		
+		
+		c= clusterRepo.save(c);
+		
+		return c;
+	}
+
 	
 
 }

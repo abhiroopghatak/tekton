@@ -3,6 +3,12 @@ import authHeader from '../../components/common/auth-header';
 
 const BASE_URL = '';
 class DataService {
+	
+	
+	
+	addCluster(data){
+	return axios.post(BASE_URL + '/api/admin/cluster/add', data , { headers: authHeader() });
+	}
 
 	getAllClusters() {
 		return axios.get(BASE_URL + '/api/clusters/getAll',{ headers: authHeader() });

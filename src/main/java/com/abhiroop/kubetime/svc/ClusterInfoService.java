@@ -17,4 +17,7 @@ public interface ClusterInfoService {
 	Cluster  disableCluster(Cluster c);
 	List<Cluster> getClusterList();
 	
+	
+	Cluster addCluster(Cluster c)throws Exception;
+	
 }
