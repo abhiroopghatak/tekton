@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import {Link} from  "react-router-dom";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody,  MDBCardTitle,  MDBListGroupItem, MDBListGroup, MDBCollapse } from "mdbreact";
+import { Link } from "react-router-dom";
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBListGroupItem, MDBListGroup, MDBCollapse } from "mdbreact";
 import _user_icon from "../../../images/icon/_user_icon.png";
 
 import BannerMdbRow from './bannerMdbRow.js';
@@ -10,14 +10,14 @@ import UserProfileCard from '../../ui/userProfileCard.js';
 import SpinnerPage from '../../ui/spinner.js';
 import ErrorAlert from '../../ui/error/errorAlert.js';
 class Home extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
 			clusters: [],
 			collapseID: "",
 			cluster: "",
-			showSpinner: true
+			showSpinner: true,
+			isAdmin: JSON.parse(localStorage.getItem('system_role'))
 		}
 	}
 	toggleCollapse = (collapseID, clusterid) => {
@@ -117,9 +117,15 @@ class Home extends Component {
 													</Link>
 
 												</MDBCardBody>
+
 											</MDBCard>
 										</MDBCollapse></MDBListGroupItem>))}
 							</MDBListGroup>
+							{this.state.isAdmin ==='AU'?
+								<Link to="/add-cluster">
+									<button type="button" class="btn btn-dark text-light pull-right" >Add Cluster</button>
+								</Link>
+								: null}
 						</MDBCol>
 					</MDBRow>
 					<BannerMdbRow /> </MDBContainer>

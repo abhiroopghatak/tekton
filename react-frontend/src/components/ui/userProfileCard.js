@@ -7,7 +7,7 @@ import DataService from '../../restapi/data-service/DataService.js';
 
 
 function UserProfileCard() {
-
+	const isAdmin = JSON.parse(localStorage.getItem('system_role'));
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -36,10 +36,11 @@ function UserProfileCard() {
 				</img>
 				<MDBCardTitle>Welcome {data.fullname}</MDBCardTitle>
 				<MDBCardText> You have been logged in as {data.email} </MDBCardText>
-
-				<Link to="/access">
-					<button type="button" class="btn btn-dark text-light pull-right" >Raise Access Request</button>
-				</Link>
+				{ isAdmin === 'AU'? null :
+					<Link to="/access">
+						<button type="button" class="btn btn-dark text-light pull-right" >Raise Access Request</button>
+					</Link>
+				}
 			</MDBCardBody>
 		</MDBCard>
 	);
