@@ -60,7 +60,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
 				if (StringUtils.isEmpty(user.getRole()))
 					user.setRole(SystemConstants.END_USER_ROLE);
 				if (StringUtils.isEmpty(user.getStatus()))
-					user.setStatus(SystemConstants.UserSIgnUpRequestedStatus);
+					user.setStatus(SystemConstants.RequestedStatus);
 				user.setCreateTime(new Date());
 				String encryptedPassword = p.encode(user.getPwd());
 				user.setPwd(encryptedPassword);

@@ -14,7 +14,7 @@ const AddCluster = () => {
 	});
 	const [formData, updateFormData] = useState(addClusterFormData);
 	const [result, setResult] = useState([]);
-	const [validFOrm, setValidFOrm] = useState([]);
+	const [validForm, setValidForm] = useState([]);
 	const [errMsg, setErrMsg] = useState([]);
 
 	const handleChange = (e) => {
@@ -27,7 +27,11 @@ const AddCluster = () => {
 
 
 	const validateForm = () => {
-
+		if (!(formData.name && formData.endpoint && formData.token && formData.environment)) {
+			setValidForm('F');
+			setErrMsg('One of form field is empty . Please fill carefully.');
+			return false;
+		}
 		return true;
 	}
 	const handleSubmit = (e) => {
@@ -37,8 +41,13 @@ const AddCluster = () => {
 				(response) => {
 					console.log(response.data);
 					setResult(response.data.message);
+					if (result === 'F') {
+						setErrMsg(response.data.obj.errorMessage);
+					}
+					setResult(response.data.message);
 				}).catch((error) => {
 					setResult('F');
+					setErrMsg('Data couldnt be saved in to system due to api error . Please try later!!!');
 					console.log(error);
 				});
 
@@ -49,44 +58,45 @@ const AddCluster = () => {
 	return (<div className="outer">
 		<div className="inner">
 			<div className="login-box">
+
+				<h3>Add cluster information to system</h3>
 				{(result === 'S') ?
-					<div id="success-alert" class="alert alert-success" role="alert" >
-						Resquest has been raised successfully. Please wait for confirmation mail from admin.
+					<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert" >
+						New cluster has been added in to the system . 
 								</div> : ''}
 
-				{(result === 'F') ? <div id="success-alert" class="alert alert-warning" role="alert" >
-					Request couldnt be raised due to data error . Please try later!!!
-								</div> : ''}
+				{(result === 'F') ? <ErrorAlert msg={errMsg} /> : null}
 
 
 				<form>
-					<h3>Add cluster information to system</h3>
 
-					<div className="form-group">
-						<label>CLuster Name</label>
-						<input type="text" name="name" className="form-control" onChange={handleChange} placeholder="Cluster unique name" />
+					{validForm === 'F' ? <ErrorAlert msg={errMsg} /> : null}
+
+					<div className="form-group required">
+						<label className="control-label">CLuster Name</label>
+						<input type="text" name="name" className="form-control " onChange={handleChange} placeholder="Cluster unique name" />
 					</div>
 
 
-					<div className="form-group">
-						<label>Cluster End Point</label>
+					<div className="form-group required">
+						<label className="control-label">Cluster End Point</label>
 						<input name="endpoint" type="url" className="form-control" onChange={handleChange} placeholder="api end point" />
 					</div>
 
-					<div className="form-group">
-						<label>Environment</label>
+					<div className="form-group required">
+						<label className="control-label">Environment</label>
 						<input type="text" name="environment" className="form-control" onChange={handleChange} placeholder="Enter Dev / Stage / PROD  etc." />
 					</div>
 
 
-					<div className="form-group">
-						<label>Service Account Token</label>
-						<input type="text" name="token" className="form-control" onChange={handleChange} placeholder="account token to authenticate" />
+					<div className="form-group required">
+						<label className="control-label">Service Account Token</label>
+						<textarea type="text" name="token" className="form-control" onChange={handleChange} placeholder="account token to authenticate" />
 					</div>
-					{errMsg === 'F' ? <ErrorAlert msg={errMsg} /> : null}
+
 
 					<button type="submit" onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Enter</button>
-					
+
 				</form>
 			</div>
 		</div></div>

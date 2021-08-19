@@ -81,7 +81,7 @@ public class UserDataController {
 		if (uca != null && uca.getClusterUniqueId() != 0) {
 			User usr = getByEmail(uca.getJsUserEmail());
 			Cluster c = clusterCtrl.getById("" + uca.getClusterUniqueId());
-			if (c != null && usr != null && StringUtils.equals(usr.getStatus(), SystemConstants.UserStatusActive)) {
+			if (c != null && usr != null && StringUtils.equals(usr.getStatus(), SystemConstants.StatusActive)) {
 				uca.setUserUniqueId(usr.getUuid());
 				uca.setStatus(SystemConstants.UserClusterAccessRequestedStatus);
 
@@ -99,7 +99,7 @@ public class UserDataController {
 		user.setEmail(adminUserEmail);
 		user.setPwd(adminUserPwd);
 		user.setRole(SystemConstants.ADMIN_USER_ROLE);
-		user.setStatus(SystemConstants.UserStatusActive);
+		user.setStatus(SystemConstants.StatusActive);
 		user.setFullname("System Admin");
 
 		try {

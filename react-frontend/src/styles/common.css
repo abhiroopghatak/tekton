@@ -64,3 +64,7 @@ margin-top: 1rem;
   background-size: cover;
 }
 
+.form-group.required .control-label:after {
+  content:" *";
+  color:red;
+}

@@ -48,6 +48,7 @@ const SignUp = () => {
 					setResult(response.data.message);
 				}).catch((error) => {
 					setResult('F');
+					setErrMsg('Request couldnt be raised due to data error . Please try later!!!');
 					console.log(error);
 				});
 
@@ -66,33 +67,31 @@ const SignUp = () => {
 							Resquest has been raised successfully. Please wait for confirmation mail from admin.
 								</div> : ''}
 
-					{(result === 'F') ? <div id="success-alert" class="alert alert-warning" role="alert" >
-						Request couldnt be raised due to data error . Please try later!!!
-								</div> : ''}
+					{(result === 'F') ?<ErrorAlert msg={errMsg} /> : null}
 
 
 					<form>
 						<h3>Register</h3>
 
-						<div className="form-group">
-							<label>Full name</label>
+						<div className="form-group required">
+							<label className="control-label">Full name</label>
 							<input type="text" name="fullname" className="form-control" onChange={handleChange} placeholder="[First name] [middle name] [lastname]" />
 						</div>
 
 
-						<div className="form-group">
-							<label>Email</label>
+						<div className="form-group required">
+							<label className="control-label">Email</label>
 							<input name="email" type="email" className="form-control" onChange={handleChange} placeholder="Enter email" />
 						</div>
 
-						<div className="form-group">
-							<label>Password</label>
+						<div className="form-group required">
+							<label className="control-label">Password</label>
 							<input type="password" name="pwd" className="form-control" onChange={handleChange} placeholder="Enter password" />
 						</div>
 
 
-						<div className="form-group">
-							<label>Confirm Password</label>
+						<div className="form-group required">
+							<label className="control-label">Confirm Password</label>
 							<input type="password" name="confirmCode" className="form-control" onChange={handleChange} placeholder="Type password again" />
 						</div>
 						{validPasscode === 'F' ? <ErrorAlert msg={errMsg} /> : null}
