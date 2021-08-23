@@ -1,28 +1,30 @@
 
-import React, { Component } from 'react';
+import React from 'react';
+import { useLocation } from "react-router-dom";
 import { MDBContainer } from "mdbreact";
 import FixedPriceCard from './FixedPrice.js';
 import Namespaces from './Namespaces.js';
 
-class QuotaDetails extends Component {
+const QuotaDetails = () => {
+	const location = useLocation()
+	const   cid = location.state.cid;
 
 
-	render() {
-		return (
-			<>
-				<MDBContainer >
-					<div class="row justify-content-center">
-						<div class="col-md-4 col-lg-3">
-							<FixedPriceCard />
-						</div>
-						<div class="col-md-5 col-lg-9">
-
-						<Namespaces />
-						</div>
+	return (
+		<>
+			<MDBContainer >
+				<div class="row justify-content-center">
+					<div class="col-md-4 col-lg-3">
+						<FixedPriceCard />
 					</div>
-				</MDBContainer>
-			</>
-		);
-	}
+					<div class="col-md-5 col-lg-9">
+
+							<Namespaces  cid={cid}/>
+					</div>
+				</div>
+			</MDBContainer>
+		</>
+	);
+
 };
 export default QuotaDetails;

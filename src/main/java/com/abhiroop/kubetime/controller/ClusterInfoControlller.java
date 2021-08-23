@@ -97,7 +97,8 @@ public class ClusterInfoControlller {
 		// session validate:TODO
 
 		// user status validate//
-		User user = userCtrl.getUserById(rqro.getUserId());
+		
+		User user = userCtrl.getByEmail(rqro.getUserEmail());
 
 		if (c != null && user != null && StringUtils.equals("A", user.getStatus())) {
 			// user 's cluster access validate

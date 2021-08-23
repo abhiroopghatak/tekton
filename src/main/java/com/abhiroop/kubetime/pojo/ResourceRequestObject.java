@@ -3,15 +3,13 @@ package com.abhiroop.kubetime.pojo;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter@Setter
+@Getter
+@Setter
 public class ResourceRequestObject {
 
-	
 	private String clusterId;
-	private long userId;
+	private String userEmail;
 	private String namespace;
 	private String sessionId;
-	
-	
-	
+
 }

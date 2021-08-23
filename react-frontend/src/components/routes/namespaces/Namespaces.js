@@ -17,7 +17,7 @@ const modalStyles = {
 	}
 };
 const Namespaces = (props) => {
-
+	const cid = props.cid;
 	const [resources, setResources] = useState([]);
 	const [pods, setPods] = useState([]);
 	const resourcesRef = useRef();
@@ -26,10 +26,10 @@ const Namespaces = (props) => {
 
 
 	const retrieveResources = () => {
-
+		var _u_email = JSON.parse(localStorage.getItem('_u_email'));
 		DataService.getResourcePerNamespaces({
-			clusterId: "1111",
-			userId: "1111"
+			clusterId: {cid},
+			userId: _u_email
 		})
 			.then((response) => {
 				setResources(response.data);
