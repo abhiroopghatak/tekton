@@ -1,7 +1,9 @@
 package com.abhiroop.kubetime.svc.impl;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.abhiroop.kubetime.config.SystemConstants;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.pojo.UserClusterAccess;
 import com.abhiroop.kubetime.repo.UserClusterAccessRepo;
@@ -29,8 +32,8 @@ public class UserClusterAccessService implements IuserClusterAccess {
 			Iterator<UserClusterAccess> itr = ucaList.iterator();
 			while (itr.hasNext()) {
 				UserClusterAccess uca = itr.next();
-				if (!StringUtils.equals("A",uca.getStatus())) {
-					System.out.print(uca +" removed from response list cause its no more active");
+				if (!StringUtils.equals("A", uca.getStatus())) {
+					System.out.print(uca + " removed from response list cause its no more active");
 					itr.remove();
 				}
 			}
@@ -57,11 +60,40 @@ public class UserClusterAccessService implements IuserClusterAccess {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public UserClusterAccess clusterAccessRequest(UserClusterAccess uca) {
 		// TODO Auto-generated method stub
 		return userClusterAccessRepo.save(uca);
+	}
+
+	@Override
+	public List<UserClusterAccess> getAllRequetsedStatus() {
+		List<UserClusterAccess> ucaList = userClusterAccessRepo.findAll();
+		Iterator<UserClusterAccess> uItr = ucaList.iterator();
+
+		while (uItr.hasNext()) {
+			UserClusterAccess uca = uItr.next();
+			if (!StringUtils.equals(SystemConstants.RequestedStatus, uca.getStatus())) {
+				uItr.remove();
+			}
+		}
+		return ucaList;
+	}
+
+	@Override
+	public UserClusterAccess statusUpdate(UserClusterAccess uca, String status) throws Exception {
+
+		Optional<UserClusterAccess> ucaOptional = userClusterAccessRepo.findById(uca.getUuid());
+		if (ucaOptional.isPresent()) {
+			uca = ucaOptional.get();
+			uca.setLastUpdated(new Date());
+			uca.setStatus(status);
+			uca = userClusterAccessRepo.saveAndFlush(uca);
+		} else {
+			throw new RuntimeException("Bad Request . No request object found to Approve/Reject");
+		}
+		return uca;
 	}
 
 }

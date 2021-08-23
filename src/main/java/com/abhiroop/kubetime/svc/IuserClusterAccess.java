@@ -12,4 +12,6 @@ public interface IuserClusterAccess {
 	UserClusterAccess removeLabelAccessToUser(String label , long userid);
 	UserClusterAccess addClusterAccessToUser(Cluster c , String label , long userid);
 	UserClusterAccess clusterAccessRequest(UserClusterAccess uca);
+	List<UserClusterAccess> getAllRequetsedStatus();
+	UserClusterAccess statusUpdate(UserClusterAccess uca, String status) throws Exception;
 }

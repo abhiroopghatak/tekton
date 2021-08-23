@@ -86,7 +86,7 @@ class Home extends Component {
 											<MDBCard className="border border-info">
 												<MDBCardBody className="clearfix">
 													<div class="table-responsive">
-														<table class="table table-success ">
+														<table class="table table-dark ">
 															<thead>
 																<tr>
 																	<th scope="col">clusterName</th>

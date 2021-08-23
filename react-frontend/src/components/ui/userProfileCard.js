@@ -41,6 +41,10 @@ function UserProfileCard() {
 						<button type="button" class="btn btn-dark text-light pull-right" >Raise Access Request</button>
 					</Link>
 				}
+				
+				<Link to="/access-approve">
+									<button type="button" class="btn btn-dark text-light pull-right" >access-approve Cluster</button>
+								</Link>
 			</MDBCardBody>
 		</MDBCard>
 	);

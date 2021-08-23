@@ -12,6 +12,7 @@ public interface ClusterInfoService {
 	
 	
 	Cluster getClusterById(long uuid);
+	Cluster getByName(String cName);
 	List<Cluster> getClusterListOfUser(String userEmail);
 	
 	Cluster  disableCluster(Cluster c);

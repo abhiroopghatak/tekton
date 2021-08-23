@@ -41,7 +41,8 @@ const AddCluster = () => {
 				(response) => {
 					console.log(response.data);
 					setResult(response.data.message);
-					if (result === 'F') {
+					if (response.data.status !=200) {
+						setResult('F');
 						setErrMsg(response.data.obj.errorMessage);
 					}
 					setResult(response.data.message);

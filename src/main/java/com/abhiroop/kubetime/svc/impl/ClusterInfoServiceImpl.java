@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -61,10 +63,21 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 	@Override
 	public Cluster addCluster(Cluster c) throws Exception {
 		
+		if(getByName(c.getName()) != null) {
+			throw new RuntimeException("CLuster of same name exists");
+		}
 		
 		c= clusterRepo.save(c);
 		
 		return c;
+	}
+
+	@Override
+	public Cluster getByName(String cName) {
+		
+
+		
+		return clusterRepo.findOneByName(cName);
 	}
 
 	

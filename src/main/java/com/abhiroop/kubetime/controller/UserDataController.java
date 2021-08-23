@@ -77,6 +77,7 @@ public class UserDataController {
 	public ResponsePojo raiseClusterACcess(@RequestBody UserClusterAccess uca) {
 
 		ResponsePojo rp = new ResponsePojo();
+		rp.setObj(uca);
 		rp.setMessage(SystemConstants.EntitySavedInDBFAILURE);
 		if (uca != null && uca.getClusterUniqueId() != 0) {
 			User usr = getByEmail(uca.getJsUserEmail());

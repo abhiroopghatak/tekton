@@ -1,5 +1,5 @@
 .heading {
-  color: #14877c;
+  color: rgb(128, 128, 128);
   border-bottom: 1px solid #14877c;
   margin-bottom: 30px;
   padding-bottom: 10px;
@@ -10,12 +10,12 @@ table {
   width: 100%;
   padding: 1em;
   border-collapse: collapse;
-  box-shadow: 0 2px 8px 0 rgb(0, 0, 255);
+  box-shadow: 0 2px 8px 0 rgba(34, 35, 58, 0.2);
   
 }
 
 thead {
-  background-color: #caf0ec;
+  background-color: rgb(70, 89, 89);
   font-size: 16px;
 }
 
@@ -23,7 +23,7 @@ th {
   text-align: left;
   padding: 8px;
   background-color: 1px solid #ffffff;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
  
 }
 td {
