@@ -14,6 +14,7 @@ import HeaderComponent from "./common/HeaderComponent";
 import FooterComponent from "./common/FooterComponent";
 import AddCluster from './routes/admin/addcluster.function.js';
 import AccessApproval from './routes/admin/AccessApproval.function.js';
+import NewUserApproval from './routes/admin/user.registration.approval.js';
 
 import QuotaDetails from './routes/namespaces/QuotaDetails.js';
 import ClusterAccess from './routes/access/ClusterAccess.js';
@@ -44,6 +45,7 @@ const App = () => {
 						<ProtectedRoute path="/access" exact component={ClusterAccess} />
 						<ProtectedRoute path="/add-cluster" exact component={AddCluster} forAdmin="true" />
 						<ProtectedRoute path="/access-approve" exact component={AccessApproval} forAdmin="true" />
+						<ProtectedRoute path="/user-approve" exact component={NewUserApproval} forAdmin="true" />
 						<Route path="*" component={BadRequest} />
 					</Switch>
 

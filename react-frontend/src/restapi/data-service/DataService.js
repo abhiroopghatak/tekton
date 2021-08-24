@@ -14,6 +14,14 @@ class DataService {
 		return axios.get(BASE_URL + '/api/admin/cluster/access/requests', { headers: authHeader() });
 	}
 	
+	getNewUserList() {
+		return axios.get(BASE_URL + '/api/admin/user/new/requests', { headers: authHeader() });
+	}
+	
+	newUserApproval(data){
+		return axios.post(BASE_URL + '/api/admin/user/new/approve', data, { headers: authHeader() });
+	}
+	
 	approveCLusterAccess(data){
 		return axios.post(BASE_URL + '/api/admin/cluster/access/approve', data, { headers: authHeader() });
 	}

@@ -36,15 +36,20 @@ function UserProfileCard() {
 				</img>
 				<MDBCardTitle>Welcome {data.fullname}</MDBCardTitle>
 				<MDBCardText> You have been logged in as {data.email} </MDBCardText>
-				{ isAdmin === 'AU'? null :
+				{isAdmin === 'AU' ? null :
 					<Link to="/access">
 						<button type="button" class="btn btn-dark text-light pull-right" >Raise Access Request</button>
 					</Link>
 				}
-				
-				<Link to="/access-approve">
-									<button type="button" class="btn btn-dark text-light pull-right" >access-approve Cluster</button>
-								</Link>
+
+				{isAdmin === 'AU' ?
+					<Link to="/access-approve">
+						<button type="button" class="btn btn-light" >Access Approval</button>
+					</Link> : null}
+				{isAdmin === 'AU' ?
+					<Link to="/user-approve">
+						<button type="button" class="btn btn-dark" >User-Approval</button>
+					</Link> : null}
 			</MDBCardBody>
 		</MDBCard>
 	);

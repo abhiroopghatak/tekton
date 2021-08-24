@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.abhiroop.kubetime.config.SystemConstants;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.pojo.ClusterAccessRequestObject;
+import com.abhiroop.kubetime.pojo.RequestPojo;
 import com.abhiroop.kubetime.pojo.ResponsePojo;
 import com.abhiroop.kubetime.pojo.User;
 import com.abhiroop.kubetime.pojo.UserClusterAccess;
@@ -69,6 +69,39 @@ public class adminApiController {
 		return ar;
 	}
 
+	@GetMapping("/user/new/requests")
+	public List<User> getAllRequestedUser() {
+		System.out.println("@/user/new/requests requested.");
+		return userInfoService.getAllRequetsedStatus();
+
+	}
+
+	@PostMapping("/user/new/approve")
+	public ResponsePojo newUserAction(@RequestBody RequestPojo rp) {
+		System.out.println("@/user/new/approve requested.");
+		ResponsePojo resp = null;
+		String action = null;
+		if (StringUtils.equals("Y", rp.getAction())) {
+			action = SystemConstants.StatusActive;
+		} else if (StringUtils.equals("N", rp.getAction())) {
+			action = SystemConstants.StatusInActive;
+		}
+		User u;
+		try {
+			u = userInfoService.userStatusUpdate(rp.getUuid(), action);
+			if (u != null) {
+				resp = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, u);
+			} else {
+				resp = new ResponsePojo(HttpStatus.FORBIDDEN, SystemConstants.EntitySavedInDBFAILURE, u);
+			}
+		} catch (Exception e) {
+			resp = new ResponsePojo(HttpStatus.FORBIDDEN, SystemConstants.EntitySavedInDBFAILURE, e.getMessage());
+			System.out.println(e.getMessage());
+		}
+		
+		return resp;
+	}
+
 	@GetMapping("/cluster/access/requests")
 	public List<ClusterAccessRequestObject> getAllClusterRequests() {
 
@@ -109,7 +142,7 @@ public class adminApiController {
 			userClusterAccessService.statusUpdate(uca, SystemConstants.StatusActive);
 			rp = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, uca);
 		} catch (Exception e) {
-			rp = new ResponsePojo(HttpStatus.FORBIDDEN,SystemConstants.EntitySavedInDBFAILURE, uca);
+			rp = new ResponsePojo(HttpStatus.FORBIDDEN, SystemConstants.EntitySavedInDBFAILURE, uca);
 			System.out.println("@/cluster/access/approve Exception=> " + e.getMessage());
 		}
 		return rp;

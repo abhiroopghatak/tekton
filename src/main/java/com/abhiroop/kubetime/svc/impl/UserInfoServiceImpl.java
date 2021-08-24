@@ -5,6 +5,9 @@ import java.security.spec.KeySpec;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import com.abhiroop.kubetime.config.SystemConstants;
 import com.abhiroop.kubetime.pojo.User;
+import com.abhiroop.kubetime.pojo.UserClusterAccess;
 import com.abhiroop.kubetime.repo.UserRepo;
 import com.abhiroop.kubetime.svc.IUserInfoService;
 
@@ -33,13 +37,6 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	@Override
 	public User getUserById(long uuid) {
 		return usrRepository.getById(uuid);
-	}
-
-	@Override
-	public User deActivateUser(User usr) {
-		usr.setStatus("I");
-		usr = usrRepository.saveAndFlush(usr);
-		return usr;
 	}
 
 	@Override
@@ -120,5 +117,33 @@ public class UserInfoServiceImpl implements IUserInfoService {
 					new ArrayList<>());
 		}
 		return springUser;
+	}
+
+	@Override
+	public List<User> getAllRequetsedStatus() {
+		List<User> ucaList = usrRepository.findAll();
+		Iterator<User> uItr = ucaList.iterator();
+
+		while (uItr.hasNext()) {
+			User uca = uItr.next();
+			if (!StringUtils.equals(SystemConstants.RequestedStatus, uca.getStatus())) {
+				uItr.remove();
+			}
+		}
+		return ucaList;
+	}
+
+	@Override
+	public User userStatusUpdate(long uuid, String status) throws Exception{
+		Optional<User> ucaOptional = usrRepository.findById(uuid);
+		User usr = null;
+		if (ucaOptional.isPresent()) {
+			usr = ucaOptional.get();
+			usr.setStatus(status);
+			usr = usrRepository.saveAndFlush(usr);
+		} else {
+			throw new RuntimeException("Bad Request . No request object found to Approve/Reject");
+		}
+		return usr;
 	}
 }
