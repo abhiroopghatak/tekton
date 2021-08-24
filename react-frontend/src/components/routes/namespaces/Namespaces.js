@@ -42,7 +42,7 @@ const Namespaces = (props) => {
 		const namespace = resourcesRef.current[rowIndex].namespaceName;
 		DataService.getPodResourcePerNamespaces(
 			{
-				"clusterId": "1111",
+				"clusterId": {cid},
 				"namespace": namespace
 			}
 		).then((response) => {

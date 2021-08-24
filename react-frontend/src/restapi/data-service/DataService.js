@@ -1,7 +1,7 @@
 import axios from 'axios'
 import authHeader from '../../components/common/auth-header';
 
-const BASE_URL = '';
+const BASE_URL = 'http://localhost:8080';
 class DataService {
 
 
