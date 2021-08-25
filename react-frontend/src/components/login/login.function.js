@@ -59,7 +59,7 @@ const Login = () => {
 							In valid form . Please fill data carefully.
 								</div> : null}
 						{result === 'F' ? <div id="pwd-alert" class="alert alert-info" role="alert" >
-							Login to application failed. Please fill valid credentials.
+							Login to application failed. Please fill valid credentials or connect admin to approve your registration.
 								</div> : null}
 						<div className="form-group">
 							<label>Email</label>

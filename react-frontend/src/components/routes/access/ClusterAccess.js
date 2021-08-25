@@ -64,6 +64,9 @@ const ClusterAccess = () => {
 				(response) => {
 					console.log(response.data);
 					setResult(response.data.message);
+					if(result==='F'){
+						setErrMsg('Request with bad or duplicate data couldnt be save into system');	
+					}
 				}).catch((error) => {
 					setResult('F');
 					setErrMsg('Request couldnt be raised due to data error . Please connect Admin!!!');

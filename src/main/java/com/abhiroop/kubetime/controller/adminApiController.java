@@ -72,7 +72,7 @@ public class adminApiController {
 	@GetMapping("/user/new/requests")
 	public List<User> getAllRequestedUser() {
 		System.out.println("@/user/new/requests requested.");
-		return userInfoService.getAllRequetsedStatus();
+		return userInfoService.getAllNonActive();
 
 	}
 

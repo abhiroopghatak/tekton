@@ -17,5 +17,6 @@ public interface IUserInfoService extends UserDetailsService {
 
 	User signUpUser(User user, boolean isUpdate) throws Exception;
 
-	List<User> getAllRequetsedStatus();
+
+	List<User> getAllNonActive();
 }

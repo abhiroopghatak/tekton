@@ -2,6 +2,7 @@ package com.abhiroop.kubetime.controller;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abhiroop.kubetime.config.JwtTokenUtil;
+import com.abhiroop.kubetime.config.SystemConstants;
 import com.abhiroop.kubetime.pojo.JwtRequest;
 import com.abhiroop.kubetime.pojo.JwtResponse;
 import com.abhiroop.kubetime.pojo.User;
@@ -44,10 +46,10 @@ public class JwtAuthenticationController {
 				u.getEmail(), u.getPwd(), new ArrayList<>());
 		final UserDetails userDetails = springUser;
 
-		if (userDetails != null) {
+		if (StringUtils.equals(SystemConstants.StatusActive, u.getStatus()) && userDetails != null) {
 			final String token = jwtTokenUtil.generateToken(userDetails);
 
-			return ResponseEntity.ok(new JwtResponse(token,u.getEmail(),u.getRole()));
+			return ResponseEntity.ok(new JwtResponse(token, u.getEmail(), u.getRole()));
 		} else {
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.setLocation(null);

@@ -85,9 +85,13 @@ public class UserDataController {
 			if (c != null && usr != null && StringUtils.equals(usr.getStatus(), SystemConstants.StatusActive)) {
 				uca.setUserUniqueId(usr.getUuid());
 				uca.setStatus(SystemConstants.UserClusterAccessRequestedStatus);
-
-				uca = userClusterAccessService.clusterAccessRequest(uca);
-				rp.setMessage(SystemConstants.EntitySavedInDBSUCCESS);
+				try {
+					uca = userClusterAccessService.clusterAccessRequest(uca);
+					rp.setMessage(SystemConstants.EntitySavedInDBSUCCESS);
+				} catch (Exception e) {
+					rp.setMessage(SystemConstants.EntitySavedInDBFAILURE);
+					rp.setStatus(HttpStatus.CONFLICT);
+				}
 			}
 		}
 

@@ -28,8 +28,8 @@ const Namespaces = (props) => {
 	const retrieveResources = () => {
 		var _u_email = JSON.parse(localStorage.getItem('_u_email'));
 		DataService.getResourcePerNamespaces({
-			clusterId: {cid},
-			userId: _u_email
+			clusterId: cid,
+			userEmail: _u_email
 		})
 			.then((response) => {
 				setResources(response.data);
@@ -42,7 +42,7 @@ const Namespaces = (props) => {
 		const namespace = resourcesRef.current[rowIndex].namespaceName;
 		DataService.getPodResourcePerNamespaces(
 			{
-				"clusterId": {cid},
+				"clusterId": cid,
 				"namespace": namespace
 			}
 		).then((response) => {
@@ -285,7 +285,7 @@ const Namespaces = (props) => {
 								{pods.map((pod, index) => (<>
 									{pod.containers.map((container, idx) => (
 										<tr>
-											<th scope="row">{idx == 0 ? pod.podName : null}</th>
+											<td scope="row">{idx == 0 ? pod.podName : null}</td>
 											<td>{container.containerName}</td>
 											<td>{container.cpuCores}</td>
 											<td>{container.memoryBytes}</td>

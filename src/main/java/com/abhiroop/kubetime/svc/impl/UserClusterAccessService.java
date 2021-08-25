@@ -62,9 +62,22 @@ public class UserClusterAccessService implements IuserClusterAccess {
 	}
 
 	@Override
-	public UserClusterAccess clusterAccessRequest(UserClusterAccess uca) {
-		// TODO Auto-generated method stub
-		return userClusterAccessRepo.save(uca);
+	public UserClusterAccess clusterAccessRequest(UserClusterAccess ucar) {
+		List<UserClusterAccess> ucaList = userClusterAccessRepo.getAllPerUser(ucar.getUserUniqueId());
+		if (!CollectionUtils.isEmpty(ucaList)) {
+
+			Iterator<UserClusterAccess> itr = ucaList.iterator();
+			while (itr.hasNext()) {
+				UserClusterAccess uca = itr.next();
+				if (StringUtils.equals(ucar.getAccessedLabel(), uca.getAccessedLabel())
+						&& ucar.getClusterUniqueId() == uca.getClusterUniqueId()) {
+					System.out.print("@clusterAccessRequest : Dup;licate request for label access");
+					throw new RuntimeException("Duplicate request");
+				}
+			}
+		}
+
+		return userClusterAccessRepo.save(ucar);
 	}
 
 	@Override

@@ -120,13 +120,13 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	}
 
 	@Override
-	public List<User> getAllRequetsedStatus() {
+	public List<User> getAllNonActive() {
 		List<User> ucaList = usrRepository.findAll();
 		Iterator<User> uItr = ucaList.iterator();
 
 		while (uItr.hasNext()) {
 			User uca = uItr.next();
-			if (!StringUtils.equals(SystemConstants.RequestedStatus, uca.getStatus())) {
+			if (StringUtils.equals(SystemConstants.StatusActive, uca.getStatus())) {
 				uItr.remove();
 			}
 		}

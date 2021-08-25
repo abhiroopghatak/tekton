@@ -14,7 +14,7 @@ const NewUserApproval = () => {
 	const usersRef = useRef();
 	usersRef.current = users;
 
-	const [modalIsOpen, setIsOpen] = React.useState(false);
+	const [modalIsOpen, setModalIsOpen] = React.useState(false);
 	const modalStyles = {
 		content: {
 			top: '10%',
@@ -25,7 +25,7 @@ const NewUserApproval = () => {
 		}
 	};
 	function openModal() {
-		setIsOpen(true);
+		setModalIsOpen(true);
 	}
 
 	function afterOpenModal() {
@@ -33,7 +33,7 @@ const NewUserApproval = () => {
 	}
 
 	function closeModal() {
-		setIsOpen(false);
+		setModalIsOpen(false);
 	}
 	const openActionDialog = (rowIndex) => {
 		setModalData(usersRef.current[rowIndex]);
@@ -80,7 +80,7 @@ const NewUserApproval = () => {
 
 		<div className="outer">
 			<div className="inner-broad">
-				<h2>New User Approval</h2>
+				<h2>Manage Users</h2>
 				{(result === 'S') ?
 					<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert" >
 						Status has been updated in system.
@@ -93,6 +93,7 @@ const NewUserApproval = () => {
 							<th scope="col">UserEmail</th>
 							<th scope="col">User Name</th>
 							<th scope="col">Registered Date</th>
+							<th scope="col">Status</th>
 							<th scope="col">Action</th>
 						</tr>
 					</thead>
@@ -105,6 +106,7 @@ const NewUserApproval = () => {
 								<td>{user.email}</td>
 								<td>{user.fullname}</td>
 								<td>{user.createTime}</td>
+								<td>{user.status=== 'I' ? "InActive" : "Registered"}</td>
 
 								<td>
 									<a onClick={() => openActionDialog(index)}>
