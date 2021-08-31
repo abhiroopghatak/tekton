@@ -1,7 +1,5 @@
 package com.abhiroop.kubetime.svc;
 
-import java.util.List;
-
 import com.abhiroop.kubetime.pojo.ItemCost;
 
 public interface ICostService {

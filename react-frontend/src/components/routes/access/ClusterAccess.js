@@ -116,7 +116,7 @@ const ClusterAccess = () => {
 									</div>
 
 									<div class="input-group mb-3">
-										<input class="w-100" placeholder="Key=value lable please ..." type="text" onChange={handleChange} name="accessedLabel" />
+										<input class="w-100" placeholder="Key=value label please ..." type="text" onChange={handleChange} name="accessedLabel" />
 									</div>
 									<small id="labelHelp" class="form-text text-muted">provide the label selector based on that namespaces in that selected cluster will appear in your dashboard</small>
 									<br />

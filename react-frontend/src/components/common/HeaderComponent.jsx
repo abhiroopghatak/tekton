@@ -26,7 +26,6 @@ const history = useHistory();
 					<ul class="navbar-nav ml-auto">
 
 						<li class="nav-item"><a class="border border-light rounded mr-1 nav-link Ripple-parent" href="/sign-up"><i class="fas fa-user-plus"></i>Register New User</a></li>
-						<li class="nav-item"><a class="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="/profile" ><i class="fa fa-id-card" aria-hidden="true"></i> Profile</a></li>
 						<button type="button" className="btn btn-dark" onClick={logout}><i class="fas fa-sign-out-alt" ></i>
 							Sign out
     </button>

@@ -15,7 +15,7 @@ const QuotaDetails = () => {
 			<MDBContainer >
 				<div class="row justify-content-center">
 					<div class="col-md-4 col-lg-3">
-						<FixedPriceCard />
+						<FixedPriceCard cid={cid} />
 					</div>
 					<div class="col-md-5 col-lg-9">
 

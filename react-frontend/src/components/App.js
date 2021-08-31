@@ -13,6 +13,7 @@ import SpinnerPage from "./ui/spinner";
 import HeaderComponent from "./common/HeaderComponent";
 import FooterComponent from "./common/FooterComponent";
 import AddCluster from './routes/admin/addcluster.function.js';
+import ClusterForm from './routes/admin/ClusterForm.js';
 import AccessApproval from './routes/admin/AccessApproval.function.js';
 import NewUserApproval from './routes/admin/user.registration.approval.js';
 
@@ -43,7 +44,7 @@ const App = () => {
 						<Route path="/sign-up" component={SignUp} />
 						<ProtectedRoute path="/resources" component={QuotaDetails} />
 						<ProtectedRoute path="/access" exact component={ClusterAccess} />
-						<ProtectedRoute path="/add-cluster" exact component={AddCluster} forAdmin="true" />
+						<ProtectedRoute path="/add-cluster" exact component={ClusterForm} forAdmin="true" />
 						<ProtectedRoute path="/access-approve" exact component={AccessApproval} forAdmin="true" />
 						<ProtectedRoute path="/user-approve" exact component={NewUserApproval} forAdmin="true" />
 						<Route path="*" component={BadRequest} />

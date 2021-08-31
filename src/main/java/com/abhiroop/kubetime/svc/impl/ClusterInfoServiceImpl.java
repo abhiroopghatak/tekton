@@ -41,7 +41,7 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 		return clusterRepo.saveAndFlush(c);
 	}
 
-	@Cacheable(value="clusters")           // it will cache result and key name will be "clusters"
+	@Cacheable(value = "clusters") // it will cache result and key name will be "clusters"
 	@Override
 	public List<Cluster> getClusterList() {
 		System.out.println("getClusterList : service call invoked");
@@ -56,30 +56,32 @@ public class ClusterInfoServiceImpl implements ClusterInfoService {
 				cluster.setErrorMessage("Date Parsing error occurred");
 			}
 		}
-		
+
 		return cList;
 	}
 
 	@Override
 	public Cluster addCluster(Cluster c) throws Exception {
-		
-		if(getByName(c.getName()) != null) {
+
+		if (getByName(c.getName()) != null) {
 			throw new RuntimeException("CLuster of same name exists");
 		}
-		
-		c= clusterRepo.save(c);
-		
+
+		c = clusterRepo.save(c);
+
 		return c;
 	}
 
 	@Override
 	public Cluster getByName(String cName) {
-		
 
-		
 		return clusterRepo.findOneByName(cName);
 	}
 
-	
+	@Override
+	public void removeCluster(Cluster c) {
+		// TODO Auto-generated method stub
+		clusterRepo.delete(c);
+	}
 
 }

@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.abhiroop.kubetime.config.SystemConstants;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.pojo.ClusterAccessRequestObject;
+import com.abhiroop.kubetime.pojo.ItemCost;
+import com.abhiroop.kubetime.pojo.JsClusterWithCost;
 import com.abhiroop.kubetime.pojo.RequestPojo;
 import com.abhiroop.kubetime.pojo.ResponsePojo;
 import com.abhiroop.kubetime.pojo.User;
 import com.abhiroop.kubetime.pojo.UserClusterAccess;
 import com.abhiroop.kubetime.svc.ClusterInfoService;
+import com.abhiroop.kubetime.svc.ICostService;
 import com.abhiroop.kubetime.svc.IUserInfoService;
 import com.abhiroop.kubetime.svc.IuserClusterAccess;
 
@@ -41,7 +44,10 @@ public class adminApiController {
 	@Autowired
 	private IUserInfoService userInfoService;
 
-	@PostMapping("/cluster/add")
+	@Autowired
+	private ICostService costService;
+
+	@PostMapping("/cluster/add/old")
 	public ResponsePojo addCluster(@RequestBody Cluster c) {
 
 		System.out.println("@/cluster/add: Received request to create cluster =>" + c);
@@ -64,6 +70,49 @@ public class adminApiController {
 				log.debug("@/cluster/add ====cluster add thrown exception=====" + e.getMessage());
 			}
 
+		}
+
+		return ar;
+	}
+
+	@PostMapping("/cluster/add")
+	public ResponsePojo addClusterWithCost(@RequestBody JsClusterWithCost jcc) {
+		System.out.println("@/cluster/add: Received request to create cluster =>" + jcc);
+		ResponsePojo ar = null;
+		Cluster c = new Cluster();
+		c.setEndpoint(jcc.getEndpoint());
+		c.setEnvironment(jcc.getEnvironment());
+		c.setName(jcc.getName());
+		c.setToken(jcc.getToken());
+
+		c.setRegisteredon(new Date());
+		c.setStatus(SystemConstants.StatusActive);
+
+		ItemCost ic = new ItemCost();
+		ic.setCpucost(jcc.getCpucost());
+		ic.setMomorycost(jcc.getMomorycost());
+		ic.setStoragecost(jcc.getStoragecost());
+		ic.setLastupdated(new Date());
+		try {
+			c = clusterInfoService.addCluster(c);
+
+			if (c.getUuid() > 0) {
+				ic.setClusterid(c.getUuid());
+				ic = costService.addCostDetail(ic);
+				if (ic.getUuid() > 0) {
+					ar = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, c);
+					log.info("@/cluster/add==== Admin added new cluster into system =======");
+				} else {
+					 clusterInfoService.removeCluster(c);
+					throw new RuntimeException(
+							"Exception occurred in cost table update . Disabled newly created cluster entry -=> " + c);
+				}
+			}
+		} catch (Exception e) {
+
+			c.setErrorMessage("Operation =AddCluster= thrown exception." + e.getMessage());
+			ar = new ResponsePojo(HttpStatus.CONFLICT, SystemConstants.EntitySavedInDBFAILURE, c);
+			log.debug("@/cluster/add ====cluster add thrown exception=====" + e.getMessage());
 		}
 
 		return ar;
@@ -98,7 +147,7 @@ public class adminApiController {
 			resp = new ResponsePojo(HttpStatus.FORBIDDEN, SystemConstants.EntitySavedInDBFAILURE, e.getMessage());
 			System.out.println(e.getMessage());
 		}
-		
+
 		return resp;
 	}
 

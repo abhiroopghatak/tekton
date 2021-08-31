@@ -8,13 +8,13 @@ import _dollar_cost_icon from "../../../images/icon/_dollar_cost_icon.png";
 
 import DataService from '../../../restapi/data-service/DataService.js';
 
-function FixedPriceCard() {
+const FixedPriceCard = (props) => {
 
-
+	const cid = props.cid;
 	const [data, setData] = useState([]);
 
 	useEffect(async () => {
-		DataService.getCostDataPerCluster(1111).then(
+		DataService.getCostDataPerCluster(cid).then(
 
 			(response) => {
 				setData(response.data);
@@ -23,7 +23,7 @@ function FixedPriceCard() {
 				console.log(error);
 			});
 
-	},[]);
+	}, []);
 	return (
 		<>
 			<MDBCard className="border border-info  z-depth-5" >

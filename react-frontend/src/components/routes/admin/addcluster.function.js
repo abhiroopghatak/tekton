@@ -74,7 +74,7 @@ const AddCluster = () => {
 					{validForm === 'F' ? <ErrorAlert msg={errMsg} /> : null}
 
 					<div className="form-group required">
-						<label className="control-label">CLuster Name</label>
+						<label className="control-label">Cluster Name</label>
 						<input type="text" name="name" className="form-control " onChange={handleChange} placeholder="Cluster unique name" />
 					</div>
 
