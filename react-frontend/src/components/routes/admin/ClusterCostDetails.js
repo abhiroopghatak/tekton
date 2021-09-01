@@ -42,8 +42,8 @@ export class ClusterCostDetails extends Component {
 
 					<br />
 					<div class="button-group mb-3">
-						<button type="button" onClick={this.back} className="btn btn-light btn-lg btn-block">Back</button>
-						<button type="button" onClick={this.continue} disabled={!isEnabled} className="btn btn-dark btn-lg btn-block">Continue</button>
+						<button type="button" onClick={this.back} className="btn btn-light float-left" rounded="true">Back</button>
+						<button type="button" onClick={this.continue} disabled={!isEnabled} className="btn btn-dark float-right" rounded="true">Continue</button>
 					</div>
 				</div></div>
 

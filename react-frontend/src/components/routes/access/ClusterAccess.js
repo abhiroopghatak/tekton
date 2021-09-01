@@ -75,18 +75,13 @@ const ClusterAccess = () => {
 		}
 	};
 
+const isEnabled = formData.accessedLabel.length > 0 && formData.jsUserEmail.length >0 && formData.clusterUniqueId >0;
+
 	return (
 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-7 bg-request-access">
-
-				</div>
-
-				<div class="col-md position-relative top-50 start-0">
-					<div class="container">
-						<div class="row">
-							<div class="col" >
+		<div className="outer">
+				<div className="inner">
+				
 								{(result === 'S') ?
 									<div id="success-alert" class="alert alert-success" role="alert" >
 										Resquest has been raised successfully
@@ -101,8 +96,8 @@ const ClusterAccess = () => {
 								</div> : null}
 								<form onSubmit={handleSubmit}>
 									<p className="h4 text-center">Cluster Access Request</p>
-									<div class="input-group mb-3 ">
-
+									<div className="form-group required">
+											<label className="control-label">Registered Email</label>
 										<input class="w-100" placeholder="Type your email" type="text" validate name="jsUserEmail"
 											onChange={handleChange} />
 										<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
@@ -115,7 +110,8 @@ const ClusterAccess = () => {
 										</select>
 									</div>
 
-									<div class="input-group mb-3">
+									<div className="form-group required">
+									<label className="control-label">Label (Key = Value)</label>
 										<input class="w-100" placeholder="Key=value label please ..." type="text" onChange={handleChange} name="accessedLabel" />
 									</div>
 									<small id="labelHelp" class="form-text text-muted">provide the label selector based on that namespaces in that selected cluster will appear in your dashboard</small>
@@ -123,19 +119,12 @@ const ClusterAccess = () => {
 									<br />
 									<div class="button-group mb-3">
 										<Link to="/home">
-											<button className="btn btn-info float-left" rounded="true" >Cancel</button>
+											<button className="btn btn-light float-left" rounded="true" >Cancel</button>
 										</Link>
-										<button type="button" onClick={handleSubmit} className="btn btn-primary float-right" rounded="true"  >Submit</button>
+										<button type="button" onClick={handleSubmit} disabled={!isEnabled} className="btn btn-dark float-right" rounded="true"  >Submit</button>
 									</div>
 								</form>
-							</div>
-
-
-						</div>
-
-					</div>
-
-				</div>
+							
 			</div>
 		</div>
 
