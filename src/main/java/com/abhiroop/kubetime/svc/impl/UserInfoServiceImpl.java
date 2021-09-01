@@ -64,6 +64,17 @@ public class UserInfoServiceImpl implements IUserInfoService {
 
 				user = usrRepository.save(user);
 			}
+		} else {
+			if (userWithDuplicateUsername == null) {
+
+				System.err.print(" User with email " + user.getEmail() + " does not exists in system. ");
+				throw new RuntimeException("User does not exists");
+			} else {
+				user.setCreateTime(new Date());
+				String encryptedPassword = p.encode(user.getPwd());
+				user.setPwd(encryptedPassword);
+				user = usrRepository.save(user);
+			}
 		}
 
 		return user;
@@ -134,7 +145,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	}
 
 	@Override
-	public User userStatusUpdate(long uuid, String status) throws Exception{
+	public User userStatusUpdate(long uuid, String status) throws Exception {
 		Optional<User> ucaOptional = usrRepository.findById(uuid);
 		User usr = null;
 		if (ucaOptional.isPresent()) {

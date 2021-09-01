@@ -12,8 +12,8 @@ export default props => {
 				Home
       </a>
 
-			<a className="menu-item" href="/about">
-				About
+			<a className="menu-item" href="/profile">
+				Profile
       </a>
 
 			<a className="menu-item" href="/access">
