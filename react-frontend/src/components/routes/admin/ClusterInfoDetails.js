@@ -45,7 +45,7 @@ export class ClusterInfoDetails extends Component {
 					</div>
 
 					<br />
-					<button type="button" onClick={this.continue} disabled={!isEnabled} className="btn btn-dark btn-lg btn-block">Continue</button>
+					<button type="button" style={{textTransform: 'none'}} onClick={this.continue} disabled={!isEnabled} className="btn btn-dark btn-lg btn-block">Continue</button>
 
 				</div></div>
 

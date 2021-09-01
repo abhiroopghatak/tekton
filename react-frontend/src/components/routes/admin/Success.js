@@ -21,7 +21,7 @@ export class Success extends Component {
 						<div class="button-group mb-3">
 							
 							<Link to="/home">
-								<button type="button" className="btn btn-dark float-right">Go to Home</button>
+								<button type="button" style={{textTransform: 'none'}} className="btn btn-dark float-right">Go to Home</button>
 							</Link>
 						</div>
 					</div></div>

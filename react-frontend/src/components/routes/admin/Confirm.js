@@ -101,8 +101,8 @@ export class Confirm extends Component {
 
 					<br />
 					<div class="button-group mb-3">
-						<button type="button" onClick={this.back} className="btn btn-light btn-lg btn-block">Back</button>
-						<button type="button" onClick={this.handleSubmit} className="btn btn-dark btn-lg btn-block">Confirm & Submit</button>
+						<button type="button"style={{textTransform: 'none'}}  onClick={this.back} className="btn btn-light btn-lg btn-block">Back</button>
+						<button type="button"  style={{textTransform: 'none'}} onClick={this.handleSubmit} className="btn btn-dark btn-lg btn-block">Confirm & Submit</button>
 					</div>
 				</div></div>
 		</>);

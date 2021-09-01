@@ -44,11 +44,11 @@ function UserProfileCard() {
 
 				{isAdmin === 'AU' ?
 					<Link to="/access-approve">
-						<button type="button" class="btn btn-light" >Access Approval</button>
+						<button type="button" class="btn btn-light" style={{textTransform: 'none'}}>Access Approval</button>
 					</Link> : null}
 				{isAdmin === 'AU' ?
 					<Link to="/user-approve">
-						<button type="button" class="btn btn-dark" >User-Approval</button>
+						<button type="button" class="btn btn-dark"  style={{textTransform: 'none'}}>User-Approval</button>
 					</Link> : null}
 			</MDBCardBody>
 		</MDBCard>

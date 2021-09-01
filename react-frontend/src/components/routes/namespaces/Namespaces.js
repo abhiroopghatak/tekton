@@ -269,7 +269,7 @@ const Namespaces = (props) => {
 				>
 					<div class="modal-header">
 						<h6 class="modal-title">Resources useage in detail</h6>
-						<button type="button" class="btn btn-secondary" onClick={closeModal}>Close</button>
+						<button type="button" class="btn btn-secondary" style={{textTransform: 'none'}} onClick={closeModal}>Close</button>
 					</div>
 					<div class="modal-body">
 						<table class="table">

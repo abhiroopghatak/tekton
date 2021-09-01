@@ -112,7 +112,7 @@ class Home extends Component {
 														</table>
 													</div>
 													<Link to={{ pathname: "/resources", state: { cid: cluster.uuid } }} >	{this.state.cluster.errorMessage ?
-														<button type="button" class="btn btn-dark p-2 float-end disabled"  >Select</button> : <button type="button" class="btn btn-dark p-2 pull-right " >Select</button>}
+														<button type="button" style={{textTransform: 'none'}} class="btn btn-dark p-2 float-end disabled"  >Select</button> : <button type="button" class="btn btn-dark p-2 pull-right " >Select</button>}
 
 													</Link>
 
@@ -123,7 +123,7 @@ class Home extends Component {
 							</MDBListGroup>
 							{this.state.isAdmin === 'AU' ?
 								<Link to="/add-cluster">
-									<button type="button" class="btn btn-dark text-light pull-right" >Add Cluster</button>
+									<button type="button" style={{textTransform: 'none'}} class="btn btn-dark text-light pull-right" >Add Cluster</button>
 								</Link>
 								: null}
 						</MDBCol>
