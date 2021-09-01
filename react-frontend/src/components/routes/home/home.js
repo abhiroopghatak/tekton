@@ -68,13 +68,13 @@ class Home extends Component {
 		return (
 			<div>
 				<MDBContainer className="z-depth-5">
-					<MDBRow class=".mt-30">
+					<MDBRow class=".mt-10">
 						<MDBCol sm="4">
 							<UserProfileCard />
 						</MDBCol>
 
 						<MDBCol sm="8" className="border border-primary hoverable">
-							<MDBCardTitle className="h3-responsive font-bold">List of cluster registered against your email</MDBCardTitle>
+							<MDBCardTitle className="h4-responsive">List of cluster registered against your email</MDBCardTitle>
 							<MDBListGroup className="my-3 mx-3">
 								{this.state.clusters.map(cluster => (
 									<MDBListGroupItem color="primary"> <a class="nav-link " id="v-pills-home-tab" role="tab" aria-selected="true" onClick={() => this.toggleCollapse(cluster.uuid, cluster.uuid)}

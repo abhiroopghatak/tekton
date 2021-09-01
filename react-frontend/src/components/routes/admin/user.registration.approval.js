@@ -80,10 +80,10 @@ const NewUserApproval = () => {
 
 		<div className="outer">
 			<div className="inner-broad">
-				<h2>Manage Users</h2>
+				<h4>Manage Users</h4>
 				{(result === 'S') ?
 					<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert" >
-						Status has been updated in system.
+						User state has been approved in the system.
 								</div> : ''}
 
 				<table class="table  table-striped table-hover">
@@ -98,8 +98,11 @@ const NewUserApproval = () => {
 						</tr>
 					</thead>
 					<tbody>
-
-						{users.map((user, index) => (
+					
+					{users.length > 0 ? 
+					<>
+					
+					{users.map((user, index) => (
 
 							<tr>
 								<td scope="row">{index + 1}</td>
@@ -119,6 +122,10 @@ const NewUserApproval = () => {
 							</tr>
 
 						))}
+					</>
+					: <p >  There is no users left in Registered or Inactive state.</p>}
+
+						
 
 					</tbody>
 				</table>

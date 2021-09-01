@@ -4,23 +4,36 @@ import '../../styles/componentstyles/Sidebar.css';
 
 
 export default props => {
-  return (
-    <Menu {...props}>
-      <a className="menu-item" href="/">
-        Home
+
+	const isAdmin = JSON.parse(localStorage.getItem('system_role'));
+	return (
+		<Menu {...props}>
+			<a className="menu-item" href="/">
+				Home
       </a>
 
-      <a className="menu-item" href="/about">
-        About
+			<a className="menu-item" href="/about">
+				About
       </a>
 
-      <a className="menu-item" href="/access">
-        Cluster Access request
+			<a className="menu-item" href="/access">
+				Cluster Access request
       </a>
 
-      <a className="menu-item" href="/contact">
-        Contact us
+			<a className="menu-item" href="/contact">
+				Contact us
       </a>
-    </Menu>
-  );
+			{isAdmin === 'AU' ?
+
+				<a className="menu-item" href="/user-approve">
+					Manage Users
+      </a> : null
+			}
+			{isAdmin === 'AU' ?
+				<a className="menu-item" href="/access-approve">
+					Cluster Access Approval
+      </a> : null}
+
+		</Menu>
+	);
 };

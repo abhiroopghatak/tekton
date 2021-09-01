@@ -34,7 +34,7 @@ function UserProfileCard() {
 				<img className="img-fluid" src={_user_icon} margin="auto" >
 
 				</img>
-				<MDBCardTitle>Welcome {data.fullname}</MDBCardTitle>
+				<MDBCardTitle className="h4-responsive">Welcome {data.fullname}</MDBCardTitle>
 				<MDBCardText> You have been logged in as {data.email} </MDBCardText>
 				{isAdmin === 'AU' ? null :
 					<Link to="/access">
