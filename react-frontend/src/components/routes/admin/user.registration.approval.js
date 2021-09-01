@@ -138,7 +138,7 @@ const NewUserApproval = () => {
 					<div class="modal-header">
 						<h5 class="modal-title" id="actionModal">Select the action to perform</h5>
 
-						<button type="button" class="btn btn-dark" onClick={closeModal}>Close</button>
+						<button type="button" style={{textTransform: 'none'}} class="btn btn-dark" onClick={closeModal}>Close</button>
 					</div>
 					<div class="modal-body">
 						{(result === 'F') ? <ErrorAlert msg={errMsg} /> : null}
@@ -158,8 +158,8 @@ const NewUserApproval = () => {
 						</table>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-warning pull-left" onClick={()=>actionTaken('N')}>Reject</button>
-						<button type="button" class="btn btn-success" onClick={()=>	actionTaken('Y')}>Accept</button>
+						<button type="button" style={{textTransform: 'none'}} class="btn btn-warning pull-left" onClick={()=>actionTaken('N')}>Reject</button>
+						<button type="button" style={{textTransform: 'none'}} class="btn btn-success" onClick={()=>	actionTaken('Y')}>Accept</button>
 					</div>
 				</Modal>
 

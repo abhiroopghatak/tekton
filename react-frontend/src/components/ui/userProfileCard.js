@@ -38,7 +38,7 @@ function UserProfileCard() {
 				<MDBCardText> You have been logged in as {data.email} </MDBCardText>
 				{isAdmin === 'AU' ? null :
 					<Link to="/access">
-						<button type="button" class="btn btn-dark text-light pull-right" >Raise Access Request</button>
+						<button type="button" style={{textTransform: 'none'}} class="btn btn-dark text-light pull-right" >Raise Access Request</button>
 					</Link>
 				}
 
