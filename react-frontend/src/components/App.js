@@ -20,6 +20,7 @@ import NewUserApproval from './routes/admin/user.registration.approval.js';
 import QuotaDetails from './routes/namespaces/QuotaDetails.js';
 import ClusterAccess from './routes/user/ClusterAccess.js';
 import Profile from './routes/user/Profile.js';
+import ChangePassword from './routes/user/ChangePassword.js';
 import Login from "./login/login.function.js";
 import SignUp from "./login/signup.function.js";
 import  Home from './routes/home/home';
@@ -45,6 +46,7 @@ const App = () => {
 						<Route path="/sign-up" component={SignUp} />
 						<ProtectedRoute path="/resources" component={QuotaDetails} />
 						<ProtectedRoute path="/access" exact component={ClusterAccess} />
+						<ProtectedRoute path="/change/password" exact component={ChangePassword} />
 						<ProtectedRoute path="/profile"  component={Profile} />
 						<ProtectedRoute path="/add-cluster" exact component={ClusterForm} forAdmin="true" />
 						<ProtectedRoute path="/access-approve" exact component={AccessApproval} forAdmin="true" />

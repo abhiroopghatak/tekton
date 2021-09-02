@@ -13,22 +13,22 @@ class DataService {
 	getRequestedAccess() {
 		return axios.get(BASE_URL + '/api/admin/cluster/access/requests', { headers: authHeader() });
 	}
-	
+
 	getNewUserList() {
 		return axios.get(BASE_URL + '/api/admin/user/new/requests', { headers: authHeader() });
 	}
-	
-	newUserApproval(data){
+
+	newUserApproval(data) {
 		return axios.post(BASE_URL + '/api/admin/user/new/approve', data, { headers: authHeader() });
 	}
-	
-	approveCLusterAccess(data){
+
+	approveCLusterAccess(data) {
 		return axios.post(BASE_URL + '/api/admin/cluster/access/approve', data, { headers: authHeader() });
 	}
-	rejectCLusterAccess(data){
+	rejectCLusterAccess(data) {
 		return axios.post(BASE_URL + '/api/admin/cluster/access/reject', data, { headers: authHeader() });
 	}
-	
+
 	getAllClusters() {
 		return axios.get(BASE_URL + '/api/clusters/getAll', { headers: authHeader() });
 	}
@@ -40,6 +40,10 @@ class DataService {
 
 	loginUser(data) {
 		return axios.post(BASE_URL + '/api/authenticate', data);
+	}
+
+	changePassword(data) {
+		return axios.post(BASE_URL + '/api/chpwd', data);
 	}
 
 	registerUser(data) {

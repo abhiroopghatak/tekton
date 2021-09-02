@@ -46,7 +46,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	}
 
 	@Override
-	public User signUpUser(User user, boolean isUpdate) throws Exception {
+	public User saveUser(User user, boolean isUpdate) throws Exception {
 		User userWithDuplicateUsername = getOneByEmail(user.getEmail());
 		if (!isUpdate) {
 			if (userWithDuplicateUsername != null) {

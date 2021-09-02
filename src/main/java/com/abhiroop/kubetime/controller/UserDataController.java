@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abhiroop.kubetime.config.SystemConstants;
+import com.abhiroop.kubetime.pojo.ChangePasswordRequest;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.pojo.ResponsePojo;
 import com.abhiroop.kubetime.pojo.User;
@@ -108,13 +109,15 @@ public class UserDataController {
 		user.setFullname("System Admin");
 
 		try {
-			user = userInfoService.signUpUser(user, false);
+			user = userInfoService.saveUser(user, false);
 			System.out.println("Admin user of email " + adminUserEmail + " created successfully.");
 		} catch (Exception e) {
 			System.err.println("Admin user already exists.");
 		}
 	}
 
+	
+	
 	@PostMapping("/register")
 	public ResponsePojo create(@RequestBody User user) {
 		System.out.println("received request to create user =>" + user);
@@ -127,7 +130,7 @@ public class UserDataController {
 				throw new RuntimeException("INVALID REQUEST : Request with malfunctioned data.");
 			}
 
-			user = userInfoService.signUpUser(user, isUpdate);
+			user = userInfoService.saveUser(user, isUpdate);
 			if (!isUpdate && user.getUuid() == 0) {
 				ar = new ResponsePojo(HttpStatus.CONFLICT, SystemConstants.EntitySavedInDBFAILURE, user);
 			} else if (!isUpdate && user.getUuid() >= 0) {

@@ -8,7 +8,7 @@ const SignUp = () => {
 		email: "",
 		fullname: "",
 		pwd: "",
-		confirmcode: ""
+		confirmCode: ""
 	});
 	const [formData, updateFormData] = useState(signupFormData);
 	const [result, setResult] = useState([]);
@@ -96,7 +96,7 @@ const SignUp = () => {
 						</div>
 						{validPasscode === 'F' ? <ErrorAlert msg={errMsg} /> : null}
 
-						<button type="submit" onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Register</button>
+						<button type="submit" style={{textTransform: 'none'}} onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Register</button>
 						<p className="forgot-password text-right">
 							Already registered <a href="/login">log in?</a>
 						</p>
