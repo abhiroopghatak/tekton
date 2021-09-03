@@ -119,9 +119,9 @@ const isEnabled = formData.accessedLabel.length > 0 && formData.jsUserEmail.leng
 									<br />
 									<div class="button-group mb-3">
 										<Link to="/home">
-											<button className="btn btn-light float-left" rounded="true" >Cancel</button>
+											<button style={{ textTransform: 'none' }}  className="btn btn-light float-left" rounded="true" >Cancel</button>
 										</Link>
-										<button type="button" onClick={handleSubmit} disabled={!isEnabled} className="btn btn-dark float-right" rounded="true"  >Submit</button>
+										<button type="button" style={{ textTransform: 'none' }}  onClick={handleSubmit} disabled={!isEnabled} className="btn btn-dark float-right" rounded="true"  >Submit</button>
 									</div>
 								</form>
 							

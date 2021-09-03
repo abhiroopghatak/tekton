@@ -89,7 +89,7 @@ const UserList = () => {
 										<td>{user.fullname}</td>
 										<td>{user.role === 'AU' ? "Admin" : "End User"}</td>
 										<td>{user.lastUpdated}</td>
-										<td>{user.status === 'I' ? "InActive" : "Registered"}</td>
+										<td>{user.status === 'I' ? "InActive" : (user.status === 'A')? "Active":"Registered"}</td>
 
 										<td>
 											<a onClick={() => openDetailDialog(index)}>
@@ -136,7 +136,7 @@ const UserList = () => {
 											<td>{ca.clustername}</td>
 											<td>{ca.labelSelector}</td>
 											<td>{ca.status}</td>
-										</tr>))}</> : <td>"No ACcess Data avaialble"</td>}
+										</tr>))}</> : <td>"No Access Data avaialble"</td>}
 								
 									
 							</tbody>

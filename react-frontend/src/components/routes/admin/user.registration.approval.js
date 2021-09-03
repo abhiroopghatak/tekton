@@ -35,7 +35,7 @@ const NewUserApproval = () => {
 		// references are now sync'd and can be accessed.
 	}
 
-	function closeModal() {
+	const closeModal=()=> {
 		setModalIsOpen(false);
 	}
 	const openActionDialog = (rowIndex) => {
@@ -67,8 +67,8 @@ const NewUserApproval = () => {
 					setErrMsg("Data conflict occurred and statuc couldnt be updated.");
 				}
 				else if (result === 'S') {
-					loadData();
 					closeModal();
+					loadData();
 				}
 			}).catch((error) => {
 				setResult('F');

@@ -8,17 +8,17 @@ import { useTable, useSortBy, useFilters, useGlobalFilter, useAsyncDebounce, use
 
 
 const modalStyles = {
-		overlay: {
-			backgroundColor: 'rgba(0,0,0,0.5)',
-		},
-		content: {
-			top: '20%',
-			left: '25%',
-			width: '50%',
-			right: 'auto',
-			bottom: 'auto',
-		}
-	};
+	overlay: {
+		backgroundColor: 'rgba(0,0,0,0.5)',
+	},
+	content: {
+		top: '20%',
+		left: '25%',
+		width: '50%',
+		right: 'auto',
+		bottom: 'auto',
+	}
+};
 const Namespaces = (props) => {
 	const cid = props.cid;
 	const [resources, setResources] = useState([]);
@@ -272,7 +272,7 @@ const Namespaces = (props) => {
 				>
 					<div class="modal-header">
 						<h6 class="modal-title">Resources useage in detail</h6>
-						<button type="button" class="btn btn-secondary" style={{textTransform: 'none'}} onClick={closeModal}>Close</button>
+						<button type="button" class="btn btn-secondary" style={{ textTransform: 'none' }} onClick={closeModal}>Close</button>
 					</div>
 					<div class="modal-body">
 						<table class="table">
@@ -285,15 +285,23 @@ const Namespaces = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{pods.map((pod, index) => (<>
+							
+							
+							{pods.length > 0 ?
+							
+							<>{pods.map((pod, index) => (<>
 									{pod.containers.map((container, idx) => (
 										<tr>
 											<td scope="row">{idx == 0 ? pod.podName : null}</td>
-											<td>{container.containerName}</td>
-											<td>{container.cpuCores}</td>
-											<td>{container.memoryBytes}</td>
+											{pod.containers.length > 1 ? <td class="table-secondary">{container.containerName}</td> : <td>{container.containerName}</td>}
+											{pod.containers.length > 1 ? <td class="table-secondary"> {container.cpuCores}</td> : <td>{container.cpuCores}</td>}
+											{pod.containers.length > 1 ? <td class="table-secondary">{container.memoryBytes}</td> : <td>{container.memoryBytes}</td>}
+											
 										</tr>))}
-								</>))}
+								</>))}</>
+							
+							 : <p> No Pods available </p>}
+								
 							</tbody>
 						</table>
 

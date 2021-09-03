@@ -34,7 +34,7 @@ public class UserClusterAccessService implements IuserClusterAccess {
 	}
 	@Override
 	public List<UserClusterAccess> getActiveLabelAccessPerUser(long userid) {
-		List<UserClusterAccess> ucaList =getAllLabelAccessPerUser(userid);
+		List<UserClusterAccess> ucaList =userClusterAccessRepo.getAllPerUser(userid);
 		if (!CollectionUtils.isEmpty(ucaList)) {
 
 			Iterator<UserClusterAccess> itr = ucaList.iterator();

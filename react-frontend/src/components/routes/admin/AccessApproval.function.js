@@ -23,9 +23,12 @@ const AccessApproval = () => {
 
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 	const modalStyles = {
+		overlay: {
+			backgroundColor: 'rgba(0,0,0,0.5)',
+		},
 		content: {
-			top: '10%',
-			left: '30%',
+			top: '20%',
+			left: '25%',
 			width: '50%',
 			right: 'auto',
 			bottom: 'auto',
@@ -39,7 +42,7 @@ const AccessApproval = () => {
 		// references are now sync'd and can be accessed.
 	}
 
-	function closeModal() {
+	const closeModal=()=> {
 		setIsOpen(false);
 	}
 	const openActionDialog = (rowIndex) => {

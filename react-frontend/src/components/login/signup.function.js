@@ -35,6 +35,10 @@ const SignUp = () => {
 			setErrMsg('One of form field is empty . Please fill carefully.');
 			return false;
 
+		} else if (!formData.email.indexOf('@') > 0) {
+			setValidPasscode('F');
+			setErrMsg('Invalid Email. Please fill carefully.');
+			return false;
 		} else {
 			return true;
 		}
@@ -67,7 +71,7 @@ const SignUp = () => {
 							Resquest has been raised successfully. Please wait for confirmation mail from admin.
 								</div> : ''}
 
-					{(result === 'F') ?<ErrorAlert msg={errMsg} /> : null}
+					{(result === 'F') ? <ErrorAlert msg={errMsg} /> : null}
 
 
 					<form>
@@ -96,7 +100,7 @@ const SignUp = () => {
 						</div>
 						{validPasscode === 'F' ? <ErrorAlert msg={errMsg} /> : null}
 
-						<button type="submit" style={{textTransform: 'none'}} onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Register</button>
+						<button type="submit" style={{ textTransform: 'none' }} onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Register</button>
 						<p className="forgot-password text-right">
 							Already registered <a href="/login">log in?</a>
 						</p>
