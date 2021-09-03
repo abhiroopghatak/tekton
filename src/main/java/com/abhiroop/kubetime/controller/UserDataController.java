@@ -1,6 +1,10 @@
 package com.abhiroop.kubetime.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,8 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abhiroop.kubetime.config.SystemConstants;
-import com.abhiroop.kubetime.pojo.ChangePasswordRequest;
 import com.abhiroop.kubetime.pojo.Cluster;
+import com.abhiroop.kubetime.pojo.JsClusterAccess;
+import com.abhiroop.kubetime.pojo.JsUserData;
 import com.abhiroop.kubetime.pojo.ResponsePojo;
 import com.abhiroop.kubetime.pojo.User;
 import com.abhiroop.kubetime.pojo.UserClusterAccess;
@@ -51,6 +56,33 @@ public class UserDataController {
 	public User getByEmail(@PathVariable String email) {
 
 		return userInfoService.getOneByEmail(email);
+	}
+
+	@GetMapping("/list")
+	public List<JsUserData> getAllWithAccessDetail() {
+		Date date = Calendar.getInstance().getTime();
+		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+		List<JsUserData> udList = new ArrayList<JsUserData>();
+
+		List<User> uList = userInfoService.getAll();
+		for (User user : uList) {
+			JsUserData ud = new JsUserData();
+			ud.setCalist(new ArrayList<JsClusterAccess>());
+			ud.setEmail(user.getEmail());
+			ud.setFullname(user.getFullname());
+			ud.setLastUpdated(dateFormat.format(user.getCreateTime()));
+			ud.setRole(user.getRole());
+			ud.setStatus(user.getStatus());
+			List<UserClusterAccess> ucaList = userClusterAccessService.getAllLabelAccessPerUser(user.getUuid());
+			for (UserClusterAccess uca : ucaList) {
+				Cluster c = clusterCtrl.getById("" + uca.getClusterUniqueId());
+				JsClusterAccess jca = new JsClusterAccess(c.getName(), uca.getAccessedLabel(), uca.getStatus());
+				ud.getCalist().add(jca);
+			}
+			udList.add(ud);
+		}
+
+		return udList;
 	}
 
 	public User getUserById(long userId) {
@@ -116,8 +148,6 @@ public class UserDataController {
 		}
 	}
 
-	
-	
 	@PostMapping("/register")
 	public ResponsePojo create(@RequestBody User user) {
 		System.out.println("received request to create user =>" + user);

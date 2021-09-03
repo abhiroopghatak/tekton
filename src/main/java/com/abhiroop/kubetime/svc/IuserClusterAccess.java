@@ -14,4 +14,5 @@ public interface IuserClusterAccess {
 	UserClusterAccess clusterAccessRequest(UserClusterAccess uca);
 	List<UserClusterAccess> getAllRequetsedStatus();
 	UserClusterAccess statusUpdate(UserClusterAccess uca, String status) throws Exception;
+	List<UserClusterAccess> getAllLabelAccessPerUser(long userid);
 }

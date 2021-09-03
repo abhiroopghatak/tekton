@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.util.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +25,16 @@ public class UserClusterAccessService implements IuserClusterAccess {
 	@Autowired
 	private UserClusterAccessRepo userClusterAccessRepo;
 
+	
+	@Override
+	public List<UserClusterAccess> getAllLabelAccessPerUser(long userid) {
+		
+		
+		return userClusterAccessRepo.findAll(Sort.by("clusterUniqueId"));
+	}
 	@Override
 	public List<UserClusterAccess> getActiveLabelAccessPerUser(long userid) {
-		List<UserClusterAccess> ucaList = userClusterAccessRepo.getAllPerUser(userid);
+		List<UserClusterAccess> ucaList =getAllLabelAccessPerUser(userid);
 		if (!CollectionUtils.isEmpty(ucaList)) {
 
 			Iterator<UserClusterAccess> itr = ucaList.iterator();

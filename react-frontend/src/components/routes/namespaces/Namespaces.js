@@ -8,14 +8,17 @@ import { useTable, useSortBy, useFilters, useGlobalFilter, useAsyncDebounce, use
 
 
 const modalStyles = {
-	content: {
-		top: '10%',
-		left: '30%',
-		width: '50%',
-		right: 'auto',
-		bottom: 'auto',
-	}
-};
+		overlay: {
+			backgroundColor: 'rgba(0,0,0,0.5)',
+		},
+		content: {
+			top: '20%',
+			left: '25%',
+			width: '50%',
+			right: 'auto',
+			bottom: 'auto',
+		}
+	};
 const Namespaces = (props) => {
 	const cid = props.cid;
 	const [resources, setResources] = useState([]);

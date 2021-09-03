@@ -54,7 +54,7 @@ const Login = () => {
 				<div className="login-box">
 					<form>
 
-						<h3>Log in</h3>
+						<h3>Sign in</h3>
 						{validForm === 'F' ? <div id="pwd-alert" class="alert alert-danger" role="alert" >
 							In valid form . Please fill data carefully.
 								</div> : null}
@@ -72,18 +72,12 @@ const Login = () => {
 						</div>
 
 
-						<button type="submit" onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Sign in</button>
+						<button type="submit" style={{textTransform: 'none'}} onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Sign in</button>
+
+						<br /><br />
 						<p className="forgot-password text-right">
-							Forgot <a href="#">password?</a>
+							Do not have account. Please <a href="/sign-up">register</a>
 						</p>
-
-						<div class="alert alert-warning" role="alert">
-							<span
-								className="align-right">Do not have account . Please register
-						here</span>
-						</div>
-						<Link to="/sign-up">	<button className="btn btn-dark btn-lg btn-block float-right" rounded="true" >Sign-up</button></Link>
-
 					</form>
 				</div>
 			</div></div>

@@ -30,6 +30,13 @@ export default props => {
       </a> : null
 			}
 			{isAdmin === 'AU' ?
+
+				<a className="menu-item" href="/ulist/access">
+					View All Users
+      </a> : null
+			}
+
+			{isAdmin === 'AU' ?
 				<a className="menu-item" href="/access-approve">
 					Cluster Access Approval
       </a> : null}

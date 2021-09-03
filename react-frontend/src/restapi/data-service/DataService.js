@@ -52,6 +52,10 @@ class DataService {
 	getUserByEmail(data) {
 		return axios.get(BASE_URL + '/api/users/getOne/' + data, { headers: authHeader() });
 	}
+	
+	getJsUserDataList() {
+		return axios.get(BASE_URL + '/api/users/list/' , { headers: authHeader() });
+	}
 
 	raiseClusterAccess(data) {
 		return axios.post(BASE_URL + '/api/users/requestAccess', data, { headers: authHeader() });

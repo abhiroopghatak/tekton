@@ -20,6 +20,7 @@ import NewUserApproval from './routes/admin/user.registration.approval.js';
 import QuotaDetails from './routes/namespaces/QuotaDetails.js';
 import ClusterAccess from './routes/user/ClusterAccess.js';
 import Profile from './routes/user/Profile.js';
+import UserList from './routes/user/UserList.js';
 import ChangePassword from './routes/user/ChangePassword.js';
 import Login from "./login/login.function.js";
 import SignUp from "./login/signup.function.js";
@@ -51,6 +52,7 @@ const App = () => {
 						<ProtectedRoute path="/add-cluster" exact component={ClusterForm} forAdmin="true" />
 						<ProtectedRoute path="/access-approve" exact component={AccessApproval} forAdmin="true" />
 						<ProtectedRoute path="/user-approve" exact component={NewUserApproval} forAdmin="true" />
+						<ProtectedRoute path="/ulist/access" exact component={UserList} forAdmin="true" />
 						<Route path="*" component={BadRequest} />
 					</Switch>
 

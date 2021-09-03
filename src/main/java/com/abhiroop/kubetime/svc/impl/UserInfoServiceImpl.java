@@ -14,6 +14,7 @@ import javax.crypto.spec.PBEKeySpec;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import com.abhiroop.kubetime.config.SystemConstants;
 import com.abhiroop.kubetime.pojo.User;
-import com.abhiroop.kubetime.pojo.UserClusterAccess;
 import com.abhiroop.kubetime.repo.UserRepo;
 import com.abhiroop.kubetime.svc.IUserInfoService;
 
@@ -156,5 +156,11 @@ public class UserInfoServiceImpl implements IUserInfoService {
 			throw new RuntimeException("Bad Request . No request object found to Approve/Reject");
 		}
 		return usr;
+	}
+
+	@Override
+	public List<User> getAll() {
+
+		return usrRepository.findAll(Sort.by("status"));
 	}
 }

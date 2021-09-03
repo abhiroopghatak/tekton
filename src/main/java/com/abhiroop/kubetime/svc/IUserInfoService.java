@@ -16,7 +16,7 @@ public interface IUserInfoService extends UserDetailsService {
 	User getOneByEmail(String email);
 
 
-
+	List<User> getAll();
 	List<User> getAllNonActive();
 
 	User saveUser(User user, boolean isUpdate) throws Exception;
