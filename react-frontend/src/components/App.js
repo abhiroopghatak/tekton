@@ -18,6 +18,7 @@ import AccessApproval from './routes/admin/AccessApproval.function.js';
 import NewUserApproval from './routes/admin/user.registration.approval.js';
 
 import QuotaDetails from './routes/namespaces/QuotaDetails.js';
+import ClusterResourceUsagePrint from './routes/namespaces/ResourceUsagePrintableComponent.js';
 import ClusterAccess from './routes/user/ClusterAccess.js';
 import Profile from './routes/user/Profile.js';
 import UserList from './routes/user/UserList.js';
@@ -46,6 +47,7 @@ const App = () => {
 						<Route path={["/", "/login"]} exact component={Login} />
 						<Route path="/sign-up" component={SignUp} />
 						<ProtectedRoute path="/resources" component={QuotaDetails} />
+						<ProtectedRoute path="/resources-export" component={ClusterResourceUsagePrint} />
 						<ProtectedRoute path="/access" exact component={ClusterAccess} />
 						<ProtectedRoute path="/change/password" exact component={ChangePassword} />
 						<ProtectedRoute path="/profile"  component={Profile} />

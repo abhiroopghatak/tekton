@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Link } from "react-router-dom";
 import DataService from '../../../restapi/data-service/DataService.js';
 import '../../../styles/componentstyles/table.css';
 import Modal from 'react-modal';
 
 import { useTable, useSortBy, useFilters, useGlobalFilter, useAsyncDebounce, usePagination } from "react-table";
-
 
 const modalStyles = {
 	overlay: {
@@ -26,6 +26,8 @@ const Namespaces = (props) => {
 	const resourcesRef = useRef();
 	resourcesRef.current = resources;
 	useEffect(async () => { retrieveResources(); }, []);
+
+
 
 
 	const retrieveResources = () => {
@@ -238,6 +240,9 @@ const Namespaces = (props) => {
 								globalFilter={state.globalFilter}
 								setGlobalFilter={setGlobalFilter}
 							/>
+							<Link to={{ pathname: "/resources-export", state: { data: resources } }} >
+								<button type="button" class="btn btn-light float-right" style={{ textTransform: 'none' }}>Export to File</button>
+							</Link>
 						</th>
 						{headerGroups.map((headerGroup) => (
 							<tr {...headerGroup.getHeaderGroupProps()}> {headerGroup.headers.map((column) => (
@@ -265,6 +270,9 @@ const Namespaces = (props) => {
 							</tr>);
 					})} </tbody>
 				</table>
+
+
+
 				<Modal
 					isOpen={modalIsOpen}
 					style={modalStyles}
@@ -285,23 +293,23 @@ const Namespaces = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-							
-							
-							{pods.length > 0 ?
-							
-							<>{pods.map((pod, index) => (<>
-									{pod.containers.map((container, idx) => (
-										<tr>
-											<td scope="row">{idx == 0 ? pod.podName : null}</td>
-											{pod.containers.length > 1 ? <td class="table-secondary">{container.containerName}</td> : <td>{container.containerName}</td>}
-											{pod.containers.length > 1 ? <td class="table-secondary"> {container.cpuCores}</td> : <td>{container.cpuCores}</td>}
-											{pod.containers.length > 1 ? <td class="table-secondary">{container.memoryBytes}</td> : <td>{container.memoryBytes}</td>}
-											
-										</tr>))}
-								</>))}</>
-							
-							 : <p> No Pods available </p>}
-								
+
+
+								{pods.length > 0 ?
+
+									<>{pods.map((pod, index) => (<>
+										{pod.containers.map((container, idx) => (
+											<tr>
+												<td scope="row">{idx == 0 ? pod.podName : null}</td>
+												{pod.containers.length > 1 ? <td class="table-secondary">{container.containerName}</td> : <td>{container.containerName}</td>}
+												{pod.containers.length > 1 ? <td class="table-secondary"> {container.cpuCores}</td> : <td>{container.cpuCores}</td>}
+												{pod.containers.length > 1 ? <td class="table-secondary">{container.memoryBytes}</td> : <td>{container.memoryBytes}</td>}
+
+											</tr>))}
+									</>))}</>
+
+									: <p> No Pods available </p>}
+
 							</tbody>
 						</table>
 
@@ -341,6 +349,7 @@ const Namespaces = (props) => {
 						))}
 					</select>
 				</div>
+
 			</div>
 
 		</div >
