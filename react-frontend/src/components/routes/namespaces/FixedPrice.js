@@ -13,12 +13,17 @@ const FixedPriceCard = (props) => {
 	const cid = props.cid;
 	const [data, setData] = useState([]);
 
+
+	const costDataToParent = (data) => {
+		props.passCostDataToParent(data);
+	}
 	useEffect(async () => {
 		DataService.getCostDataPerCluster(cid).then(
 
 			(response) => {
 				setData(response.data);
-				console.log(response.data);
+				costDataToParent(response.data);
+				//console.log(response.data);
 			}).catch(error => {
 				console.log(error);
 			});

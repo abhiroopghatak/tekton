@@ -9,6 +9,8 @@ const componentRef = useRef();
 const location = useLocation();
 
 const   data=location.state.data;
+const  costData = location.state.costData;
+const cluster = location.state.cluster;
 
 		return (
 			<div>
@@ -18,7 +20,7 @@ const   data=location.state.data;
 					content={() => componentRef.current}
 				/>
 				<hr/>
-				<ResourceUsagePrintClass ref={componentRef} data = {data}/>
+				<ResourceUsagePrintClass ref={componentRef} data = {data} costData={costData} cluster={cluster}/>
 			</div>
 		);
 }

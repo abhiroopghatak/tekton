@@ -111,7 +111,7 @@ class Home extends Component {
 															</tbody>
 														</table>
 													</div>
-													<Link to={{ pathname: "/resources", state: { cid: cluster.uuid } }} >	{this.state.cluster.errorMessage ?
+													<Link to={{ pathname: "/resources", state: { cluster: cluster } }} >	{this.state.cluster.errorMessage ?
 														<button type="button" style={{textTransform: 'none'}} class="btn btn-dark p-2 float-end disabled"  >Select</button> : <button type="button" class="btn btn-dark p-2 pull-right " >Select</button>}
 
 													</Link>

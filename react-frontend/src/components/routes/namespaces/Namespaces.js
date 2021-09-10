@@ -20,7 +20,8 @@ const modalStyles = {
 	}
 };
 const Namespaces = (props) => {
-	const cid = props.cid;
+	const cluster = props.cluster;
+	const costData = props.costData;
 	const [resources, setResources] = useState([]);
 	const [pods, setPods] = useState([]);
 	const resourcesRef = useRef();
@@ -33,7 +34,7 @@ const Namespaces = (props) => {
 	const retrieveResources = () => {
 		var _u_email = JSON.parse(localStorage.getItem('_u_email'));
 		DataService.getResourcePerNamespaces({
-			clusterId: cid,
+			clusterId: cluster.uuid,
 			userEmail: _u_email
 		})
 			.then((response) => {
@@ -47,7 +48,7 @@ const Namespaces = (props) => {
 		const namespace = resourcesRef.current[rowIndex].namespaceName;
 		DataService.getPodResourcePerNamespaces(
 			{
-				"clusterId": cid,
+				"clusterId": cluster.uuid,
 				"namespace": namespace
 			}
 		).then((response) => {
@@ -240,7 +241,7 @@ const Namespaces = (props) => {
 								globalFilter={state.globalFilter}
 								setGlobalFilter={setGlobalFilter}
 							/>
-							<Link to={{ pathname: "/resources-export", state: { data: resources } }} >
+							<Link to={{ pathname: "/resources-export", state: { data: resources, costData: costData, cluster: cluster } }} >
 								<button type="button" class="btn btn-light float-right" style={{ textTransform: 'none' }}>Export to File</button>
 							</Link>
 						</th>

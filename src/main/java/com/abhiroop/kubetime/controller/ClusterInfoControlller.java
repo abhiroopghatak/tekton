@@ -142,6 +142,8 @@ public class ClusterInfoControlller {
 		try {
 			cid = Long.parseLong(id);
 			ic = costService.getCostDeatilPerCluster(cid);
+			ic.setUuid(0);
+			
 			System.out.println("cost per cluster data recieved");
 		} catch (RuntimeException pe) {
 			System.out.println(pe);
