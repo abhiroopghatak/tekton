@@ -48,7 +48,6 @@ const Login = () => {
 		}
 	};
 	return (
-
 		<div className="outer">
 			<div className="inner">
 				<div className="login-box">
@@ -79,6 +78,7 @@ const Login = () => {
 							Do not have account. Please <a href="/sign-up">register</a>
 						</p>
 					</form>
+<div>Kubetime is an application where you may access your accessed cluster data and resource usages</div>
 				</div>
 			</div></div>
 	);

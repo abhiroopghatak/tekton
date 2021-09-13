@@ -25,7 +25,7 @@ import UserList from './routes/user/UserList.js';
 import ChangePassword from './routes/user/ChangePassword.js';
 import Login from "./login/login.function.js";
 import SignUp from "./login/signup.function.js";
-import  Home from './routes/home/home';
+import Home from './routes/home/home';
 const Sidebar = lazy(() => import('./common/sidebar'));
 const renderLoader = () => <SpinnerPage />;
 
@@ -33,24 +33,26 @@ const renderLoader = () => <SpinnerPage />;
 
 const App = () => {
 	log.info('[App]: Rendering App Component')
-
+	const isAuthenticated = JSON.parse(localStorage.getItem('_token'));
 	return (
 		<div className="App" id="outer-container">
 			<Router history={history}>
 				<HeaderComponent />
 				<div id="page-wrap" >
-					<Suspense fallback={renderLoader()}>
-						<Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} /> </Suspense>
+
+					{isAuthenticated ? <Suspense fallback={renderLoader()}>
+						<Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} /> </Suspense> : null}
+
 					<Switch>
 
-						<ProtectedRoute path="/home" component={Home} / >
+						<ProtectedRoute path="/home" component={Home} />
 						<Route path={["/", "/login"]} exact component={Login} />
 						<Route path="/sign-up" component={SignUp} />
 						<ProtectedRoute path="/resources" component={QuotaDetails} />
 						<ProtectedRoute path="/resources-export" component={ClusterResourceUsagePrint} />
 						<ProtectedRoute path="/access" exact component={ClusterAccess} />
 						<ProtectedRoute path="/change/password" exact component={ChangePassword} />
-						<ProtectedRoute path="/profile"  component={Profile} />
+						<ProtectedRoute path="/profile" component={Profile} />
 						<ProtectedRoute path="/add-cluster" exact component={ClusterForm} forAdmin="true" />
 						<ProtectedRoute path="/access-approve" exact component={AccessApproval} forAdmin="true" />
 						<ProtectedRoute path="/user-approve" exact component={NewUserApproval} forAdmin="true" />
