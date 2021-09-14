@@ -5,10 +5,7 @@ html, body {
     margin: 0;
 }
 
-body ::-webkit-scrollbar {
-    width:0 !important;
-    height: 0 !important;
-}
+
 
 #customDropdown {
     font-weight: bold;
@@ -33,20 +30,18 @@ input {
 
 #page-wrap{
 padding-top: 30px;
-	
+	min-height: calc(100vh - 34px);
 }
 
 .footer{
 	position: relative;
-margin-top: 1rem;
-  padding: 1rem;
-  bottom: 0;
   left: 0;
-  width: 100%;
+  bottom: 0;
 }
 .page-top{
-	position: relative;
+	position: absolute;
 	 width: 100%;
+	 
 	 
 }
 

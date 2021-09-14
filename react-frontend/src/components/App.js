@@ -26,7 +26,7 @@ import ChangePassword from './routes/user/ChangePassword.js';
 import Login from "./login/login.function.js";
 import SignUp from "./login/signup.function.js";
 import Home from './routes/home/home';
-const Sidebar = lazy(() => import('./common/sidebar'));
+import Sidebar from './common/sidebar';
 const renderLoader = () => <SpinnerPage />;
 
 
@@ -40,8 +40,8 @@ const App = () => {
 				<HeaderComponent />
 				<div id="page-wrap" >
 
-					{isAuthenticated ? <Suspense fallback={renderLoader()}>
-						<Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} /> </Suspense> : null}
+					{isAuthenticated ?
+						<Sidebar  />  : null}
 
 					<Switch>
 
