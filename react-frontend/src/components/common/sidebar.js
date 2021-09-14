@@ -31,7 +31,7 @@ export default props => {
 			}
 			{isAdmin === 'AU' ?
 
-				<a className="menu-item" href="/ulist/access">
+				<a className="menu-item" href="/manageusers">
 					View All Users
       </a> : null
 			}

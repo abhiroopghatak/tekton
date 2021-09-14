@@ -56,7 +56,7 @@ const App = () => {
 						<ProtectedRoute path="/add-cluster" exact component={ClusterForm} forAdmin="true" />
 						<ProtectedRoute path="/access-approve" exact component={AccessApproval} forAdmin="true" />
 						<ProtectedRoute path="/user-approve" exact component={NewUserApproval} forAdmin="true" />
-						<ProtectedRoute path="/ulist/access" exact component={UserList} forAdmin="true" />
+						<ProtectedRoute path="/manageusers" exact component={UserList} forAdmin="true" />
 						<Route path="*" component={BadRequest} />
 					</Switch>
 
