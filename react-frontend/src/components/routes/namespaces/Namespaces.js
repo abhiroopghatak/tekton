@@ -228,7 +228,9 @@ const Namespaces = (props) => {
 		<div className="list row">
 
 			<div className="col-md-12 list table-responsive">
-				<table className="table  table-striped table-sm table-bordered border-primary align-middle" {...getTableProps()}><caption>Accessbile Namespaces and resources in use</caption>
+				<table className="table  table-striped table-sm table-bordered border-primary align-middle" {...getTableProps()}>
+				
+				{page.length > 0 ?<caption>Accessbile Namespaces and resources in use</caption> : <caption>No data found !!!</caption> }
 					<thead className="">
 						<th
 							colSpan={visibleColumns.length}
@@ -317,6 +319,7 @@ const Namespaces = (props) => {
 					</div>
 				</Modal>
 
+		{pageOptions.length > 0 ? 
 				<div className="pagination">
 					<button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
 						{'<<'}
@@ -330,26 +333,28 @@ const Namespaces = (props) => {
 					<button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
 						{'>>'}
 					</button>{' '}
-					<span>
-						Page{' '}
-						<strong>
-							{pageIndex + 1} of {pageOptions.length}
-						</strong>{' '}
-					</span>
-					{' '}
-					<select
-						value={pageSize}
-						onChange={e => {
-							setPageSize(Number(e.target.value))
-						}}
-					>
-						{[8, 12, 16, 20].map(pageSize => (
-							<option key={pageSize} value={pageSize}>
-								Show {pageSize}
-							</option>
-						))}
-					</select>
+					
+						<span>
+							Page{' '}
+							<strong>
+								{pageIndex + 1} of {pageOptions.length}
+							</strong>{' '}
+						</span>
+						{' '}
+						<select
+							value={pageSize}
+							onChange={e => {
+								setPageSize(Number(e.target.value))
+							}}
+						>
+							{[8, 12, 16, 20].map(pageSize => (
+								<option key={pageSize} value={pageSize}>
+									Show {pageSize}
+								</option>
+							))}
+						</select>
 				</div>
+						: null}
 
 			</div>
 

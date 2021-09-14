@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import { MDBContainer } from "mdbreact";
 import FixedPriceCard from './FixedPrice.js';
@@ -9,7 +9,7 @@ const QuotaDetails = () => {
 	const initialCostData = Object.freeze({
 		cpucost: "",
 		cpuunit: "",
-		currency: "$",
+	currency: "$",
 		lastupdated: "",
 		memoryunit: "1Gi",
 		momorycost: 0,
@@ -20,9 +20,18 @@ const QuotaDetails = () => {
 
 	});
 
+	const location = useLocation();
+	useEffect(() => {
+		window.onbeforeunload = function() {
+			localStorage.setItem("cluster", JSON.stringify(cluster));
+			return true;
+		};
 
-	const location = useLocation()
-	const cluster = location.state.cluster;
+		return () => {
+			window.onbeforeunload = null;
+		};
+	}, []);
+	const [cluster, setCluster] = useState(location.state ? location.state.cluster : JSON.parse(localStorage.getItem('cluster')));
 	const [costData, SetCostData] = useState(initialCostData);
 
 	return (
@@ -34,7 +43,7 @@ const QuotaDetails = () => {
 					</div>
 					<div class="col-md-5 col-lg-9">
 
-						<Namespaces cluster={cluster}  costData={costData} />
+						<Namespaces cluster={cluster} costData={costData} />
 					</div>
 				</div>
 			</MDBContainer>
