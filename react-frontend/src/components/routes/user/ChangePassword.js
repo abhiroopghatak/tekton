@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import DataService from '../../../restapi/data-service/DataService.js';
 import ErrorAlert from '../../ui/error/errorAlert.js';
@@ -25,7 +25,7 @@ const ChangePassword = () => {
 	};
 
 	const validateForm = () => {
-		if (formData.newpassword != formData.confirmcode) {
+		if (formData.newpassword !== formData.confirmcode) {
 			setResult('F');
 			setErrMsg('Both password doesnt match . Please try carefully.');
 			return false;
@@ -48,7 +48,7 @@ const ChangePassword = () => {
 			DataService.changePassword(formData).then((response) => {
 				console.log(response.data);
 
-				if (response.data.status != 'OK') {
+				if (response.data.status !== 'OK') {
 					setResult('F');
 					setErrMsg(response.data.obj);
 				}

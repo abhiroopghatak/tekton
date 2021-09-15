@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import '../../styles/componentstyles/login.css';
 import DataService from '../../restapi/data-service/DataService.js';
 import ErrorAlert from '../ui/error/errorAlert.js';
@@ -26,7 +26,7 @@ const SignUp = () => {
 
 
 	const validateForm = () => {
-		if (formData.pwd != formData.confirmCode) {
+		if (formData.pwd !== formData.confirmCode) {
 			setValidPasscode('F');
 			setErrMsg('Both password doesnt match . Please try carefully.');
 			return false;

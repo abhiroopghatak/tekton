@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { MDBCard, MDBCardText, MDBCardBody, MDBCardTitle, MDBBadge } from "mdbreact";
+import { MDBCard, MDBCardBody, MDBCardTitle } from "mdbreact";
 import fixedPrice from "../../../images/fixedPrice.jpg";
 import _dollar_cost_icon from "../../../images/icon/_dollar_cost_icon.png";
 
@@ -32,11 +32,11 @@ const FixedPriceCard = (props) => {
 	return (
 		<>
 			<MDBCard className="border border-info  z-depth-5" >
-				<MDBCardTitle><img className="img-fluid" src={_dollar_cost_icon} margin="auto" >
+				<MDBCardTitle><img alt="" className="img-fluid" src={_dollar_cost_icon} margin="auto" >
 
 				</img>Price details </MDBCardTitle>
 				<MDBCardBody>
-					<img className="img-fluid" src={fixedPrice} margin="auto" >
+					<img alt="" className="img-fluid" src={fixedPrice} margin="auto" >
 
 					</img>
 

@@ -1,5 +1,5 @@
 
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import history from "../history";
 
 import { BadRequest } from "./ui/error/badRequest";
@@ -9,10 +9,8 @@ import { Router, Route, Switch } from 'react-router-dom';
 import '../styles/App.css';
 
 import ProtectedRoute from './ui/ProtectedRoute';
-import SpinnerPage from "./ui/spinner";
 import HeaderComponent from "./common/HeaderComponent";
 import FooterComponent from "./common/FooterComponent";
-import AddCluster from './routes/admin/addcluster.function.js';
 import ClusterForm from './routes/admin/ClusterForm.js';
 import AccessApproval from './routes/admin/AccessApproval.function.js';
 import NewUserApproval from './routes/admin/user.registration.approval.js';
@@ -27,7 +25,6 @@ import Login from "./login/login.function.js";
 import SignUp from "./login/signup.function.js";
 import Home from './routes/home/home';
 import Sidebar from './common/sidebar';
-const renderLoader = () => <SpinnerPage />;
 
 
 
