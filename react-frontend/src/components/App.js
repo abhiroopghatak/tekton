@@ -34,7 +34,7 @@ const App = () => {
 	return (
 		<div className="App" id="outer-container">
 			<Router history={history}>
-				<HeaderComponent />
+				
 				<div id="page-wrap" >
 
 					{isAuthenticated ?
