@@ -71,14 +71,15 @@ const Login = () => {
 						</div>
 
 
-						<button type="submit" style={{textTransform: 'none'}} onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Sign in</button>
+						<button type="submit" style={{ textTransform: 'none' }} onClick={handleSubmit} className="btn btn-dark btn-lg btn-block">Sign in</button>
 
 						<br /><br />
 						<p className="forgot-password text-right">
 							Do not have account. Please <a href="/sign-up">register</a>
 						</p>
 					</form>
-<div>Kubetime is an application where you may access your accessed cluster data and resource usages</div>
+					<div>Kubetime is an application where you may access your accessed cluster data and resource usages</div>
+					<Link to="/help"><button className="btn-dark float-right" > Help </button></Link>
 				</div>
 			</div></div>
 	);

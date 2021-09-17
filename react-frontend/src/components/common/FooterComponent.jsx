@@ -23,6 +23,8 @@ class FooterComponent extends Component {
 				<div className="footer-copyright text-center py-1">
 					<MDBContainer fluid className='text-white'>
 						&copy; {new Date().getFullYear()} Copyright: <a href="https://www.hcl.com"> Abhiroop Ghatak </a>
+						
+						<a  type="button"className="btn-sm float-right" href="/help"> Help </a>
 					</MDBContainer>
 				</div>
 			</MDBFooter>

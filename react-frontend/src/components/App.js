@@ -9,7 +9,8 @@ import { Router, Route, Switch } from 'react-router-dom';
 import '../styles/App.css';
 
 import ProtectedRoute from './ui/ProtectedRoute';
-import HeaderComponent from "./common/HeaderComponent";
+
+import HelpPage from "./common/HelpPage.function.js";
 import FooterComponent from "./common/FooterComponent";
 import ClusterForm from './routes/admin/ClusterForm.js';
 import AccessApproval from './routes/admin/AccessApproval.function.js';
@@ -43,6 +44,7 @@ const App = () => {
 					<Switch>
 
 						<ProtectedRoute path="/home" component={Home} />
+						<Route path="/help" component={HelpPage} />
 						<Route path={["/", "/login"]} exact component={Login} />
 						<Route path="/sign-up" component={SignUp} />
 						<ProtectedRoute path="/resources" component={QuotaDetails} />
