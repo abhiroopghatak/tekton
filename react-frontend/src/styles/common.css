@@ -39,8 +39,9 @@ padding-top: 30px;
   bottom: 0;
 }
 .page-top{
-	position: absolute;
+	position: sticky;
 	 width: 100%;
+	 top:0;
 	 
 	 
 }

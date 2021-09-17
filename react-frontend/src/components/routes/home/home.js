@@ -67,8 +67,8 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
-				<MDBContainer className="z-depth-5">
-					<MDBRow class=".mt-10">
+				<MDBContainer className="w-75 p-3 z-depth-5">
+					<MDBRow class=".mt-8">
 						<MDBCol sm="4">
 							<UserProfileCard />
 						</MDBCol>

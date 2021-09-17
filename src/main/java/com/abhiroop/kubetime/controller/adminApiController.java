@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abhiroop.kubetime.config.SystemConstants;
+import com.abhiroop.kubetime.notification.EmailService;
 import com.abhiroop.kubetime.pojo.Cluster;
 import com.abhiroop.kubetime.pojo.ClusterAccessRequestObject;
 import com.abhiroop.kubetime.pojo.ItemCost;
@@ -103,7 +104,7 @@ public class adminApiController {
 					ar = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, c);
 					log.info("@/cluster/add==== Admin added new cluster into system =======");
 				} else {
-					 clusterInfoService.removeCluster(c);
+					clusterInfoService.removeCluster(c);
 					throw new RuntimeException(
 							"Exception occurred in cost table update . Disabled newly created cluster entry -=> " + c);
 				}
@@ -139,7 +140,10 @@ public class adminApiController {
 		try {
 			u = userInfoService.userStatusUpdate(rp.getUuid(), action);
 			if (u != null) {
+				String notificationAction = StringUtils.equals("Y", rp.getAction()) ? "Approved" : "Rejected";
 				resp = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, u);
+				EmailService.emailNotification(u.getEmail(), "UserStatus Updation Notification",
+						"Admin has " + notificationAction + " your user account");
 			} else {
 				resp = new ResponsePojo(HttpStatus.FORBIDDEN, SystemConstants.EntitySavedInDBFAILURE, u);
 			}
@@ -190,6 +194,8 @@ public class adminApiController {
 			uca.setUuid(caro.getUuid());
 			userClusterAccessService.statusUpdate(uca, SystemConstants.StatusActive);
 			rp = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, uca);
+			EmailService.emailNotification(caro.getUseremail(), "Cluster's Namespace data access  Updation Notification",
+					"Admin has Approved your access for Namespace with Label "+caro.getRequestedLabel()+" Access" );
 		} catch (Exception e) {
 			rp = new ResponsePojo(HttpStatus.FORBIDDEN, SystemConstants.EntitySavedInDBFAILURE, uca);
 			System.out.println("@/cluster/access/approve Exception=> " + e.getMessage());
@@ -206,6 +212,8 @@ public class adminApiController {
 			uca.setUuid(caro.getUuid());
 			userClusterAccessService.statusUpdate(uca, SystemConstants.StatusInActive);
 			rp = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, uca);
+			EmailService.emailNotification(caro.getUseremail(), "Cluster's Namespace data access  Updation Notification",
+					"Admin has Rejected your access for Namespace with Label "+caro.getRequestedLabel()+" Access" );
 		} catch (Exception e) {
 			rp = new ResponsePojo(HttpStatus.FORBIDDEN, e.getMessage(), uca);
 			System.out.println("@/cluster/access/reject Exception=> " + e.getMessage());
