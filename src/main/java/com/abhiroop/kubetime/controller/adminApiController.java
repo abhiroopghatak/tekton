@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.abhiroop.kubetime.cluster.restclient.http.PlatformDataController;
 import com.abhiroop.kubetime.config.SystemConstants;
 import com.abhiroop.kubetime.notification.EmailService;
 import com.abhiroop.kubetime.pojo.Cluster;
@@ -44,7 +45,8 @@ public class adminApiController {
 	private IuserClusterAccess userClusterAccessService;
 	@Autowired
 	private IUserInfoService userInfoService;
-
+	@Autowired
+	private PlatformDataController pdc;
 	@Autowired
 	private ICostService costService;
 
@@ -89,31 +91,40 @@ public class adminApiController {
 		c.setRegisteredon(new Date());
 		c.setStatus(SystemConstants.StatusActive);
 
-		ItemCost ic = new ItemCost();
-		ic.setCpucost(jcc.getCpucost());
-		ic.setMomorycost(jcc.getMomorycost());
-		ic.setStoragecost(jcc.getStoragecost());
-		ic.setLastupdated(new Date());
-		try {
-			c = clusterInfoService.addCluster(c);
+		if (!StringUtils.equals(SystemConstants.StatusActive,
+				pdc.clusterServiceStatus(c.getEndpoint(), c.getToken()))) {
+			c.setErrorMessage("Cluster Service is not running");
+			ar = new ResponsePojo(HttpStatus.BAD_GATEWAY, SystemConstants.EntitySavedInDBFAILURE, c);
+			log.debug("@/cluster/add ====Cluster Service is not running");
+		} else {
 
-			if (c.getUuid() > 0) {
-				ic.setClusterid(c.getUuid());
-				ic = costService.addCostDetail(ic);
-				if (ic.getUuid() > 0) {
-					ar = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, c);
-					log.info("@/cluster/add==== Admin added new cluster into system =======");
-				} else {
-					clusterInfoService.removeCluster(c);
-					throw new RuntimeException(
-							"Exception occurred in cost table update . Disabled newly created cluster entry -=> " + c);
+			ItemCost ic = new ItemCost();
+			ic.setCpucost(jcc.getCpucost());
+			ic.setMomorycost(jcc.getMomorycost());
+			ic.setStoragecost(jcc.getStoragecost());
+			ic.setLastupdated(new Date());
+			try {
+				c = clusterInfoService.addCluster(c);
+
+				if (c.getUuid() > 0) {
+					ic.setClusterid(c.getUuid());
+					ic = costService.addCostDetail(ic);
+					if (ic.getUuid() > 0) {
+						ar = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, c);
+						log.info("@/cluster/add==== Admin added new cluster into system =======");
+					} else {
+						clusterInfoService.removeCluster(c);
+						throw new RuntimeException(
+								"Exception occurred in cost table update . Disabled newly created cluster entry -=> "
+										+ c);
+					}
 				}
-			}
-		} catch (Exception e) {
+			} catch (Exception e) {
 
-			c.setErrorMessage("Operation =AddCluster= thrown exception." + e.getMessage());
-			ar = new ResponsePojo(HttpStatus.CONFLICT, SystemConstants.EntitySavedInDBFAILURE, c);
-			log.debug("@/cluster/add ====cluster add thrown exception=====" + e.getMessage());
+				c.setErrorMessage("Operation =AddCluster= thrown exception." + e.getMessage());
+				ar = new ResponsePojo(HttpStatus.CONFLICT, SystemConstants.EntitySavedInDBFAILURE, c);
+				log.debug("@/cluster/add ====cluster add thrown exception=====" + e.getMessage());
+			}
 		}
 
 		return ar;
@@ -194,8 +205,9 @@ public class adminApiController {
 			uca.setUuid(caro.getUuid());
 			userClusterAccessService.statusUpdate(uca, SystemConstants.StatusActive);
 			rp = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, uca);
-			EmailService.emailNotification(caro.getUseremail(), "Cluster's Namespace data access  Updation Notification",
-					"Admin has Approved your access for Namespace with Label "+caro.getRequestedLabel()+" Access" );
+			EmailService.emailNotification(caro.getUseremail(),
+					"Cluster's Namespace data access  Updation Notification",
+					"Admin has Approved your access for Namespace with Label " + caro.getRequestedLabel() + " Access");
 		} catch (Exception e) {
 			rp = new ResponsePojo(HttpStatus.FORBIDDEN, SystemConstants.EntitySavedInDBFAILURE, uca);
 			System.out.println("@/cluster/access/approve Exception=> " + e.getMessage());
@@ -212,8 +224,9 @@ public class adminApiController {
 			uca.setUuid(caro.getUuid());
 			userClusterAccessService.statusUpdate(uca, SystemConstants.StatusInActive);
 			rp = new ResponsePojo(HttpStatus.ACCEPTED, SystemConstants.EntitySavedInDBSUCCESS, uca);
-			EmailService.emailNotification(caro.getUseremail(), "Cluster's Namespace data access  Updation Notification",
-					"Admin has Rejected your access for Namespace with Label "+caro.getRequestedLabel()+" Access" );
+			EmailService.emailNotification(caro.getUseremail(),
+					"Cluster's Namespace data access  Updation Notification",
+					"Admin has Rejected your access for Namespace with Label " + caro.getRequestedLabel() + " Access");
 		} catch (Exception e) {
 			rp = new ResponsePojo(HttpStatus.FORBIDDEN, e.getMessage(), uca);
 			System.out.println("@/cluster/access/reject Exception=> " + e.getMessage());

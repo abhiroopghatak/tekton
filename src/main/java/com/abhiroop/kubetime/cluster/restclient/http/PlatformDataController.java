@@ -17,6 +17,8 @@ import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.Cluste
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.NamespaceResourceObject;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.PodResourceObject;
 import com.abhiroop.kubetime.cluster.restclient.http.svc.PlatformDataServiceImpl;
+import com.abhiroop.kubetime.cluster.restclient.http.svc.PlatformMetadataServiceImpl;
+import com.abhiroop.kubetime.config.SystemConstants;
 
 @RestController
 @RequestMapping("/api/platforms")
@@ -25,6 +27,25 @@ public class PlatformDataController {
 
 	@Autowired
 	private PlatformDataServiceImpl platformDataService;
+
+	@Autowired
+	private PlatformMetadataServiceImpl platformMetaDataSvc;
+
+	@GetMapping("/clusterServiceStatus")
+	public String clusterServiceStatus(String endPoint , String token) {
+		ClusterClientBaseBuilder oc = new OpenshiftClient();
+		String clusterStatus = SystemConstants.StatusInActive;
+		oc.withBaseUrl(endPoint);
+		oc.usingToken(token);
+
+		int result = platformMetaDataSvc.getClusterInfo(oc);
+
+		if (result > 199 && result < 300) {
+			clusterStatus = SystemConstants.StatusActive;
+		}
+
+		return clusterStatus;
+	}
 
 	@GetMapping("/getPlatformSpec")
 	public ClusterMetadata getPlatformSpec(ClusterMetadata cmd) {
@@ -82,8 +103,7 @@ public class PlatformDataController {
 	}
 
 	@GetMapping("/namespace/podmetric")
-	public
-	List<PodResourceObject> getPodResourcePerNameSpace(ClusterMetadata cmd, String namespace) {
+	public List<PodResourceObject> getPodResourcePerNameSpace(ClusterMetadata cmd, String namespace) {
 		List<PodResourceObject> proList = null;
 		ClusterClientBaseBuilder oc = new OpenshiftClient();
 

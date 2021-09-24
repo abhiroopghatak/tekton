@@ -27,11 +27,11 @@ export class Confirm extends Component {
 					this.props.nextStep();
 				} else {
 
-					console.log(response.data.obj.errorMessage);
-					this.setState({ errmsg: "Data couldnt updated in system.Backend Api error ." });
+					//console.log(response.data.obj.errorMessage);
+					this.setState({ errmsg: "Data couldnt updated in system. => " + response.data.obj.errorMessage + ". Please check endpoint & token and resubmit." });
 				}
 			}).catch((error) => {
-				console.log(error);
+				//console.log(error);
 				this.setState({ errmsg: "Data couldnt updated in system.Backend Api error ." });
 			});
 
