@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.abhiroop.kubetime.cluster.restclient.http.constants.openshift4.ClusterConstants;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.ClusterClientBaseBuilder;
-import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.ClusterMetadata;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.NamespaceResourceObject;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.PodContainer;
 import com.abhiroop.kubetime.cluster.restclient.http.pojo.clusterresource.PodResourceObject;
@@ -34,63 +31,22 @@ public class PlatformDataServiceImpl implements IPlatformDataService {
 
 	@Autowired
 	private RestTemplate restTemplate;
-
-	@Override
-	public ClusterMetadata getPlatformSpec(ClusterClientBaseBuilder client) {
-		String fullJson = null;
-		ClusterMetadata cmd = new ClusterMetadata();
+	
+	private HttpEntity<String> getSandardHttpEntity(ClusterClientBaseBuilder client) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(client.getToken());
 		headers.add("Accept", "application/json");
 		headers.add("content-type", "application/json");
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-		log.info("==== RESTful API call getClusterSpec using Spring RESTTemplate START =======");
-		try {
-
-			ResponseEntity<String> response = restTemplate.exchange(
-					client.getBaseUrl() + ClusterConstants.RestApiRelativePath.CLUSTER_METADATA, HttpMethod.GET, entity,
-					String.class);
-			fullJson = response.getBody();
-			JSONObject jo = (JSONObject) new JSONParser().parse(fullJson);
-
-			cmd.setBuildDate(JsonParserHelper.getDataValue(fullJson, new String[] { "buildDate" }));
-			cmd.setGitVersion(JsonParserHelper.getDataValue(fullJson, new String[] { "gitVersion" }));
-			cmd.setGoVersion(JsonParserHelper.getDataValue(fullJson, new String[] { "goVersion" }));
-			cmd.setPlatform(JsonParserHelper.getDataValue(fullJson, new String[] { "platform" }));
-			response = null;
-			response = restTemplate.exchange(client.getClusterSpecApiUrl(), HttpMethod.GET, entity, String.class);
-			fullJson = response.getBody();
-			jo = (JSONObject) new JSONParser().parse(fullJson);
-
-			cmd.setChannel(JsonParserHelper.getDataValue(fullJson, new String[] { "spec", "channel" }));
-			cmd.setClusterVersion(
-					JsonParserHelper.getDataValue(fullJson, new String[] { "status", "desired", "version" }));
-			cmd.setClusterId(JsonParserHelper.getDataValue(fullJson, new String[] { "spec", "clusterID" }));
-
-			System.out.println(cmd);
-
-		} catch (RestClientException | ParseException rce) {
-			System.out.println(rce);
-			if (rce instanceof ParseException) {
-
-				cmd.setErrorMessage("Data Parcing exception occurred. Connect Admin");
-			} else {
-				cmd.setErrorMessage("Api error occurred. Connect Admin");
-			}
-		}
-		log.info("==== RESTful API Response using Spring RESTTemplate END =======");
-		return cmd;
+		return entity;
 	}
 
 	public List<String> getAccessibleNameSPaces(ClusterClientBaseBuilder client, String labelKeyValue)
 			throws RestClientException, ParseException {
 		String fullJson = null;
 		List<String> nameList = null;
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth(client.getToken());
-		headers.add("Accept", "application/json");
-		headers.add("content-type", "application/json");
-		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+		
+		HttpEntity<String> entity = getSandardHttpEntity(client);
 		log.info("==== RESTful API call getAccessibleNameSPaces using Spring RESTTemplate START =======");
 
 		ResponseEntity<String> response = restTemplate.exchange(client.getBaseUrl()
@@ -104,16 +60,15 @@ public class PlatformDataServiceImpl implements IPlatformDataService {
 		return nameList;
 	}
 
+	
+
 	@Override
 	public NamespaceResourceObject getVolumePerNamespace(ClusterClientBaseBuilder client,
 			NamespaceResourceObject namespace) throws RestClientException, ParseException {
 		String fullJson = null;
 		String volumeReserved = "0Gi";
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth(client.getToken());
-		headers.add("Accept", "application/json");
-		headers.add("content-type", "application/json");
-		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+		
+		HttpEntity<String> entity = getSandardHttpEntity(client);
 		log.info("==== RESTful API call getVolumePerNamespace using Spring RESTTemplate START =======");
 
 		ResponseEntity<String> response = restTemplate.exchange(
@@ -137,11 +92,7 @@ public class PlatformDataServiceImpl implements IPlatformDataService {
 
 		String fullJson = null;
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth(client.getToken());
-		headers.add("Accept", "application/json");
-		headers.add("content-type", "application/json");
-		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+		HttpEntity<String> entity = getSandardHttpEntity(client);
 		log.info("==== RESTful API call getResourceQuota using Spring RESTTemplate START =======");
 
 		ResponseEntity<String> response = restTemplate
@@ -178,11 +129,7 @@ public class PlatformDataServiceImpl implements IPlatformDataService {
 
 		String fullJson = null;
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth(client.getToken());
-		headers.add("Accept", "application/json");
-		headers.add("content-type", "application/json");
-		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+		HttpEntity<String> entity = getSandardHttpEntity(client);
 		log.info("==== RESTful API call getPodResourcePerNameSpace using Spring RESTTemplate START =======");
 
 		ResponseEntity<String> response = restTemplate.exchange(client.getBaseUrl()
@@ -229,6 +176,27 @@ public class PlatformDataServiceImpl implements IPlatformDataService {
 
 		}
 		return pro;
+	}
+
+	@Override
+	public boolean nameSpaceExistsOrNot(ClusterClientBaseBuilder client, String name) throws Exception {
+		boolean result = false;
+
+		HttpEntity<String> entity = getSandardHttpEntity(client);
+		log.info(name + "==== nameSpaceExistsOrNot START =======");
+		String kind = "";
+		ResponseEntity<String> response = restTemplate.exchange(
+				client.getBaseUrl() + ClusterConstants.NamespaceRestApiPath.NAMESPACE_INFO + name, HttpMethod.GET,
+				entity, String.class);
+		String fullJson = response.getBody();
+		if (!StringUtils.isEmpty(fullJson)) {
+			kind = JsonParserHelper.getDataValue(fullJson, new String[] { "kind" });
+			if (StringUtils.equals("Project", kind)) {
+				result = true;
+				log.info("==== namespace exist =====");
+			}
+		}
+		return result;
 	}
 
 }

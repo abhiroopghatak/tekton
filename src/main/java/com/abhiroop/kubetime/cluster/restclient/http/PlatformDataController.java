@@ -54,7 +54,7 @@ public class PlatformDataController {
 
 		oc.withBaseUrl(cmd.getEndPointUrl());
 		oc.usingToken(cmd.getToken());
-		ClusterMetadata data = platformDataService.getPlatformSpec(oc);
+		ClusterMetadata data = platformMetaDataSvc.getPlatformSpec(oc);
 		data.setClusterName(cmd.getClusterName());
 		return data;
 	}
