@@ -9,12 +9,12 @@ const QuotaDetails = () => {
 	const initialCostData = Object.freeze({
 		cpucost: "",
 		cpuunit: "",
-	currency: "$",
+		currency: "$",
 		lastupdated: "",
-		memoryunit: "1Gi",
+		memoryunit: "Gi",
 		momorycost: 0,
 		storagecost: 0,
-		storageunit: "1Gi",
+		storageunit: "Gi",
 		timelengthunit: "month",
 
 

@@ -23,28 +23,64 @@ class ResourceUsagePrintClass extends React.Component {
 
 	calcAmount = (data, costData) => {
 		var c = 0.0;
-		data.forEach( d => {
+		data.forEach(d => {
+			d.cost = 0.0;
+			if (d.storageVolume) {
+				if (d.storageVolume.endsWith("Gi")) {
+					d.storageVolume = d.storageVolume.substring(0, d.storageVolume.length - 2);
+					if (costData.storageunit === "Gi") {
+						d.cost = d.cost + (d.storageVolume * costData.storagecost);
+					} else if (costData.storageunit === "mi" || costData.storageunit === "Mi") {
+						d.cost = d.cost + (d.storageVolume / 1024) * costData.storagecost;
+					}
 
-			if (d.storageVolume && (d.storageVolume.endsWith("Gi") || d.storageVolume.endsWith("mi") || d.storageVolume.endsWith("Mi"))) {
-				d.storageVolume = d.storageVolume.substring(0, d.storageVolume.length - 2);
-				c = c + d.storageVolume * costData.storagecost;
+				} else if (d.storageVolume.endsWith("mi") || d.storageVolume.endsWith("Mi")) {
+					d.storageVolume = d.storageVolume.substring(0, d.storageVolume.length - 2);
+					if (costData.storageunit === "Gi") {
+						d.cost = d.cost + (d.storageVolume / 1024) * costData.storagecost;
+
+					} else if (costData.storageunit === "mi" || costData.storageunit === "Mi") {
+						d.cost = d.cost + d.storageVolume * costData.storagecost;
+					}
+				} else {
+					d.cost = d.cost + (d.storageVolume * costData.storagecost);
+				}
+
 			} else {
-				if (d.storageVolume ) { c = c + d.storageVolume * costData.storagecost; }
-				else { d.storageVolume = "0Gi"; }
-			}
-			
-			if (d.requestMemory && (d.requestMemory.endsWith("Gi") || d.requestMemory.endsWith("mi") || d.requestMemory.endsWith("Mi"))) {
-				d.requestMemory = d.requestMemory.substring(0, d.requestMemory.length - 2);
-				c = c + d.requestMemory * costData.momorycost;
-			} else {
-				if (d.requestMemory ) { c = c + d.requestMemory * costData.momorycost; }
-				else { d.requestMemory = "0Gi"; }
-			}
-			
-			if(d.requestCpu){
-				c=c+d.requestCpu*costData.cpucost;
+
+				d.storageVolume = "0Gi";
 			}
 
+			if (d.requestMemory) {
+				if (d.requestMemory.endsWith("Gi")) {
+					d.requestMemory = d.requestMemory.substring(0, d.requestMemory.length - 2);
+					if (costData.memoryunit === "Gi") {
+						d.cost = d.cost + d.requestMemory * costData.momorycost;
+					} else if (costData.memoryunit === "mi" || costData.memoryunit === "Mi") {
+						d.cost = d.cost + (d.requestMemory / 1024) * costData.momorycost;
+					}
+
+				} else if (d.requestMemory.endsWith("mi") || d.requestMemory.endsWith("Mi")) {
+					d.requestMemory = d.requestMemory.substring(0, d.requestMemory.length - 2);
+					if (costData.memoryunit === "Gi") {
+						d.cost = d.cost + (d.requestMemory / 1024) * costData.momorycost;
+
+					} else if (costData.memoryunit === "mi" || costData.memoryunit === "Mi") {
+						d.cost = d.cost + d.requestMemory * costData.momorycost;
+					}
+				} else {
+					d.cost = d.cost + (d.requestMemory * costData.momorycost);
+				}
+
+			} else {
+
+				d.requestMemory = "0Gi";
+			}
+
+			if (d.requestCpu) {
+				d.cost = d.cost + d.requestCpu * costData.cpucost;
+			}
+			c = c + d.cost;
 		});
 
 		return c;
@@ -158,12 +194,15 @@ class ResourceUsagePrintClass extends React.Component {
 
 								<table className="table-striped">
 									<thead>
-										<th scope="col">S-No#</th>
-										<th scope="col">Namespace</th>
-										<th scope="col">AccessedLabel</th>
-										<th scope="col">Storage</th>
-										<th scope="col">vCpu</th>
-										<th scope="col">Memory</th>
+										<tr>
+											<th scope="col">S-No#</th>
+											<th scope="col">Namespace</th>
+											<th scope="col">AccessedLabel</th>
+											<th scope="col">Storage</th>
+											<th scope="col">vCpu</th>
+											<th scope="col">Memory</th>
+											<th scope="col">Cost</th>
+										</tr>
 									</thead>
 
 									<tbody class="text-95 text-secondary-d3">
@@ -172,12 +211,13 @@ class ResourceUsagePrintClass extends React.Component {
 
 											{data.map((tuple, index) => (
 												<tr>
-													<td scope="row" >{index + 1}</td>
+													<td scope="row" >{index + 1}    </td>
 													<td scope="row">{tuple.namespaceName}</td>
 													<td scope="row">{tuple.labelSelector}</td>
 													<td scope="row">{tuple.storageVolume}</td>
 													<td scope="row">{tuple.requestCpu}</td>
 													<td scope="row">{tuple.requestMemory}</td>
+													<td scope="row">{tuple.cost}</td>
 												</tr>
 											))}
 										</> : null}
@@ -205,7 +245,7 @@ class ResourceUsagePrintClass extends React.Component {
 												Tax (10%)
                                 </div>
 											<div class="col-5">
-												<span class="text-110 text-secondary-d1">${totalCost/10}</span>
+												<span class="text-110 text-secondary-d1">${totalCost / 10}</span>
 											</div>
 										</div>
 
@@ -214,7 +254,7 @@ class ResourceUsagePrintClass extends React.Component {
 												Total Amount
                                 </div>
 											<div class="col-5">
-												<span class="text-150 text-success-d3 opacity-2">${totalCost + (totalCost/10)}</span>
+												<span class="text-150 text-success-d3 opacity-2">${totalCost + (totalCost / 10)}</span>
 											</div>
 										</div>
 									</div>

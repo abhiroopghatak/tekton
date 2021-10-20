@@ -31,9 +31,9 @@ public class ItemCost implements Serializable {
 	
 	private long clusterid;
 	private String currency ="dollar";
-	private String cpuunit="1 vCPU";
-	private String memoryunit = "1 Gi";
-	private String storageunit = "1 Gi";
+	private String cpuunit="vCPU";
+	private String memoryunit = "Gi";
+	private String storageunit = "Gi";
 	private String timelengthunit = "month";
 	private double cpucost ;
 	private double momorycost;
