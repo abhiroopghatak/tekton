@@ -1,12 +1,12 @@
 kind: "DeploymentConfig"
-apiVersion: "v1"
+apiVersion: "apps.openshift.io/v1"
 metadata:
   name: "frontend"
 spec:
   template: 
     metadata:
       labels:
-        name: "frontend"
+        name: "vote-api"
     spec:
       containers:
         - name: "helloworld"
