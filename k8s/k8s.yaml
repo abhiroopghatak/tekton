@@ -53,7 +53,7 @@ spec:
       - name: custom-portal
         image: image-registry.openshift-image-registry.svc:5000/kubetime-tekton/custom-portal:latest
         ports:
-        - containerPort: 8010
+        - containerPort: 8080
         livenessProbe:
           httpGet:
             path: /health
