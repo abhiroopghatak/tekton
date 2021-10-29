@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: Custom-Portal
-        image: image-registry.openshift-image-registry.svc:5000/kubetime-tekton/Custom-Portal:latest
+        image: image-registry.openshift-image-registry.svc:5000/kubetime-tekton/custom-portal:latest
         ports:
         - containerPort: 8010
         livenessProbe:
