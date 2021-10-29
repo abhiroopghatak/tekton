@@ -1,39 +1,39 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: vote-api
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: vote-api
-  template:
-    metadata:
-      labels:
-        app: vote-api
-    spec:
-      terminationGracePeriodSeconds: 0
-      containers:
-      - name: api
-        image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: vote-api
-  annotations:
-    dev.okteto.com/auto-ingress: "true"
+  name: Custom-Portal
   labels:
-    app: vote-api
+    app: Custom-Portal
 spec:
-  type: ClusterIP
-  ports:
-    - name: vote-api
-      port: 8080
+  type: NodePort
   selector:
-    app: vote-api
+    app: Custom-Portal
+  ports:
+  - protocol: TCP
+    port: 8010
+    name: http
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: Custom-Portal
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: Custom-Portal
+    spec:
+      containers:
+      - name: Custom-Portal
+        image: image-registry.openshift-image-registry.svc:5000/kubetime-tekton/Custom-Portal:latest
+        ports:
+        - containerPort: 8010
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8010
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
